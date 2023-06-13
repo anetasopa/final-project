@@ -1,0 +1,48 @@
+.heroContainer {
+  display: flex;
+  padding: 50px;
+
+  .image {
+    z-index: -10;
+  }
+
+  .heroContainerText {
+    width: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 30px;
+
+    .heroH1 {
+      font-weight: bold;
+      font-size: 2rem;
+      line-height: 40px;
+    }
+
+    .heroPar {
+      line-height: 40px;
+    }
+
+    .heroButton {
+      padding: 10px 20px;
+      background-color: var(--main-accent-color);
+      color: var(--primary-accent-color);
+      border-radius: 50px;
+      border: none;
+
+      .heroButton:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.popup {
+  display: flex;
+  justify-content: center;
+}
+
+.overlay {
+  background-color: #999999;
+}

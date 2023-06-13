@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Ma Shan Zheng&family=Poppins:wght@400;500;600;700&family=Montserrat&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --font-family: Montserrat, sans-serif;
+  --font-family-main: Poppins, sans-serif;
+  --font-family-logo: Ma Shan Zheng, sans-serif;
+
+  --main-color: #191919;
+  --primary-text-color: #999999;
+  --secondary-text-color: #d9d9d9;
+  --main-accent-color: #6bd9ec;
+  --primary-accent-color: #324b4f;
+  --secondary-accent-color: #95b0b5;
+
+  --mobileS: 320px;
+  --mobileM: 375px;
+  --mobileL: 425px;
+  --tablet: 768px;
+  --laptop: 1024px;
+  --desktop: 1440px;
+}
+
+body {
+  width: auto;
+  height: auto;
+  font-family: var(--font-family-main);
+  color: var(--main-color);
+}
+
+li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: #000;
+}
+
+h1 {
+  font-family: var(--font-family);
+}
