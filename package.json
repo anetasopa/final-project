@@ -6,16 +6,20 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "ley-new": "f(){ touch migrations/$(date +%s)-$1.ts; }; f",
+    "migrate": "dotenv -- ley --require tsm"
   },
   "dependencies": {
+    "ley": "^0.8.1",
     "next": "13.4.5",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-icons": "^4.9.0",
     "reactjs-popup": "^2.0.5",
     "sass": "^1.63.3",
-    "sharp": "^0.32.1"
+    "sharp": "^0.32.1",
+    "tsm": "^2.3.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.11",
