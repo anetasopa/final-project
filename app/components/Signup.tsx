@@ -3,7 +3,7 @@ import { useState } from 'react';
 import styles from './Signup.module.scss';
 
 export default function Signup(props: {
-  onFormSwitch: (arg0: string) => void;
+  onFormSwitch: (signup: string) => void;
 }) {
   const [userName, setUserName] = useState('');
   const [email, setEmail] = useState('');

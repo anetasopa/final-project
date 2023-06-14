@@ -2,9 +2,7 @@
 import { useState } from 'react';
 import styles from './Login.module.scss';
 
-// import styles from './Login.module.scss';
-
-export default function Login(props: { onFormSwitch: (arg0: string) => void }) {
+export default function Login(props: { onFormSwitch: (login: string) => void }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 

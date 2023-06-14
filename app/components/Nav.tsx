@@ -5,9 +5,9 @@ import React from 'react';
 import styles from './Nav.module.scss';
 
 const links = [
-  { id: 1, title: 'ChatSync', link: '/' },
-  { id: 2, title: 'Home', link: '/' },
-  { id: 3, title: 'About Us', link: '#aboutUs' },
+  { id: 1, title: 'Home', link: '/' },
+  { id: 2, title: 'AboutUs', link: '/aboutUs' },
+  { id: 3, title: 'Benefits', link: '#benefits' },
 ];
 
 export default function Nav({ setOpenModal }) {
@@ -16,7 +16,7 @@ export default function Nav({ setOpenModal }) {
       <nav>
         <div>
           <Link href="/" className={styles.logo}>
-            {links[0]?.title}
+            ChatSync
           </Link>
         </div>
         <ul>

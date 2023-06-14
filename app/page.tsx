@@ -25,6 +25,19 @@ export default function Home() {
           <button className={styles.heroButton}>Get started</button>
         </div>
       </section>
+
+      <section className={styles.aboutUsContainer}>
+        <h3>About Us</h3>
+        <p>
+          We understand the importance of shared passions and compatible
+          personalities. <span>ChatSync</span> is a revolutionary app that
+          brings together individuals who share common hobbies, goals, and
+          values. Say goodbye to superficial small talk and hello to deep,
+          meaningful conversations with like-minded souls.
+        </p>
+      </section>
+
+      <section className={styles.benefitsContainer}></section>
     </main>
   );
 }

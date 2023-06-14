@@ -38,9 +38,42 @@
   }
 }
 
+.aboutUsContainer {
+  padding: 50px;
+  margin: 0 auto;
+  width: 90%;
+  text-align: center;
+
+  h3 {
+    text-align: center;
+    width: 10%;
+    margin: 0 auto;
+    border-bottom: 3px solid var(--main-accent-color);
+  }
+
+  p {
+    margin-top: 30px;
+    line-height: 30px;
+    letter-spacing: 1px;
+
+    span {
+      color: var(--main-accent-color);
+      font-weight: bold;
+    }
+  }
+}
+
+.benefitsContainer {
+  padding: 50px;
+  margin: 0 auto;
+  width: 90%;
+  text-align: center;
+}
+
 .popup {
   display: flex;
   justify-content: center;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 
 .overlay {
