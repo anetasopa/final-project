@@ -2,10 +2,6 @@
   display: flex;
   padding: 50px;
 
-  .image {
-    z-index: -10;
-  }
-
   .heroContainerText {
     width: 30%;
     display: flex;
@@ -71,9 +67,26 @@
 
   h3 {
     text-align: center;
+    text-align: 2rem;
     width: 10%;
     margin: 0 auto;
     border-bottom: 3px solid var(--main-accent-color);
+  }
+
+  .benefits {
+    display: flex;
+    padding: 50px;
+  }
+
+  .reverse {
+    flex-direction: row-reverse;
+    padding: 50px 50px 50px 0;
+  }
+
+  .benefitsText {
+    display: block;
+    text-align: left;
+    padding: 50px;
   }
 }
 
@@ -85,4 +98,7 @@
 
 .overlay {
   background-color: #999999;
+}
+
+.image {
 }

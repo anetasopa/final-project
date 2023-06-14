@@ -10,8 +10,8 @@ export default function Home() {
           className={styles.image}
           src="./images/chat.svg"
           alt="chat image"
-          width={800}
-          height={500}
+          width={700}
+          height={400}
         />
         <div className={styles.heroContainerText}>
           <h1 className={styles.heroH1}>
@@ -37,31 +37,34 @@ export default function Home() {
 
       <section className={styles.benefitsContainer}>
         <h3>Benefits</h3>
-        <div>
-          <div>
-            <Image
-              className={styles.image}
-              src="./images/common2.svg"
-              alt="chat image"
-              width={800}
-              height={500}
-            />
+        <div className={styles.benefits}>
+          <Image
+            className={styles.image}
+            src="./images/common2.svg"
+            alt="chat image"
+            width={500}
+            height={300}
+          />
+          <div className={styles.benefitsText}>
             <h5>Common Ground</h5>
             <p>
               It makes easier to build a strong foundation for a relationship.
             </p>
           </div>
-          <div>
-            <Image
-              className={styles.image}
-              src="./images/common2.svg"
-              alt="chat image"
-              width={800}
-              height={500}
-            />
-            <h5>Common Ground</h5>
+        </div>
+        <div className={`${styles.benefits} ${styles.reverse}`}>
+          <Image
+            className={styles.image}
+            src="./images/growth2.svg"
+            alt="chat image"
+            width={500}
+            height={300}
+          />
+          <div className={styles.benefitsText}>
+            <h5>Inspiring Growth</h5>
             <p>
-              It makes easier to build a strong foundation for a relationship.
+              You'll have the opportunity to learn from each other, discover new
+              perspectives, and expand your horizons together.
             </p>
           </div>
         </div>
