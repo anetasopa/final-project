@@ -13,11 +13,11 @@
     .heroH1 {
       font-weight: bold;
       font-size: 2rem;
-      line-height: 40px;
+      line-height: 50px;
     }
 
     .heroPar {
-      line-height: 40px;
+      line-height: 30px;
     }
 
     .heroButton {
@@ -67,7 +67,8 @@
 
   h3 {
     text-align: center;
-    text-align: 2rem;
+    font-size: 1.5rem;
+
     width: 10%;
     margin: 0 auto;
     border-bottom: 3px solid var(--main-accent-color);
@@ -87,6 +88,15 @@
     display: block;
     text-align: left;
     padding: 50px;
+
+    h5 {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+
+    p {
+      line-height: 30px;
+    }
   }
 }
 
