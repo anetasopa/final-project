@@ -1,6 +1,4 @@
 import Image from 'next/image';
-// eslint-disable-next-line no-restricted-syntax
-// 'use client';
 import React from 'react';
 import styles from './page.module.scss';
 
@@ -37,7 +35,37 @@ export default function Home() {
         </p>
       </section>
 
-      <section className={styles.benefitsContainer}></section>
+      <section className={styles.benefitsContainer}>
+        <h3>Benefits</h3>
+        <div>
+          <div>
+            <Image
+              className={styles.image}
+              src="./images/common2.svg"
+              alt="chat image"
+              width={800}
+              height={500}
+            />
+            <h5>Common Ground</h5>
+            <p>
+              It makes easier to build a strong foundation for a relationship.
+            </p>
+          </div>
+          <div>
+            <Image
+              className={styles.image}
+              src="./images/common2.svg"
+              alt="chat image"
+              width={800}
+              height={500}
+            />
+            <h5>Common Ground</h5>
+            <p>
+              It makes easier to build a strong foundation for a relationship.
+            </p>
+          </div>
+        </div>
+      </section>
     </main>
   );
 }
