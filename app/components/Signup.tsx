@@ -50,7 +50,17 @@ export default function Signup(props: {
             required
           />
         </div>
-        <button className={styles.buttonSignUp}>Sign Up</button>
+        <button
+          className={styles.buttonSignUp}
+          onClick={async () => {
+            await fetch('/api/signup', {
+              method: 'POST',
+              body: JSON.stringify({ userName, password }),
+            });
+          }}
+        >
+          Sign Up
+        </button>
       </form>
     </div>
   );

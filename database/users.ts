@@ -1,13 +1,13 @@
 import { cache } from 'react';
 import { sql } from './connect';
 
-type UserWithPasswordHash = {
+export type UserWithPasswordHash = {
   id: number;
   userName: string;
   passwordHash: string;
 };
 
-type User = {
+export type User = {
   id: number;
   userName: string;
 };

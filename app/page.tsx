@@ -20,12 +20,14 @@ export default function Home() {
           <p className={styles.heroPar}>
             Unleash the power of shared interests and let your true self shine.
           </p>
-          <button className={styles.heroButton}>Get started</button>
+          <div>
+            <button className={styles.heroButton}>Get started</button>
+          </div>
         </div>
       </section>
 
       <section className={styles.aboutUsContainer}>
-        <h3>About Us</h3>
+        <h3>About</h3>
         <p>
           We understand the importance of shared passions and compatible
           personalities. <span>ChatSync</span> is a revolutionary app that
