@@ -3,6 +3,7 @@
 import './globals.scss';
 import { Inter } from 'next/font/google';
 import { useState } from 'react';
+import Footer from './components/Footer';
 import Modal from './components/Modal';
 import Nav from './components/Nav';
 import styles from './page.module.scss';
@@ -31,6 +32,7 @@ export default function RootLayout({
           {openModal && <Modal closeModal={setOpenModal} />}
         </div>
         {children}
+        <Footer />
       </body>
     </html>
   );

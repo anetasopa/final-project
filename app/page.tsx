@@ -5,7 +5,7 @@ import styles from './page.module.scss';
 export default function Home() {
   return (
     <main>
-      <section className={styles.heroContainer}>
+      <section id="#" className={styles.heroContainer}>
         <Image
           className={styles.image}
           src="./images/chat.svg"
@@ -26,7 +26,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className={styles.aboutUsContainer}>
+      <section id="about" className={styles.aboutUsContainer}>
         <h3>About</h3>
         <p>
           We understand the importance of shared passions and compatible
@@ -37,7 +37,7 @@ export default function Home() {
         </p>
       </section>
 
-      <section className={styles.benefitsContainer}>
+      <section id="benefits" className={styles.benefitsContainer}>
         <h3>Benefits</h3>
         <div className={styles.benefits}>
           <Image
