@@ -50,7 +50,10 @@ export default function Home() {
           <div className={styles.benefitsText}>
             <h5>Common Ground</h5>
             <p>
-              It makes easier to build a strong foundation for a relationship.
+              Finding someone who understands your interests can be challenging.
+              Our app eliminates the guesswork, connecting you with individuals
+              who already share common ground, making it easier to build a
+              strong foundation for a relationship.
             </p>
           </div>
         </div>
@@ -65,8 +68,9 @@ export default function Home() {
           <div className={styles.benefitsText}>
             <h5>Inspiring Growth</h5>
             <p>
-              You'll have the opportunity to learn from each other, discover new
-              perspectives, and expand your horizons together.
+              Interacting with others who share your interests can be incredibly
+              inspiring. You'll have the opportunity to learn from each other,
+              discover new perspectives, and expand your horizons together.
             </p>
           </div>
         </div>
