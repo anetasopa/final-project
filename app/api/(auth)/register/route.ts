@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import { NextRequest, NextResponse } from 'next/server';
-import { z } from 'zod';
+import { string, z } from 'zod';
 import {
   createUser,
   getUsersByUserName,
@@ -24,11 +24,7 @@ export async function POST(
 ): Promise<NextResponse<RegisterResponseBodyPost>> {
   const body = await request.json();
 
-  console.log({ body });
-
   const result = userSchema.safeParse(body);
-
-  console.log({ result });
 
   if (!result.success) {
     return NextResponse.json(
@@ -50,17 +46,22 @@ export async function POST(
     );
   }
 
-  console.log({
-    userName: await createUser(
-      result.data.userName,
-      result.data.email,
-      result.data.password,
-    ),
-  });
+  const passwordHash = bcrypt.hash(result.data.password, 10);
 
-  const password_hash = bcrypt.hash(result.data.password, 10);
+  const newUser = await createUser(
+    result.data.userName,
+    result.data.email,
+    await passwordHash,
+  );
 
-  console.log({ password_hash });
+  if (!newUser) {
+    return NextResponse.json(
+      {
+        error: 'Error creating the new user!',
+      },
+      { status: 500 },
+    );
+  }
 
-  return NextResponse.json({ user: { id: 1, userName: 'Alex' } });
+  if (!newUser) return NextResponse.json({ user: newUser });
 }

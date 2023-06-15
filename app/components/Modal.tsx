@@ -9,6 +9,7 @@ export default function Modal({ closeModal }) {
   const toggleForm = (formName: SetStateAction<string>) => {
     setCurrentForm(formName);
   };
+
   return (
     <>
       <button onClick={() => closeModal()} className={styles.closeModalButton}>
