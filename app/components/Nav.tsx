@@ -33,7 +33,7 @@ export default function Nav({ setOpenModal }) {
             }}
             className={styles.buttonSignup}
           >
-            SignUp
+            Register
           </button>
         </li>
       </nav>

@@ -1,0 +1,73 @@
+.containerSignUp {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  padding: 70px;
+  position: absolute;
+  border-radius: 10px;
+
+  div {
+    .textCreateAccount {
+      color: var(--main-accent-color);
+      font-weight: bold;
+      font-size: 1.5rem;
+      text-align: center;
+    }
+    .buttons {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      button {
+        padding: 10px 20px;
+        color: var(--primary-accent-color);
+        border-radius: 50px;
+        margin-top: 30px;
+        border: 1px solid var(--primary-accent-color);
+        background-color: white;
+        margin-bottom: 30px;
+
+        &:hover {
+          cursor: pointer;
+          transition: 0.3s ease-in;
+          background-color: var(--main-accent-color);
+        }
+      }
+
+      .buttonRight {
+        margin-left: 10px;
+      }
+    }
+  }
+
+  .form {
+    display: grid;
+
+    label {
+      margin-bottom: 5px;
+    }
+
+    input {
+      margin-bottom: 10px;
+      padding: 10px 30px;
+      font-size: 1.125rem;
+      border: 1px solid var(--primary-text-color);
+      width: 350px;
+    }
+  }
+
+  .buttonSignUp {
+    padding: 10px 20px;
+    background-color: var(--main-accent-color);
+    color: var(--primary-accent-color);
+    border-radius: 50px;
+    border: none;
+    margin-top: 20px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}

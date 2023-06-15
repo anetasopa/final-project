@@ -44,7 +44,6 @@ export default function Signup(props: {
         <label htmlFor="password">Password</label>
         <div>
           <input
-            type="password"
             id="password"
             value={password}
             onChange={(event) => setPassword(event.target.value)}
@@ -54,9 +53,9 @@ export default function Signup(props: {
         <button
           className={styles.buttonSignUp}
           onClick={async () => {
-            await fetch('/api/register', {
+            await fetch('/api/signup', {
               method: 'POST',
-              body: JSON.stringify({ userName, email, password }),
+              body: JSON.stringify({ userName, password }),
             });
           }}
         >
