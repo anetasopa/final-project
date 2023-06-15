@@ -5,13 +5,23 @@ import {
   createUser,
   getUsersByUserName,
   User,
+  UserWithPasswordHash,
 } from '../../../../database/users';
 
 type Error = {
   error: string;
 };
 
-type RegisterResponseBodyPost = { user: User } | Error;
+type Body = {
+  success: boolean;
+  data: {
+    userName: string;
+    email: string;
+    password: string;
+  };
+};
+
+export type RegisterResponseBodyPost = { user: User } | Error;
 
 const userSchema = z.object({
   userName: z.string().min(5),
@@ -26,16 +36,21 @@ export async function POST(
 
   const result = userSchema.safeParse(body);
 
+  // try {
+  //   const a = userSchema.safeParse(body);
+  //   console.log({ a: a, error: a.error });
+  // } catch (e) {
+  //   console.log({ e });
+  // }
+
   if (!result.success) {
     return NextResponse.json(
       {
-        error: 'User or password missing!',
+        error: 'User, email or password missing!',
       },
       { status: 406 },
     );
   }
-
-  console.log({ userName: await getUsersByUserName(result.data.userName) });
 
   if (await getUsersByUserName(result.data.userName)) {
     return NextResponse.json(

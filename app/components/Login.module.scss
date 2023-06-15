@@ -37,7 +37,7 @@
         &:hover {
           cursor: pointer;
           transition: 0.3s ease-in;
-          background-color: var(--main-accent-color);
+          color: var(--main-accent-color);
         }
       }
     }
@@ -48,14 +48,29 @@
 
     label {
       margin-bottom: 5px;
+      margin-top: 20px;
     }
 
     input {
-      margin-bottom: 10px;
       padding: 10px 30px;
       font-size: 1.125rem;
       border: 1px solid var(--primary-text-color);
       width: 350px;
+    }
+
+    .errorContainer {
+      display: flex;
+
+      .icon {
+        width: 10px;
+        color: red;
+        margin-left: 5px;
+      }
+      .errorMessage {
+        color: red;
+        font-size: 0.6rem;
+        margin-top: 5px;
+      }
     }
   }
 
