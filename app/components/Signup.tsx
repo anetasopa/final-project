@@ -18,7 +18,6 @@ export default function Signup(props: {
           <button className={styles.buttonRight}>Sign up</button>
         </div>
       </div>
-
       <form
         className={styles.form}
         onSubmit={(event) => event.preventDefault()}
@@ -27,7 +26,6 @@ export default function Signup(props: {
         <label htmlFor="userName">User name</label>
         <input
           id="userName"
-          placeholder="&nbsp;"
           value={userName}
           onChange={(event) => setUserName(event.currentTarget.value)}
           required

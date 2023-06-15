@@ -16,7 +16,7 @@ type RegisterResponseBodyPost = { user: User } | Error;
 const userSchema = z.object({
   userName: z.string().min(5),
   email: z.string().min(5),
-  passwordHush: z.string().min(150),
+  password: z.string().min(5),
 });
 
 export async function POST(
@@ -54,11 +54,11 @@ export async function POST(
     userName: await createUser(
       result.data.userName,
       result.data.email,
-      result.data.passwordHush,
+      result.data.password,
     ),
   });
 
-  const password_hash = bcrypt.hash(result.data.passwordHush, 10);
+  const password_hash = bcrypt.hash(result.data.password, 10);
 
   console.log({ password_hash });
 
