@@ -10,7 +10,8 @@ export type UserWithPasswordHash = {
 
 export type User = {
   id: number;
-  userName: string;
+  username: string;
+  email: string;
 };
 
 export const getUsersWithPasswordHashByUserName = cache(

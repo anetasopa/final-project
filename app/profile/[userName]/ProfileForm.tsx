@@ -4,34 +4,39 @@ import Link from 'next/link';
 import React, { useState } from 'react';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
+import { Category } from '../../../migrations/1686916405-createTableCategories';
 import styles from './ProfileForm.module.scss';
 
-export interface CategoriesOption {
-  readonly value: string;
-  readonly label: string;
-}
+type Props = {
+  categories: Category[];
+};
 
-export const categoriesOption: readonly CategoriesOption[] = [
-  { value: 'running', label: 'Running' },
-  { value: 'programming', label: 'Programming' },
-  { value: 'football', label: 'Football' },
-  { value: 'tarvel', label: 'Tarvel' },
-  { value: 'computer game', label: 'Computer game' },
-  { value: 'trip', label: 'Trip' },
-  { value: 'swimming', label: 'Swimming' },
-  { value: 'nature', label: 'Nature' },
-];
-
-const animatedComponents = makeAnimated();
-
-export default function ProfileForm() {
+export default async function ProfileForm(props: Props) {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [selectedOption, setSelectedOption] = useState(null);
 
+  interface CategoriesOption {
+    readonly value: string;
+    readonly label: string;
+  }
+
+  const categoriesOption: readonly CategoriesOption[] = [
+    { value: 'running', label: 'Running' },
+    { value: 'programming', label: 'Programming' },
+    { value: 'football', label: 'Football' },
+    { value: 'tarvel', label: 'Tarvel' },
+    { value: 'computer game', label: 'Computer game' },
+    { value: 'trip', label: 'Trip' },
+    { value: 'swimming', label: 'Swimming' },
+    { value: 'nature', label: 'Nature' },
+  ];
+
+  const animatedComponents = makeAnimated();
+
   return (
     <form className={styles.form} onSubmit={(event) => event.preventDefault()}>
-      <label htmlFor="name">Name</label>
+      <label htmlFor="name">Nickname</label>
       <input
         id="name"
         value={name}

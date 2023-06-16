@@ -14,7 +14,7 @@ export const categoriesOption: readonly CategoriesOption[] = [
   { value: 'running', label: 'Running' },
   { value: 'programming', label: 'Programming' },
   { value: 'football', label: 'Football' },
-  { value: 'tarvel', label: 'Tarvel' },
+  { value: 'travel', label: 'Travel' },
   { value: 'computer game', label: 'Computer game' },
   { value: 'trip', label: 'Trip' },
   { value: 'swimming', label: 'Swimming' },
