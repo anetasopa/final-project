@@ -30,6 +30,7 @@ export const getUsersWithPasswordHashByUserName = cache(
 // });
 
 export const getUsersByUserName = cache(async (userName: string) => {
+  console.log(userName);
   const [user] = await sql<User[]>`
     SELECT id, username FROM users WHERE users.username = ${userName.toLowerCase()}
  `;

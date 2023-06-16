@@ -36,7 +36,6 @@ export default function ProfileForm() {
       </textarea>
       <Select
         className={styles.select}
-        defaultValue={selectedOption}
         onChange={setSelectedOption}
         options={categories}
       />
