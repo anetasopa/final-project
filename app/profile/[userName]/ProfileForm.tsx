@@ -5,9 +5,9 @@ import Select from 'react-select';
 import styles from './ProfileForm.module.scss';
 
 const categories = [
-  { value: 'chocolate', label: 'Chocolate' },
-  { value: 'strawberry', label: 'Strawberry' },
-  { value: 'vanilla', label: 'Vanilla' },
+  { value: 'running', label: 'Running' },
+  { value: 'travel', label: 'Travel' },
+  { value: 'reading', label: 'Reading' },
 ];
 
 export default function ProfileForm() {

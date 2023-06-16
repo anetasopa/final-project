@@ -7,13 +7,12 @@ import ProfileForm from './ProfileForm';
 
 type Props = { params: { userName: string } };
 
-export default async function Profile() {
-  // console.log(params);
-  // const user = await getUsersByUserName(params.userName);
+export default async function Profile({ params }: Props) {
+  const user = await getUsersByUserName(params.userName);
 
-  // if (!user) {
-  //   notFound();
-  // }
+  if (!user) {
+    notFound();
+  }
   return (
     <main className={styles.profileContainer}>
       <div className={styles.background}></div>
@@ -25,13 +24,13 @@ export default async function Profile() {
           height={300}
           className={styles.userImage}
         />
-        {/* <p>{user.userName}</p> */}
         <div>
           <div></div>
           <div>
             <ProfileForm />
           </div>
         </div>
+        <p className={styles.p}>{user.userName}</p>
       </div>
     </main>
   );

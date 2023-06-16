@@ -30,9 +30,8 @@ export const getUsersWithPasswordHashByUserName = cache(
 // });
 
 export const getUsersByUserName = cache(async (userName: string) => {
-  console.log(userName);
   const [user] = await sql<User[]>`
-    SELECT id, username FROM users WHERE users.username = ${userName.toLowerCase()}
+    SELECT id, username FROM users WHERE users.username = ${userName}
  `;
   return user;
 });
@@ -40,7 +39,7 @@ export const getUsersByUserName = cache(async (userName: string) => {
 export const createUser = cache(
   async (userName: string, email: string, passwordHash: string) => {
     const [user] = await sql<User[]>`
-    INSERT INTO users (username, email, password_hash) VALUES(${userName.toLowerCase()}, ${email}, ${passwordHash}) RETURNING id, username
+    INSERT INTO users (username, email, password_hash) VALUES(${userName}, ${email}, ${passwordHash}) RETURNING id, username
  `;
     return user;
   },
