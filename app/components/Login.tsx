@@ -27,6 +27,7 @@ export default function Login(props: {
     }
 
     if ('user' in data) {
+      // setOpenModal(!openModal);
       router.push(`profile/${data.user.username}`);
       router.refresh();
     }
