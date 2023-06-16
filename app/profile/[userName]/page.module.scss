@@ -1,0 +1,27 @@
+.profileContainer {
+  height: 100vh;
+}
+
+.background {
+  background: linear-gradient(
+    var(--main-accent-color),
+    var(--primary-accent-color)
+  );
+  width: 80%;
+  height: 200px;
+  margin: 0 auto;
+  border-radius: 10px 100px / 120px;
+}
+
+.info {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 0 150px;
+}
+
+.userImage {
+  border-radius: 150px;
+  margin-top: -50px;
+  margin-left: 50px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}

@@ -30,8 +30,9 @@ export default function Login(props: {
     }
 
     if ('user' in data) {
+      console.log(data);
       setError(data.user);
-      router.push(`profile2/${data.user.userName}`);
+      router.push(`profile/${data.user.userName}`);
       router.refresh();
     }
   }
