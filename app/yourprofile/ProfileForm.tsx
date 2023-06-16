@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import React, { useState } from 'react';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
@@ -58,15 +57,7 @@ export default function ProfileForm() {
         isMulti
         options={categoriesOption}
       />
-      <Link
-        className={styles.buttonCreate}
-        href="/yourprofile"
-        style={{
-          textDecoration: 'none',
-        }}
-      >
-        Create
-      </Link>
+      <button className={styles.buttonCreate}>Create</button>
     </form>
   );
 }

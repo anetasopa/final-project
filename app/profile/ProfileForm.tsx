@@ -40,6 +40,16 @@ export default function ProfileForm() {
         onChange={setSelectedOption}
         options={categories}
       />
+      <Link
+        className={styles.button}
+        href="/checkout"
+        style={{
+          color: 'black',
+          textDecoration: 'none',
+        }}
+      >
+        Create
+      </Link>
       <button className={styles.buttonCreate}>Create</button>
     </form>
   );
