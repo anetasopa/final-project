@@ -8,7 +8,7 @@ import styles from './Signup.module.scss';
 export default function Signup(props: {
   onFormSwitch: (signup: string) => void;
 }) {
-  const [userName, setUserName] = useState('');
+  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string>('');
@@ -16,7 +16,7 @@ export default function Signup(props: {
   async function register() {
     const response = await fetch('/api/register', {
       method: 'POST',
-      body: JSON.stringify({ userName, email, password }),
+      body: JSON.stringify({ username, email, password }),
     });
 
     const data: RegisterResponseBodyPost = await response.json();
@@ -47,8 +47,8 @@ export default function Signup(props: {
         <label htmlFor="userName">User name</label>
         <input
           id="userName"
-          value={userName}
-          onChange={(event) => setUserName(event.currentTarget.value)}
+          value={username}
+          onChange={(event) => setUsername(event.currentTarget.value)}
           required
         />
         {error !== '' && (

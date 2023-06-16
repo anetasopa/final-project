@@ -13,9 +13,8 @@ type Error = {
 export type LoginResponseBodyPost = { user: User } | Error;
 
 const userSchema = z.object({
-  userName: z.string().min(5),
-  email: z.string().min(5),
-  password: z.string().min(5),
+  username: z.string().min(1),
+  password: z.string().min(1),
 });
 
 export async function POST(
@@ -24,8 +23,6 @@ export async function POST(
   const body = await request.json();
 
   const result = userSchema.safeParse(body);
-
-  console.log({ result });
 
   if (!result.success) {
     return NextResponse.json(
@@ -37,28 +34,19 @@ export async function POST(
   }
 
   const userWithPasswordHash = await getUsersWithPasswordHashByUserName(
-    result.data.userName,
+    result.data.username,
   );
-
-  console.log('userWithPasswordHash', userWithPasswordHash);
 
   if (!userWithPasswordHash) {
     return NextResponse.json(
       {
         error: 'Email or password not valid!',
       },
-      { status: 400 },
+      { status: 401 },
     );
   }
 
   const isPasswordValid = await bcrypt.compare(
-    result.data.password,
-    userWithPasswordHash.passwordHash,
-  );
-
-  console.log(
-    'isValid',
-    isPasswordValid,
     result.data.password,
     userWithPasswordHash.passwordHash,
   );
@@ -68,14 +56,28 @@ export async function POST(
       {
         error: 'User or password not valid!',
       },
-      { status: 400 },
+      { status: 401 },
     );
   }
 
-  return NextResponse.json({
-    user: {
-      userName: userWithPasswordHash.userName,
-      id: userWithPasswordHash.id,
+  if (!userWithPasswordHash) {
+    return NextResponse.json(
+      {
+        error: 'User or password not valid!',
+      },
+      { status: 401 },
+    );
+  }
+
+  return NextResponse.json(
+    {
+      user: {
+        username: userWithPasswordHash.username,
+        id: userWithPasswordHash.id,
+      },
     },
-  });
+    {
+      status: 200,
+    },
+  );
 }

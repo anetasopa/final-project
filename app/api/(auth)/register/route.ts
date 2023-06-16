@@ -1,30 +1,20 @@
 import bcrypt from 'bcrypt';
 import { NextRequest, NextResponse } from 'next/server';
-import { string, z } from 'zod';
+import { z } from 'zod';
 import {
   createUser,
   getUsersByUserName,
   User,
-  UserWithPasswordHash,
 } from '../../../../database/users';
 
 type Error = {
   error: string;
 };
 
-type Body = {
-  success: boolean;
-  data: {
-    userName: string;
-    email: string;
-    password: string;
-  };
-};
-
 export type RegisterResponseBodyPost = { user: User } | Error;
 
 const userSchema = z.object({
-  userName: z.string().min(5),
+  username: z.string().min(5),
   email: z.string().min(5),
   password: z.string().min(5),
 });
@@ -52,7 +42,7 @@ export async function POST(
     );
   }
 
-  if (await getUsersByUserName(result.data.userName)) {
+  if (await getUsersByUserName(result.data.username)) {
     return NextResponse.json(
       {
         error: 'User is already used!',
@@ -64,7 +54,7 @@ export async function POST(
   const passwordHash = bcrypt.hash(result.data.password, 10);
 
   const newUser = await createUser(
-    result.data.userName,
+    result.data.username,
     result.data.email,
     await passwordHash,
   );

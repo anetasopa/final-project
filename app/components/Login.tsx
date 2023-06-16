@@ -1,4 +1,5 @@
 'use client';
+
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { FaExclamationCircle } from 'react-icons/fa';
@@ -8,31 +9,25 @@ import styles from './Login.module.scss';
 export default function Login(props: {
   onFormSwitch: (login: string) => void;
 }) {
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string>('');
   const router = useRouter();
 
-  console.log({ error });
-
   async function login() {
     const response = await fetch('/api/login', {
       method: 'POST',
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ username, password }),
     });
 
     const data: LoginResponseBodyPost = await response.json();
-
-    console.log({ data });
 
     if ('error' in data) {
       setError(data.error);
     }
 
     if ('user' in data) {
-      console.log(data);
-      setError(data.user);
-      router.push(`profile/${data.user.userName}`);
+      router.push(`profile/${data.user.username}`);
       router.refresh();
     }
   }
@@ -57,11 +52,11 @@ export default function Login(props: {
         onSubmit={(event) => event.preventDefault()}
         id="login"
       >
-        <label htmlFor="email">Email Address</label>
+        <label htmlFor="email">User name</label>
         <input
-          id="email"
-          value={email}
-          onChange={(event) => setEmail(event.currentTarget.value)}
+          id="username"
+          value={username}
+          onChange={(event) => setUsername(event.currentTarget.value)}
           required
         />
         {error !== '' && (

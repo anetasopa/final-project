@@ -47,4 +47,11 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 /user/:id
 - GET => user
 
+/categories
+- GET => categories[]
+- POST => category
+
+/sessions
+- POST => session
+
 ```

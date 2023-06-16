@@ -3,7 +3,7 @@ import { sql } from './connect';
 
 export type UserWithPasswordHash = {
   id: number;
-  userName: string;
+  username: string;
   email: string;
   passwordHash: string;
 };
@@ -15,9 +15,9 @@ export type User = {
 };
 
 export const getUsersWithPasswordHashByUserName = cache(
-  async (userName: string) => {
+  async (username: string) => {
     const [user] = await sql<UserWithPasswordHash[]>`
-    SELECT * FROM users WHERE users.username = ${userName}
+    SELECT * FROM users WHERE users.username = ${username}
  `;
     return user;
   },
@@ -30,17 +30,17 @@ export const getUsersWithPasswordHashByUserName = cache(
 //   return user;
 // });
 
-export const getUsersByUserName = cache(async (userName: string) => {
+export const getUsersByUserName = cache(async (username: string) => {
   const [user] = await sql<User[]>`
-    SELECT id, username FROM users WHERE users.username = ${userName}
+    SELECT id, username FROM users WHERE users.username = ${username}
  `;
   return user;
 });
 
 export const createUser = cache(
-  async (userName: string, email: string, passwordHash: string) => {
+  async (username: string, email: string, passwordHash: string) => {
     const [user] = await sql<User[]>`
-    INSERT INTO users (username, email, password_hash) VALUES(${userName}, ${email}, ${passwordHash}) RETURNING id, username
+    INSERT INTO users (username, email, password_hash) VALUES(${username}, ${email}, ${passwordHash}) RETURNING id, username
  `;
     return user;
   },
