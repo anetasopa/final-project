@@ -1,10 +1,14 @@
+import crypto from 'node:crypto';
 import bcrypt from 'bcrypt';
+import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 import { string, z } from 'zod';
+import { createSession } from '../../../../database/sessions';
 import {
   getUsersWithPasswordHashByUserName,
   User,
 } from '../../../../database/users';
+import { secureCookieOptions } from '../../../../util/cookies';
 
 type Error = {
   error: string;
@@ -68,6 +72,25 @@ export async function POST(
       { status: 401 },
     );
   }
+
+  const token = crypto.randomBytes(100).toString('base64');
+
+  const session = await createSession(token, userWithPasswordHash.id);
+
+  if (!session) {
+    return NextResponse.json(
+      {
+        error: 'Error creating the new session',
+      },
+      { status: 500 },
+    );
+  }
+
+  cookies().set({
+    name: 'sessionToken',
+    value: session.token,
+    ...secureCookieOptions,
+  });
 
   return NextResponse.json(
     {

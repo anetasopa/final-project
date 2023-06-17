@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { FaExclamationCircle } from 'react-icons/fa';
+import { FaExclamationCircle, FaHourglassEnd } from 'react-icons/fa';
 import { LoginResponseBodyPost } from '../api/(auth)/login/route';
 import styles from './Login.module.scss';
 
@@ -17,7 +17,10 @@ export default function Login(props: {
   async function login() {
     const response = await fetch('/api/login', {
       method: 'POST',
-      body: JSON.stringify({ username, password }),
+      body: JSON.stringify({
+        username,
+        password,
+      }),
     });
 
     const data: LoginResponseBodyPost = await response.json();
@@ -27,7 +30,7 @@ export default function Login(props: {
     }
 
     if ('user' in data) {
-      // setOpenModal(!openModal);
+      props.setOpenModal(false);
       router.push(`profile/${data.user.username}`);
       router.refresh();
     }

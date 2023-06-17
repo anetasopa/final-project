@@ -42,7 +42,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 - POST => user | error
 
 /users
-- GET => users[]
+- GET => users[] - list of the users to talk
 
 /user/:id
 - GET => user
@@ -53,5 +53,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 /sessions
 - POST => session
+
+
 
 ```

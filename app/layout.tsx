@@ -29,7 +29,7 @@ export default function RootLayout({
       <body className={background}>
         <Nav setOpenModal={setOpenModal} />
         <div className={styles.popup}>
-          {openModal && <Modal closeModal={setOpenModal} />}
+          {openModal && <Modal setOpenModal={setOpenModal} />}
         </div>
         {children}
         <Footer />

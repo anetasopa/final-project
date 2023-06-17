@@ -4,7 +4,7 @@ import Login from './Login';
 import styles from './Modal.module.scss';
 import Signup from './Signup';
 
-export default function Modal({ closeModal }) {
+export default function Modal({ setOpenModal }) {
   const [currentForm, setCurrentForm] = useState('signup');
   const toggleForm = (formName: SetStateAction<string>) => {
     setCurrentForm(formName);
@@ -12,13 +12,16 @@ export default function Modal({ closeModal }) {
 
   return (
     <>
-      <button onClick={() => closeModal()} className={styles.closeModalButton}>
+      <button
+        onClick={() => setOpenModal()}
+        className={styles.closeModalButton}
+      >
         <GrFormClose />
       </button>
       {currentForm === 'signup' ? (
         <Signup onFormSwitch={toggleForm} />
       ) : (
-        <Login onFormSwitch={toggleForm} />
+        <Login setOpenModal={setOpenModal} onFormSwitch={toggleForm} />
       )}
     </>
   );
