@@ -37,6 +37,15 @@ export const getUsersByUserName = cache(async (username: string) => {
   return user;
 });
 
+export const getUserByToken = cache(async (token: string) => {
+  const [user] = await sql<User[]>`
+  SELECT u.* FROM users u
+  INNER JOIN sessions s ON u.id = s.user_id
+  WHERE s.token = ${token}
+ `;
+  return user;
+});
+
 export const createUser = cache(
   async (username: string, email: string, passwordHash: string) => {
     const [user] = await sql<User[]>`
@@ -45,3 +54,9 @@ export const createUser = cache(
     return user;
   },
 );
+
+sql`
+SELECT u.* FROM sessions s
+INNER JOIN users u ON u.id = s.user_id
+WHERE s.token = 'OrEUqc6hs/Qp2jH6gDeglV83UfhV0ebOvcJUq+LSgwKxIYe3ENmTavqdUvboaIWhYSYEfZ0u28HWht+V//QX3yudh3O5VmTPkhixepMjenrXAeG6I1/GVPodqnr1arqIwT45HA==';
+`;

@@ -3,6 +3,7 @@
 import './globals.scss';
 import { Inter } from 'next/font/google';
 import { useState } from 'react';
+// import Modal from '../app/(auth)/module/Modal';
 import Footer from './components/Footer';
 import Modal from './components/Modal';
 import Nav from './components/Nav';

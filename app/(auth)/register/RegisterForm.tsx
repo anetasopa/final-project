@@ -1,66 +1,67 @@
 'use client';
-
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { FaExclamationCircle, FaHourglassEnd } from 'react-icons/fa';
-import { LoginResponseBodyPost } from '../api/(auth)/login/route';
-import styles from './Login.module.scss';
+import { FaExclamationCircle } from 'react-icons/fa';
+// import { GrStatusGood } from 'react-icons/gr';
+import { RegisterResponseBodyPost } from '../../api/(auth)/register/route';
+import styles from './RegisterForm.module.scss';
 
-export default function Login(props: {
-  onFormSwitch: (login: string) => void;
-}) {
+export default function Signup() {
   const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string>('');
-  const router = useRouter();
 
-  async function login() {
-    const response = await fetch('/api/login', {
+  async function RegisterForm() {
+    const response = await fetch('/api/register', {
       method: 'POST',
-      body: JSON.stringify({
-        username,
-        password,
-      }),
+      body: JSON.stringify({ username, email, password }),
     });
 
-    const data: LoginResponseBodyPost = await response.json();
+    const data: RegisterResponseBodyPost = await response.json();
 
     if ('error' in data) {
       setError(data.error);
     }
 
     if ('user' in data) {
-      props.setOpenModal(false);
-      router.push(`profile/${data.user.id}`);
-      router.refresh();
+      setError(data.user);
     }
   }
 
   return (
-    <div className={styles.containerLogIn}>
+    <div className={styles.containerSignUp}>
       <div>
-        <p className={styles.textAccount}>Account</p>
+        <p className={styles.textCreateAccount}>Create Account</p>
         <div className={styles.buttons}>
-          <button>Log in</button>
-          <button
-            className={styles.buttonRight}
-            onClick={() => props.onFormSwitch('signup')}
-          >
-            Sign up
-          </button>
+          <button onClick={() => router.push('/dashboard')}>Log in</button>
+          <button className={styles.buttonRight}>Sign up</button>
         </div>
       </div>
-
       <form
         className={styles.form}
         onSubmit={(event) => event.preventDefault()}
-        id="login"
+        id="signup"
       >
-        <label htmlFor="email">User name</label>
+        <label htmlFor="userName">User name</label>
         <input
-          id="username"
+          id="userName"
           value={username}
           onChange={(event) => setUsername(event.currentTarget.value)}
+          required
+        />
+        {error !== '' && (
+          <div className={styles.errorContainer}>
+            <p className={styles.errorMessage}>{error}</p>{' '}
+            <FaExclamationCircle className={styles.icon} />
+          </div>
+        )}
+        <label htmlFor="email">Email Address</label>
+        <input
+          id="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          type="email"
           required
         />
         {error !== '' && (
@@ -86,12 +87,12 @@ export default function Login(props: {
           )}
         </div>
         <button
-          className={styles.buttonLogIn}
+          className={styles.buttonSignUp}
           onClick={async () => {
-            await login();
+            await register();
           }}
         >
-          Log in
+          Sign Up
         </button>
       </form>
     </div>

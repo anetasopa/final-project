@@ -39,7 +39,7 @@ function connectOneTimeToDatabase() {
   return ((
     ...sqlParameters: Parameters<typeof globalThis.postgresSqlClient>
   ) => {
-    headers();
+    //headers();
     return globalThis.postgresSqlClient(...sqlParameters);
   }) as typeof globalThis.postgresSqlClient;
 }

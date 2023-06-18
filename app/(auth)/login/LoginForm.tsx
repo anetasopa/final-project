@@ -3,10 +3,10 @@
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { FaExclamationCircle, FaHourglassEnd } from 'react-icons/fa';
-import { LoginResponseBodyPost } from '../api/(auth)/login/route';
-import styles from './Login.module.scss';
+import { LoginResponseBodyPost } from '../../api/(auth)/login/route';
+import styles from './LoginForm.module.scss';
 
-export default function Login(props: {
+export default function LoginForm(props: {
   onFormSwitch: (login: string) => void;
 }) {
   const [username, setUsername] = useState('');
@@ -31,7 +31,7 @@ export default function Login(props: {
 
     if ('user' in data) {
       props.setOpenModal(false);
-      router.push(`profile/${data.user.id}`);
+      router.push(`profile/${data.user.username}`);
       router.refresh();
     }
   }
