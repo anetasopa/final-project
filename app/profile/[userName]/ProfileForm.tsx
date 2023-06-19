@@ -28,7 +28,6 @@ async function create({ setShowInput, userId, nickname, description }: Props) {
     });
 
     if (response.status !== 500) {
-      console.log(response);
       const data: CreateResponseBodyPost = await response.json();
 
       if ('error' in data) {
@@ -53,10 +52,6 @@ export default function ProfileForm(props: Props) {
 
   const handleSaveClick = () => {
     setShowInput(false);
-  };
-
-  const handleInputChange = (e) => {
-    setNickname(e.target.value);
   };
 
   const categories = props.categories;
