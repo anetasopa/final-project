@@ -6,6 +6,7 @@
 
   label {
     margin-bottom: 5px;
+    font-weight: bold;
   }
 
   input {
@@ -58,4 +59,24 @@
       cursor: pointer;
     }
   }
+
+  .buttonEdit {
+    padding: 10px 20px;
+    background-color: var(--main-accent-color);
+    color: var(--primary-accent-color);
+    border-radius: 50px;
+    border: none;
+    margin-top: 20px;
+    text-align: center;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.profileData {
+  margin: 10px 0 20px 0;
+  color: var(--primary-accent-color);
+  font-weight: 200;
 }

@@ -1,8 +1,10 @@
-'use client';
+// 'use client';
 
 import React, { useState } from 'react';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
+import { getUsersById } from '../../database/users';
+import { Category } from '../../migrations/1686916405-createTableCategories';
 import styles from './ProfileForm.module.scss';
 
 export interface CategoriesOption {
@@ -10,30 +12,40 @@ export interface CategoriesOption {
   readonly label: string;
 }
 
-export const categoriesOption: readonly CategoriesOption[] = [
-  { value: 'running', label: 'Running' },
-  { value: 'programming', label: 'Programming' },
-  { value: 'football', label: 'Football' },
-  { value: 'travel', label: 'Travel' },
-  { value: 'computer game', label: 'Computer game' },
-  { value: 'trip', label: 'Trip' },
-  { value: 'swimming', label: 'Swimming' },
-  { value: 'nature', label: 'Nature' },
-];
+type Props = {
+  categories: Category[];
+  userId: number;
+  nickname: string;
+  description: string;
+};
 
-const animatedComponents = makeAnimated();
+export default function ProfileForm(props: Props) {
+  // const [nickname, setName] = useState('');
+  // const [description, setDescription] = useState('');
+  // const [selectedOption, setSelectedOption] = useState(null);
+  const userId = props.userId;
 
-export default function ProfileForm() {
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
-  const [selectedOption, setSelectedOption] = useState(null);
+  console.log(userId);
+
+  const user = getUsersById(userId);
+
+  const categories = props.categories;
+
+  const categoriesOption: readonly CategoriesOption[] = categories.map(
+    (category) => {
+      return { value: category.name, label: category.label };
+    },
+  );
 
   return (
     <form className={styles.form} onSubmit={(event) => event.preventDefault()}>
-      <label htmlFor="name">Name</label>
-      <input
-        id="name"
-        value={name}
+      <label htmlFor="nickname">Nickname</label>
+      <p></p>
+      <p></p>
+
+      {/* <input
+        id="nickname"
+        value={nickname}
         onChange={(event) => setName(event.currentTarget.value)}
         required
       />
@@ -47,16 +59,11 @@ export default function ProfileForm() {
         required
       >
         Description
-      </textarea>
-
-      <Select
-        className={styles.select}
-        closeMenuOnSelect={false}
-        components={categoriesOption}
-        defaultValue={[categoriesOption[4], categoriesOption[5]]}
-        isMulti
-        options={categoriesOption}
-      />
+      </textarea> */}
+      {categories.map((category) => {
+        return <p>{category.name}</p>;
+      })}
+      <p></p>
       <button className={styles.buttonCreate}>Create</button>
     </form>
   );

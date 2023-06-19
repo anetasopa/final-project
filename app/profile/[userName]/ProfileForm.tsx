@@ -1,10 +1,8 @@
 'use client';
 
 import { cookies } from 'next/headers';
-import { notFound, useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import Select from 'react-select';
-import { getUsersById } from '../../../database/users';
 import { Category } from '../../../migrations/1686916405-createTableCategories';
 import { CreateResponseBodyPost } from '../../api/(auth)/users/[userId]/route';
 import styles from './ProfileForm.module.scss';
@@ -12,6 +10,8 @@ import styles from './ProfileForm.module.scss';
 type Props = {
   categories: Category[];
   userId: number;
+  nickname: string;
+  description: string;
 };
 
 interface CategoriesOption {
@@ -19,7 +19,8 @@ interface CategoriesOption {
   readonly label: string;
 }
 
-async function create({ userId, nickname, description }) {
+async function create({ setShowInput, userId, nickname, description }: Props) {
+  setShowInput(false);
   try {
     const response = await fetch(`/api/users/${userId}`, {
       method: 'PUT',
@@ -31,11 +32,11 @@ async function create({ userId, nickname, description }) {
       const data: CreateResponseBodyPost = await response.json();
 
       if ('error' in data) {
-        console.log({ data });
+        console.log(data.error);
       }
 
-      if ('data' in data) {
-        console.log({ data });
+      if ('user' in data) {
+        console.log(data.user);
       }
     }
   } catch (e) {
@@ -44,14 +45,23 @@ async function create({ userId, nickname, description }) {
 }
 
 export default function ProfileForm(props: Props) {
-  const [nickname, setName] = useState('');
+  const [nickname, setNickname] = useState('');
   const [description, setDescription] = useState('');
+  // const [error, setError] = useState<string>('');
+
+  const [showInput, setShowInput] = useState(true);
+
+  const handleSaveClick = () => {
+    setShowInput(false);
+  };
+
+  const handleInputChange = (e) => {
+    setNickname(e.target.value);
+  };
 
   const categories = props.categories;
-  console.log({ categories });
 
   const userId = props.userId;
-  console.log({ props });
 
   const categoriesOption: readonly CategoriesOption[] = categories.map(
     (category) => {
@@ -62,23 +72,33 @@ export default function ProfileForm(props: Props) {
   return (
     <form className={styles.form} onSubmit={(event) => event.preventDefault()}>
       <label htmlFor="nickname">Nickname</label>
-      <input
-        id="nickname"
-        value={nickname}
-        onChange={(event) => setName(event.currentTarget.value)}
-        required
-      />
+
+      {showInput ? (
+        <input
+          id="nickname"
+          value={nickname}
+          onChange={(event) => setNickname(event.currentTarget.value)}
+          required
+        />
+      ) : (
+        <p className={styles.profileData}>{nickname}</p>
+      )}
+
       <label htmlFor="description">Description</label>
-      <textarea
-        style={{ fontSize: '14px' }}
-        name="description"
-        id="description"
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-        required
-      >
-        Description
-      </textarea>
+      {showInput ? (
+        <textarea
+          style={{ fontSize: '14px' }}
+          name="description"
+          id="description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          required
+        >
+          Description
+        </textarea>
+      ) : (
+        <p className={styles.profileData}>{description}</p>
+      )}
 
       <Select
         className={styles.select}
@@ -88,26 +108,26 @@ export default function ProfileForm(props: Props) {
         isMulti
         options={categoriesOption}
       />
-      <button
-        className={styles.buttonCreate}
-        onClick={async () => {
-          // router.push('/yourprofile');
-          await create({ userId, nickname, description });
-          // router.refresh();
-        }}
-      >
-        Create
-      </button>
 
-      {/* <Link
-        className={styles.buttonCreate}
-        href="/yourprofile"
-        style={{
-          textDecoration: 'none',
-        }}
-      >
-        Create
-      </Link> */}
+      {showInput ? (
+        <button
+          className={styles.buttonCreate}
+          onClick={async () => {
+            // router.push('/yourprofile');
+            await create({ setShowInput, userId, nickname, description });
+            // router.refresh();
+          }}
+        >
+          Create
+        </button>
+      ) : (
+        <button
+          className={styles.buttonEdit}
+          onClick={() => setShowInput(true)}
+        >
+          Edit
+        </button>
+      )}
     </form>
   );
 }
