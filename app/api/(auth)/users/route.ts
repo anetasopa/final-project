@@ -2,10 +2,7 @@ import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { getValidSessionByToken } from '../../../../database/sessions';
-import {
-  createUser,
-  getUsersWithLimitAndOffsetBySessionToken,
-} from '../../../../database/users';
+import { getUsersWithLimitAndOffsetBySessionToken } from '../../../../database/users';
 
 export type User = {
   id: number;
@@ -23,7 +20,6 @@ export type Error = {
 };
 
 type UsersResponseBodyGet = { animals: User[] } | Error;
-type UsersResponseBodyPost = { animal: User } | Error;
 
 const animalSchema = z.object({
   username: z.string(),
@@ -68,11 +64,11 @@ export async function GET(
   }
 
   // query the database to get all the animals only if a valid session token is passed
-  const animals = await getUsersWithLimitAndOffsetBySessionToken(
+  const users = await getUsersWithLimitAndOffsetBySessionToken(
     limit,
     offset,
     sessionTokenCookie.value,
   );
 
-  return NextResponse.json({ animals: animals });
+  return NextResponse.json({ users: users });
 }
