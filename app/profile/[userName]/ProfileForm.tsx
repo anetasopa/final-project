@@ -1,9 +1,10 @@
 'use client';
 
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import Select from 'react-select';
 import { Category } from '../../../migrations/1686916405-createTableCategories';
+// import { CreateResponseBodyPost } from '../../api/(auth)/createProfile/route';
 import styles from './ProfileForm.module.scss';
 
 type Props = {
@@ -13,6 +14,26 @@ type Props = {
 export default async function ProfileForm(props: Props) {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
+  const [error, setError] = useState<string>('');
+  const router = useRouter();
+
+  async function create() {
+    const response = await fetch('/api/createProfile', {
+      method: 'POST',
+      body: JSON.stringify({ name, description }),
+    });
+  }
+
+  //   const data: CreateResponseBodyPost = await response.json();
+
+  //   if ('error' in data) {
+  //     setError(data.error);
+  //   }
+
+  //   if ('user' in data) {
+  //     setError(data.user);
+  //   }
+  // }
 
   interface CategoriesOption {
     readonly value: string;
@@ -56,7 +77,18 @@ export default async function ProfileForm(props: Props) {
         isMulti
         options={categoriesOption}
       />
-      <Link
+      <button
+        className={styles.buttonCreate}
+        onClick={async () => {
+          router.push('/yourprofile');
+          await create();
+          router.refresh();
+        }}
+      >
+        Create
+      </button>
+
+      {/* <Link
         className={styles.buttonCreate}
         href="/yourprofile"
         style={{
@@ -64,7 +96,7 @@ export default async function ProfileForm(props: Props) {
         }}
       >
         Create
-      </Link>
+      </Link> */}
     </form>
   );
 }

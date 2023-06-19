@@ -13,7 +13,7 @@ export default function Signup() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string>('');
 
-  async function RegisterForm() {
+  async function register() {
     const response = await fetch('/api/register', {
       method: 'POST',
       body: JSON.stringify({ username, email, password }),
