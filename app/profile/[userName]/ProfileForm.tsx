@@ -3,6 +3,7 @@
 import { cookies } from 'next/headers';
 import React, { useState } from 'react';
 import Select from 'react-select';
+import { getUsers, User } from '../../../database/users';
 import { Category } from '../../../migrations/1686916405-createTableCategories';
 import { CreateResponseBodyPost } from '../../api/(auth)/users/[userId]/route';
 import styles from './ProfileForm.module.scss';
@@ -10,8 +11,7 @@ import styles from './ProfileForm.module.scss';
 type Props = {
   categories: Category[];
   userId: number;
-  nickname: string;
-  description: string;
+  singleUserData: User;
 };
 
 interface CategoriesOption {
@@ -19,7 +19,7 @@ interface CategoriesOption {
   readonly label: string;
 }
 
-async function create({ setShowInput, userId, nickname, description }: Props) {
+async function save({ setShowInput, userId, nickname, description }: Props) {
   setShowInput(false);
   try {
     const response = await fetch(`/api/users/${userId}`, {
@@ -43,9 +43,39 @@ async function create({ setShowInput, userId, nickname, description }: Props) {
   }
 }
 
+async function get({ setShowInput, userId, nickname, description }: Props) {
+  setShowInput(false);
+  try {
+    const response = await fetch(`/api/users/${userId}`, {
+      method: 'GET',
+      body: JSON.stringify({ userId, nickname, description }),
+    });
+
+    if (response.status !== 500) {
+      const data: CreateResponseBodyPost = await response.json();
+
+      if ('error' in data) {
+        console.log(data.error);
+      }
+
+      if ('user' in data) {
+        console.log(data.user);
+      }
+    }
+  } catch (e) {
+    console.log({ e });
+  }
+}
+
 export default function ProfileForm(props: Props) {
-  const [nickname, setNickname] = useState('');
-  const [description, setDescription] = useState('');
+  const singleUserData = props.singleUserData;
+
+  const [nickname, setNickname] = useState(
+    singleUserData.nickname ? singleUserData.nickname : '',
+  );
+  const [description, setDescription] = useState(
+    singleUserData.description ? singleUserData.description : '',
+  );
   // const [error, setError] = useState<string>('');
 
   const [showInput, setShowInput] = useState(true);
@@ -53,6 +83,8 @@ export default function ProfileForm(props: Props) {
   const categories = props.categories;
 
   const userId = props.userId;
+
+  console.log({ singleUserData });
 
   const categoriesOption: readonly CategoriesOption[] = categories.map(
     (category) => {
@@ -105,11 +137,12 @@ export default function ProfileForm(props: Props) {
           className={styles.buttonCreate}
           onClick={async () => {
             // router.push('/yourprofile');
-            await create({ setShowInput, userId, nickname, description });
+            await save({ setShowInput, userId, nickname, description });
+            //await get({ setShowInput, userId, nickname, description });
             // router.refresh();
           }}
         >
-          Create
+          Save
         </button>
       ) : (
         <button

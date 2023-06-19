@@ -17,6 +17,14 @@ export type User = {
   description: string | null;
 };
 
+export const getUsers = cache(async () => {
+  const users = await sql<User[]>`
+    SELECT * FROM users
+ `;
+
+  return users;
+});
+
 export const getUsersWithPasswordHashByUserName = cache(
   async (username: string) => {
     const [user] = await sql<UserWithPasswordHash[]>`
@@ -29,7 +37,11 @@ export const getUsersWithPasswordHashByUserName = cache(
 export const getUsersById = cache(async (id: number) => {
   const [user] = await sql<User[]>`
     SELECT
-      *
+      id,
+      username,
+      email,
+      nickname,
+      description
     FROM
     users
     WHERE
@@ -92,17 +104,17 @@ export const getUserBySessionToken = cache(async (token: string) => {
 
 export const updateUserById = cache(
   async (id: number, nickname: string, description: string) => {
-    const [user] = await sql<User[]>`
+    await sql`
       UPDATE users
       SET
       nickname = ${nickname},
       description = ${description}
       WHERE
-        id = ${id}
-        RETURNING *
-    `;
+        id = ${id};
 
-    return user;
+      -- DELETE FROM user_categories WHERE user_id = 30;
+      -- INSERT INTO user_categories ;
+    `;
   },
 );
 
