@@ -1,4 +1,5 @@
 'use client';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { FaExclamationCircle } from 'react-icons/fa';
@@ -34,10 +35,18 @@ export default function Signup() {
       <div>
         <p className={styles.textCreateAccount}>Create Account</p>
         <div className={styles.buttons}>
-          <button onClick={() => router.push('/dashboard')}>Log in</button>
-          <button className={styles.buttonRight}>Sign up</button>
+          <Link className={styles.link} href="/login">
+            Login
+          </Link>
+          <Link
+            className={`${styles.link} ${styles.buttonRight}`}
+            href="/register"
+          >
+            Signup
+          </Link>
         </div>
       </div>
+
       <form
         className={styles.form}
         onSubmit={(event) => event.preventDefault()}

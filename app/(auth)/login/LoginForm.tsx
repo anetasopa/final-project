@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { FaExclamationCircle, FaHourglassEnd } from 'react-icons/fa';
@@ -24,13 +25,13 @@ export default function LoginForm(props: {
     });
 
     const data: LoginResponseBodyPost = await response.json();
+    console.log(data);
 
     if ('error' in data) {
       setError(data.error);
     }
 
     if ('user' in data) {
-      props.setOpenModal(false);
       router.push(`profile/${data.user.username}`);
       router.refresh();
     }
@@ -38,19 +39,22 @@ export default function LoginForm(props: {
 
   return (
     <div className={styles.containerLogIn}>
-      <div>
-        <p className={styles.textAccount}>Account</p>
-        <div className={styles.buttons}>
-          <button>Log in</button>
-          <button
-            className={styles.buttonRight}
-            onClick={() => props.onFormSwitch('signup')}
-          >
-            Sign up
-          </button>
+      <div className={styles.center}>
+        <div>
+          <p className={styles.textAccount}>Account</p>
+          <div className={styles.buttons}>
+            <Link className={styles.link} href="/login">
+              Login
+            </Link>
+            <Link
+              className={`${styles.link} ${styles.buttonRight}`}
+              href="/register"
+            >
+              Signup
+            </Link>
+          </div>
         </div>
       </div>
-
       <form
         className={styles.form}
         onSubmit={(event) => event.preventDefault()}

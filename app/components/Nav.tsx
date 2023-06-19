@@ -1,7 +1,8 @@
-'use client';
-
+import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
+import { logout } from '../(auth)/logout/actions';
+import { LogoutButton } from './LogoutButton';
 import styles from './Nav.module.scss';
 
 const links = [
@@ -10,7 +11,7 @@ const links = [
   { id: 3, title: 'Benefits', link: '#benefits' },
 ];
 
-export default function Nav({ setOpenModal }) {
+export default function Nav({ user }) {
   return (
     <header className={styles.header}>
       <nav>
@@ -26,16 +27,24 @@ export default function Nav({ setOpenModal }) {
             </Link>
           ))}
         </ul>
-        <li>
-          <button
-            onClick={() => {
-              setOpenModal(true);
-            }}
-            className={styles.buttonSignup}
-          >
+
+        {user ? (
+          <>
+            <LogoutButton logout={logout} />
+            <p>{user.username}</p>
+            <Image
+              alt="userImage"
+              src="/images/photo2.jpeg"
+              width={50}
+              height={50}
+              className={styles.profileImage}
+            />
+          </>
+        ) : (
+          <Link className={styles.buttonSignup} href="/register">
             Register
-          </button>
-        </li>
+          </Link>
+        )}
       </nav>
     </header>
   );
