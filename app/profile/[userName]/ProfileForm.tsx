@@ -50,10 +50,6 @@ export default function ProfileForm(props: Props) {
 
   const [showInput, setShowInput] = useState(true);
 
-  const handleSaveClick = () => {
-    setShowInput(false);
-  };
-
   const categories = props.categories;
 
   const userId = props.userId;
