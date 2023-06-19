@@ -12,6 +12,9 @@ export type User = {
   id: number;
   username: string;
   email: string;
+  nickname: string | null;
+  // image_url: string | null;
+  description: string | null;
 };
 
 export const getUsersWithPasswordHashByUserName = cache(
@@ -23,12 +26,17 @@ export const getUsersWithPasswordHashByUserName = cache(
   },
 );
 
-// export const getUsersById = cache(async (id: number) => {
-//   const [user] = await sql<User[]>`
-//     SELECT id, username FROM users WHERE users.id = ${id}
-//  `;
-//   return user;
-// });
+export const getUsersById = cache(async (id: number) => {
+  const [user] = await sql<User[]>`
+    SELECT
+      *
+    FROM
+    users
+    WHERE
+      id = ${id}
+  `;
+  return user;
+});
 
 export const getUsersByUserName = cache(async (username: string) => {
   const [user] = await sql<User[]>`
@@ -72,3 +80,55 @@ export const getUserBySessionToken = cache(async (token: string) => {
 
   return user;
 });
+
+// export const updateUserByUserName = cache(
+//   async (nickname: string, description: string) => {
+//     const [user] = await sql<User[]>`
+//     INSERT INTO users (nickname, description) VALUES(${nickname}, ${description}) RETURNING id, username
+//  `;
+//     return user;
+//   },
+// );
+
+export const updateUserById = cache(
+  async (id: number, nickname: string, description: string) => {
+    const [user] = await sql<User[]>`
+      UPDATE users
+      SET
+      nickname = ${nickname},
+      description = ${description}
+      WHERE
+        id = ${id}
+        RETURNING *
+    `;
+
+    return user;
+  },
+);
+
+export const getUsersWithLimitAndOffsetBySessionToken = cache(
+  async (limit: number, offset: number, token: string) => {
+    const animals = await sql<User[]>`
+      SELECT
+        users.*
+      FROM
+      users
+      INNER JOIN
+        sessions ON (
+          sessions.token = ${token} AND
+          sessions.expiry_timestamp > now()
+          -- sessions.user_id = animals.user_id
+        )
+      -- This would JOIN the users table that is related to animals
+      -- INNER JOIN
+      --   users ON (
+      --     users.id = animals.user_id AND
+      --     sessions.user_id = users.id
+      --   )
+      LIMIT ${limit}
+      OFFSET ${offset}
+    `;
+
+    return animals;
+  },
+);

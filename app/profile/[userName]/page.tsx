@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import React from 'react';
 import { getCategories } from '../../../database/categories';
-import { getUserBySessionToken } from '../../../database/users';
+import { getUserBySessionToken, getUsersById } from '../../../database/users';
 import { Category } from '../../../migrations/1686916405-createTableCategories';
 import styles from './page.module.scss';
 import ProfileForm from './ProfileForm';
@@ -36,6 +36,8 @@ export default async function Profile({ params }: Props) {
     notFound();
   }
 
+  const userId = user.id;
+
   const categories: Category[] = await getCategories();
 
   return (
@@ -54,7 +56,7 @@ export default async function Profile({ params }: Props) {
         </div>
         <div>
           <div>
-            <ProfileForm categories={categories} />
+            <ProfileForm userId={userId} categories={categories} />
           </div>
         </div>
       </div>
