@@ -1,13 +1,9 @@
 import './globals.scss';
 import { Inter } from 'next/font/google';
 import { cookies } from 'next/headers';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
 import { getUserByToken } from '../database/users';
 // import Modal from '../app/(auth)/module/Modal';
 import Footer from './components/Footer';
-import Modal from './components/Modal';
 import Nav from './components/Nav';
 import styles from './page.module.scss';
 
@@ -23,7 +19,6 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // 1. get the session token from the cookie
   const cookieStore = cookies();
   const sessionToken = cookieStore.get('sessionToken');
 
