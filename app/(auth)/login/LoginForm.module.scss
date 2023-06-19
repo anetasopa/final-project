@@ -9,8 +9,15 @@
   border-radius: 10px;
   margin-top: 30px;
 
-  .center {
-    margin: 0 auto;
+  .closeIcon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 20px 20px 0 0;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 
   div {

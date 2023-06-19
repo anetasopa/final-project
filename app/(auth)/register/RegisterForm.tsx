@@ -1,9 +1,9 @@
 'use client';
+
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { FaExclamationCircle } from 'react-icons/fa';
-// import { GrStatusGood } from 'react-icons/gr';
+import { IoMdClose } from 'react-icons/io';
 import { RegisterResponseBodyPost } from '../../api/(auth)/register/route';
 import styles from './RegisterForm.module.scss';
 
@@ -32,6 +32,11 @@ export default function Signup() {
 
   return (
     <div className={styles.containerSignUp}>
+      <Link href="/">
+        <div className={styles.closeIcon}>
+          <IoMdClose />
+        </div>
+      </Link>
       <div>
         <p className={styles.textCreateAccount}>Create Account</p>
         <div className={styles.buttons}>

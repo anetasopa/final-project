@@ -3,7 +3,8 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { FaExclamationCircle, FaHourglassEnd } from 'react-icons/fa';
+import { FaExclamationCircle } from 'react-icons/fa';
+import { IoMdClose } from 'react-icons/io';
 import { LoginResponseBodyPost } from '../../api/(auth)/login/route';
 import styles from './LoginForm.module.scss';
 
@@ -39,20 +40,23 @@ export default function LoginForm(props: {
 
   return (
     <div className={styles.containerLogIn}>
-      <div className={styles.center}>
-        <div>
-          <p className={styles.textAccount}>Account</p>
-          <div className={styles.buttons}>
-            <Link className={styles.link} href="/login">
-              Login
-            </Link>
-            <Link
-              className={`${styles.link} ${styles.buttonRight}`}
-              href="/register"
-            >
-              Signup
-            </Link>
-          </div>
+      <Link href="/">
+        <div className={styles.closeIcon}>
+          <IoMdClose />
+        </div>
+      </Link>
+      <div>
+        <p className={styles.textAccount}>Account</p>
+        <div className={styles.buttons}>
+          <Link className={styles.link} href="/login">
+            Login
+          </Link>
+          <Link
+            className={`${styles.link} ${styles.buttonRight}`}
+            href="/register"
+          >
+            Signup
+          </Link>
         </div>
       </div>
       <form
