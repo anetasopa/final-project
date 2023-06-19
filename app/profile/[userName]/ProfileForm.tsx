@@ -19,16 +19,13 @@ export default async function ProfileForm(props: Props) {
     readonly label: string;
   }
 
-  const categoriesOption: readonly CategoriesOption[] = [
-    { value: 'running', label: 'Running' },
-    { value: 'programming', label: 'Programming' },
-    { value: 'football', label: 'Football' },
-    { value: 'tarvel', label: 'Tarvel' },
-    { value: 'computer game', label: 'Computer game' },
-    { value: 'trip', label: 'Trip' },
-    { value: 'swimming', label: 'Swimming' },
-    { value: 'nature', label: 'Nature' },
-  ];
+  const categories = props.categories;
+
+  const categoriesOption: readonly CategoriesOption[] = categories.map(
+    (category) => {
+      return { value: category.name, label: category.label };
+    },
+  );
 
   return (
     <form className={styles.form} onSubmit={(event) => event.preventDefault()}>
