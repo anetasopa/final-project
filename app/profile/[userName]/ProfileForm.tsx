@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import React, { useState } from 'react';
 import Select from 'react-select';
-import makeAnimated from 'react-select/animated';
 import { Category } from '../../../migrations/1686916405-createTableCategories';
 import styles from './ProfileForm.module.scss';
 
@@ -31,8 +30,6 @@ export default async function ProfileForm(props: Props) {
     { value: 'swimming', label: 'Swimming' },
     { value: 'nature', label: 'Nature' },
   ];
-
-  const animatedComponents = makeAnimated();
 
   return (
     <form className={styles.form} onSubmit={(event) => event.preventDefault()}>

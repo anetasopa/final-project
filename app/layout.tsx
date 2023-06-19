@@ -1,7 +1,7 @@
 import './globals.scss';
 import { Inter } from 'next/font/google';
 import { cookies } from 'next/headers';
-import { getUserByToken } from '../database/users';
+import { getUserBySessionToken, getUserByToken } from '../database/users';
 // import Modal from '../app/(auth)/module/Modal';
 import Footer from './components/Footer';
 import Nav from './components/Nav';
@@ -24,7 +24,7 @@ export default async function RootLayout({
 
   const user = !sessionToken?.value
     ? undefined
-    : await getUserByToken(sessionToken.value);
+    : await getUserBySessionToken(sessionToken.value);
 
   return (
     <html lang="en">
