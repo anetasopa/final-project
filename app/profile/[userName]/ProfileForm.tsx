@@ -13,7 +13,6 @@ type Props = {
 export default async function ProfileForm(props: Props) {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
-  const [selectedOption, setSelectedOption] = useState(null);
 
   interface CategoriesOption {
     readonly value: string;
