@@ -43,30 +43,6 @@ async function save({ setShowInput, userId, nickname, description }: Props) {
   }
 }
 
-async function get({ setShowInput, userId, nickname, description }: Props) {
-  setShowInput(false);
-  try {
-    const response = await fetch(`/api/users/${userId}`, {
-      method: 'GET',
-      body: JSON.stringify({ userId, nickname, description }),
-    });
-
-    if (response.status !== 500) {
-      const data: CreateResponseBodyPost = await response.json();
-
-      if ('error' in data) {
-        console.log(data.error);
-      }
-
-      if ('user' in data) {
-        console.log(data.user);
-      }
-    }
-  } catch (e) {
-    console.log({ e });
-  }
-}
-
 export default function ProfileForm(props: Props) {
   const singleUserData = props.singleUserData;
 
@@ -136,10 +112,7 @@ export default function ProfileForm(props: Props) {
         <button
           className={styles.buttonCreate}
           onClick={async () => {
-            // router.push('/yourprofile');
             await save({ setShowInput, userId, nickname, description });
-            //await get({ setShowInput, userId, nickname, description });
-            // router.refresh();
           }}
         >
           Save

@@ -1,4 +1,8 @@
 import { cache } from 'react';
+import {
+  UserCategories,
+  UserWithCategoriesInJsonAgg,
+} from '../migrations/1687248585-createTableUserCategories';
 import { sql } from './connect';
 
 export type UserWithPasswordHash = {
@@ -144,3 +148,56 @@ export const getUsersWithLimitAndOffsetBySessionToken = cache(
     return animals;
   },
 );
+
+export const getUsersWithCategories = cache(async (id: number) => {
+  const userCategories = await sql<UserCategories[]>`
+   SELECT
+     users.id AS user_id,
+     users.username AS user_username,
+     users.email AS user_email,
+     users.nickname AS user_email,
+     users.description AS user_description,
+     categories.id AS category_id,
+     categories.name AS category_name,
+     categories.label AS category_label
+    FROM
+     users
+    INNER JOIN
+      user_categories ON users.id = user_categories.user_id
+    INNER JOIN
+    categories ON categories.id = user_categories.category_id
+    WHERE users.id = ${id}
+  `;
+  return userCategories;
+});
+
+// Join query for getting a single user with related categories using json_agg
+export const getUserWithCategoriesById = cache(async (id: number) => {
+  const [user] = await sql<UserWithCategoriesInJsonAgg[]>`
+SELECT
+  users.id AS user_id,
+  users.username AS user_username,
+  users.email AS user_email,
+  users.nickname AS user_nickname,
+  users.description AS user_description,
+  (
+    SELECT
+      json_agg(categories.*)
+    FROM
+      user_categories
+    INNER JOIN
+    categories ON user_categories.category_id = categories.id
+    WHERE
+      user_categories.user_id = users.id
+
+  ) AS user_categories
+FROM
+  users
+WHERE
+  users.id = ${id}
+GROUP BY
+users.username, users.email, users.nickname, users.description;
+  `;
+
+  return user;
+});
