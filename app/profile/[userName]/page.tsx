@@ -5,8 +5,9 @@ import React from 'react';
 import { getCategories } from '../../../database/categories';
 import {
   getUserBySessionToken,
-  getUsers,
   getUsersById,
+  getUsersWithCategories,
+  getUserWithCategoriesById,
 } from '../../../database/users';
 import { Category } from '../../../migrations/1686916405-createTableCategories';
 import styles from './page.module.scss';
@@ -43,11 +44,28 @@ export default async function Profile({ params }: Props) {
   const userId = user.id;
 
   const singleUserData = await getUsersById(userId);
-
   console.log({ singleUserData });
-  if (!singleUserData) {
-    notFound();
-  }
+  // const usersCategories = await getUsersWithCategories(userId);
+  // console.log({ usersCategories });
+  // const userWithCategoriesJsonAgg = await getUserWithCategoriesById(userId);
+  // console.log({
+  //   userWithCategoriesJsonAgg,
+  // });
+  // console.log({
+  //   userWithCategoriesJsonAgg: userWithCategoriesJsonAgg?.userCategories,
+  // });
+  // if (!user) {
+  //   notFound();
+  // }
+  // const userWIthCategories = await getUsersWithCategories(usersCategories);
+  // console.log({ userWIthCategories });
+
+  // const singleUserData = await getUsersById(userId);
+
+  // console.log({ singleUserData });
+  // if (!singleUserData) {
+  //   notFound();
+  // }
 
   const categories: Category[] = await getCategories();
 

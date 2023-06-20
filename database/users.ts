@@ -196,7 +196,7 @@ FROM
 WHERE
   users.id = ${id}
 GROUP BY
-users.username, users.email, users.nickname, users.description;
+users.id, users.username, users.email, users.nickname, users.description;
   `;
 
   return user;

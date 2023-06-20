@@ -54,10 +54,6 @@ export async function PUT(
   const userId = Number(params.userId);
   const body = await request.json();
 
-  console.log({ userId });
-
-  console.log({ body });
-
   if (!userId) {
     return NextResponse.json(
       {

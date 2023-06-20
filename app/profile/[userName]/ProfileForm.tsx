@@ -1,9 +1,10 @@
 'use client';
 
 import { cookies } from 'next/headers';
+import { notFound } from 'next/navigation';
 import React, { useState } from 'react';
 import Select from 'react-select';
-import { getUsers, User } from '../../../database/users';
+import { User } from '../../../database/users';
 import { Category } from '../../../migrations/1686916405-createTableCategories';
 import { CreateResponseBodyPost } from '../../api/(auth)/users/[userId]/route';
 import styles from './ProfileForm.module.scss';
@@ -43,7 +44,7 @@ async function save({ setShowInput, userId, nickname, description }: Props) {
   }
 }
 
-export default function ProfileForm(props: Props) {
+export default async function ProfileForm(props: Props) {
   const singleUserData = props.singleUserData;
 
   const [nickname, setNickname] = useState(
@@ -59,8 +60,6 @@ export default function ProfileForm(props: Props) {
   const categories = props.categories;
 
   const userId = props.userId;
-
-  console.log({ singleUserData });
 
   const categoriesOption: readonly CategoriesOption[] = categories.map(
     (category) => {
