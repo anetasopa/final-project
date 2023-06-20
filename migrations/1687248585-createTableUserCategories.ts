@@ -17,19 +17,6 @@ export type UserCategories = {
   categoryLabel: string;
 };
 
-type JsonAgg = {
-  id: number;
-};
-
-export type UserWithCategoriesInJsonAgg = {
-  userId: number;
-  userUsername: string;
-  userEmail: string;
-  userNickname: string;
-  userDescription: string;
-  userCategories: JsonAgg;
-};
-
 export async function up(sql: Sql) {
   await sql`
     CREATE TABLE user_categories (

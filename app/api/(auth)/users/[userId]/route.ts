@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import {
+  getUserCategories,
   getUsersById,
+  updateCategoriesOfUserById,
   updateUserById,
   User,
 } from '../../../../../database/users';
@@ -16,6 +18,8 @@ export type CreateResponseBodyPost = { user: User } | Error;
 const animalSchema = z.object({
   nickname: z.string(),
   description: z.string(),
+  idSelectedCategories: z.array(z.number()),
+  userId: z.number(),
 });
 
 export async function GET(
@@ -54,6 +58,8 @@ export async function PUT(
   const userId = Number(params.userId);
   const body = await request.json();
 
+  console.log({ body });
+
   if (!userId) {
     return NextResponse.json(
       {
@@ -74,11 +80,7 @@ export async function PUT(
     );
   }
 
-  const user = await updateUserById(
-    userId,
-    result.data.nickname,
-    result.data.description,
-  );
+  const user = await getUsersById(userId);
 
   if (!user) {
     return NextResponse.json(
@@ -89,7 +91,13 @@ export async function PUT(
     );
   }
 
+  await updateUserById(userId, result.data.nickname, result.data.description);
+
+  await updateCategoriesOfUserById(userId, result.data.idSelectedCategories);
+  const userCategories = await getUserCategories(userId);
+
   return NextResponse.json({
-    user: user,
+    user,
+    userCategories,
   });
 }

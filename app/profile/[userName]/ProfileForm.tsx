@@ -1,9 +1,7 @@
 'use client';
 
-import { cookies } from 'next/headers';
-import { notFound } from 'next/navigation';
 import React, { useState } from 'react';
-import Select from 'react-select';
+import Creatable from 'react-select';
 import { User } from '../../../database/users';
 import { Category } from '../../../migrations/1686916405-createTableCategories';
 import { CreateResponseBodyPost } from '../../api/(auth)/users/[userId]/route';
@@ -13,6 +11,11 @@ type Props = {
   categories: Category[];
   userId: number;
   singleUserData: User;
+  userCategories: any[];
+  setShowInput: boolean;
+  idSelectedCategories: any[];
+  nickname: string;
+  description: string;
 };
 
 interface CategoriesOption {
@@ -20,12 +23,25 @@ interface CategoriesOption {
   readonly label: string;
 }
 
-async function save({ setShowInput, userId, nickname, description }: Props) {
+async function save({
+  setSelectedOption,
+  setUserCategories,
+  setShowInput,
+  idSelectedCategories,
+  userId,
+  nickname,
+  description,
+}: Props) {
   setShowInput(false);
   try {
     const response = await fetch(`/api/users/${userId}`, {
       method: 'PUT',
-      body: JSON.stringify({ userId, nickname, description }),
+      body: JSON.stringify({
+        userId,
+        idSelectedCategories,
+        nickname,
+        description,
+      }),
     });
 
     if (response.status !== 500) {
@@ -36,7 +52,9 @@ async function save({ setShowInput, userId, nickname, description }: Props) {
       }
 
       if ('user' in data) {
-        console.log(data.user);
+        setUserCategories(data.userCategories);
+        setSelectedOption(data.userCategories);
+        console.log(data);
       }
     }
   } catch (e) {
@@ -44,8 +62,15 @@ async function save({ setShowInput, userId, nickname, description }: Props) {
   }
 }
 
-export default async function ProfileForm(props: Props) {
+export default function ProfileForm(props: Props) {
   const singleUserData = props.singleUserData;
+  const userCategoriesProps = props.userCategories;
+
+  const [selectedOption, setSelectedOption] = useState(userCategoriesProps);
+  const idSelectedCategories = selectedOption?.map((selected) => selected.id);
+  console.log({ selectedOption });
+
+  const [userCategories, setUserCategories] = useState(userCategoriesProps);
 
   const [nickname, setNickname] = useState(
     singleUserData.nickname ? singleUserData.nickname : '',
@@ -53,22 +78,31 @@ export default async function ProfileForm(props: Props) {
   const [description, setDescription] = useState(
     singleUserData.description ? singleUserData.description : '',
   );
+
   // const [error, setError] = useState<string>('');
 
   const [showInput, setShowInput] = useState(true);
 
   const categories = props.categories;
-
   const userId = props.userId;
 
   const categoriesOption: readonly CategoriesOption[] = categories.map(
     (category) => {
-      return { value: category.name, label: category.label };
+      return { id: category.id, value: category.name, label: category.label };
     },
   );
 
   return (
     <form className={styles.form} onSubmit={(event) => event.preventDefault()}>
+      <p>id: {userId}</p>
+
+      {userCategories.map((c) => {
+        return (
+          <p>
+            {c.name} - {c.categoryId}
+          </p>
+        );
+      })}
       <label htmlFor="nickname">Nickname</label>
 
       {showInput ? (
@@ -98,11 +132,12 @@ export default async function ProfileForm(props: Props) {
         <p className={styles.profileData}>{description}</p>
       )}
 
-      <Select
+      <Creatable
         className={styles.select}
         closeMenuOnSelect={false}
         components={categoriesOption}
-        defaultValue={[categoriesOption[4], categoriesOption[5]]}
+        onChange={setSelectedOption}
+        defaultValue={selectedOption}
         isMulti
         options={categoriesOption}
       />
@@ -111,7 +146,15 @@ export default async function ProfileForm(props: Props) {
         <button
           className={styles.buttonCreate}
           onClick={async () => {
-            await save({ setShowInput, userId, nickname, description });
+            await save({
+              setSelectedOption,
+              setUserCategories,
+              setShowInput,
+              idSelectedCategories,
+              userId,
+              nickname,
+              description,
+            });
           }}
         >
           Save

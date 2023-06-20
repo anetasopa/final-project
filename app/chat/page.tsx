@@ -2,7 +2,7 @@ import { cookies } from 'next/headers';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import React from 'react';
-import { BiSolidPencil } from 'react-icons/bi';
+import { FaPen } from 'react-icons/fa';
 import { getUserBySessionToken, getUsersById } from '../../database/users';
 import styles from './page.module.scss';
 
@@ -26,6 +26,7 @@ export default async function Chat() {
     <main className={styles.profileContainer}>
       <div className={styles.list}>
         <div className={styles.imageUsernameContainer}>
+          {/* <div> */}
           <Image
             alt="userImage"
             src="/images/photo2.jpeg"
@@ -35,7 +36,10 @@ export default async function Chat() {
           />
           <div className={styles.availability}></div>
           <p className={styles.name}>{user.username}</p>
-          {/* <BiSolidPencil /> */}
+          {/* </div> */}
+          <div className={styles.editIcon}>
+            <FaPen />
+          </div>
         </div>
         <div></div>
         <div></div>

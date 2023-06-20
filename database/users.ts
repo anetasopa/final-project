@@ -1,8 +1,6 @@
 import { cache } from 'react';
-import {
-  UserCategories,
-  UserWithCategoriesInJsonAgg,
-} from '../migrations/1687248585-createTableUserCategories';
+import { Category } from '../migrations/1686916405-createTableCategories';
+import { UserCategories } from '../migrations/1687248585-createTableUserCategories';
 import { sql } from './connect';
 
 export type UserWithPasswordHash = {
@@ -115,16 +113,34 @@ export const updateUserById = cache(
       description = ${description}
       WHERE
         id = ${id};
-
-      -- DELETE FROM user_categories WHERE user_id = 30;
-      -- INSERT INTO user_categories ;
     `;
+  },
+);
+
+export const updateCategoriesOfUserById = cache(
+  async (userId: number, idSelectedCategories: any[]) => {
+    await sql`
+      DELETE FROM user_categories WHERE user_id = ${userId}
+    `;
+
+    for (const userCategory of idSelectedCategories) {
+      await sql`
+      INSERT INTO user_categories
+        (user_id, category_id)
+      VALUES
+        (${userId}, ${userCategory})
+        RETURNING
+        id,
+        user_id,
+        category_id
+    `;
+    }
   },
 );
 
 export const getUsersWithLimitAndOffsetBySessionToken = cache(
   async (limit: number, offset: number, token: string) => {
-    const animals = await sql<User[]>`
+    const users = await sql<User[]>`
       SELECT
         users.*
       FROM
@@ -133,71 +149,25 @@ export const getUsersWithLimitAndOffsetBySessionToken = cache(
         sessions ON (
           sessions.token = ${token} AND
           sessions.expiry_timestamp > now()
-          -- sessions.user_id = animals.user_id
         )
-      -- This would JOIN the users table that is related to animals
-      -- INNER JOIN
-      --   users ON (
-      --     users.id = animals.user_id AND
-      --     sessions.user_id = users.id
-      --   )
       LIMIT ${limit}
       OFFSET ${offset}
     `;
 
-    return animals;
+    return users;
   },
 );
 
-export const getUsersWithCategories = cache(async (id: number) => {
+export const getUserCategories = cache(async (userId: number) => {
   const userCategories = await sql<UserCategories[]>`
-   SELECT
-     users.id AS user_id,
-     users.username AS user_username,
-     users.email AS user_email,
-     users.nickname AS user_email,
-     users.description AS user_description,
-     categories.id AS category_id,
-     categories.name AS category_name,
-     categories.label AS category_label
-    FROM
-     users
-    INNER JOIN
-      user_categories ON users.id = user_categories.user_id
-    INNER JOIN
-    categories ON categories.id = user_categories.category_id
-    WHERE users.id = ${id}
-  `;
-  return userCategories;
-});
-
-// Join query for getting a single user with related categories using json_agg
-export const getUserWithCategoriesById = cache(async (id: number) => {
-  const [user] = await sql<UserWithCategoriesInJsonAgg[]>`
-SELECT
-  users.id AS user_id,
-  users.username AS user_username,
-  users.email AS user_email,
-  users.nickname AS user_nickname,
-  users.description AS user_description,
-  (
     SELECT
-      json_agg(categories.*)
+      *
     FROM
-      user_categories
+      categories c
     INNER JOIN
-    categories ON user_categories.category_id = categories.id
-    WHERE
-      user_categories.user_id = users.id
-
-  ) AS user_categories
-FROM
-  users
-WHERE
-  users.id = ${id}
-GROUP BY
-users.id, users.username, users.email, users.nickname, users.description;
+      user_categories uc ON c.id = uc.category_id
+    WHERE uc.user_id = ${userId}
   `;
 
-  return user;
+  return userCategories;
 });
