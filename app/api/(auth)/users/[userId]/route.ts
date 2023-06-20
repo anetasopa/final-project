@@ -15,7 +15,7 @@ type Error = {
 export type CreateResponseBodyGet = { user: User } | Error;
 export type CreateResponseBodyPost = { user: User } | Error;
 
-const animalSchema = z.object({
+const userSchema = z.object({
   nickname: z.string(),
   description: z.string(),
   idSelectedCategories: z.array(z.number()),
@@ -69,7 +69,7 @@ export async function PUT(
     );
   }
 
-  const result = animalSchema.safeParse(body);
+  const result = userSchema.safeParse(body);
 
   if (!result.success) {
     return NextResponse.json(

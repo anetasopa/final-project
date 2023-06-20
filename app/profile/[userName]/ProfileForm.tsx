@@ -1,10 +1,12 @@
 'use client';
 
+import axios from 'axios';
 import React, { useState } from 'react';
 import Creatable from 'react-select';
 import { User } from '../../../database/users';
 import { Category } from '../../../migrations/1686916405-createTableCategories';
 import { CreateResponseBodyPost } from '../../api/(auth)/users/[userId]/route';
+import { LoadImage } from './LoadImage';
 import styles from './ProfileForm.module.scss';
 
 type Props = {
@@ -87,9 +89,41 @@ export default function ProfileForm(props: Props) {
     },
   );
 
+  const [file, setFile] = useState(null);
+  const [filename, setFilename] = useState('');
+
+  const handleFileChange = (event) => {
+    setFile(event.target.files[0]);
+    setFilename(event.target.files[0].name);
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', 'YOUR_UPLOAD_PRESET_NAME');
+
+    try {
+      const response = await axios.post(
+        'https://api.cloudinary.com/v1_1/your_cloud_name/image/upload',
+        formData,
+      );
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <form className={styles.form} onSubmit={(event) => event.preventDefault()}>
       <p>id: {userId}</p>
+
+      <LoadImage
+        handleSubmit={handleSubmit}
+        handleFileChange={handleFileChange}
+        filename={filename}
+      />
 
       {userCategories.map((c) => {
         return (
