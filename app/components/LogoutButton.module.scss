@@ -7,6 +7,12 @@
   font-weight: bold;
   border: none;
   background-color: transparent;
+
+  @media (max-width: 480px) {
+    & {
+      padding: 0;
+    }
+  }
 }
 
 .buttonLogout:hover {

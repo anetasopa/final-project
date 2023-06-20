@@ -73,7 +73,7 @@ export default async function Profile({ params }: Props) {
     <main className={styles.profileContainer}>
       <div className={styles.background}></div>
       <div className={styles.info}>
-        <div>
+        <div className={styles.imageUsernameContainer}>
           <Image
             alt="userImage"
             src="/images/photo2.jpeg"
