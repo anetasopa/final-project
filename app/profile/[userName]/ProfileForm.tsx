@@ -68,20 +68,15 @@ export default function ProfileForm(props: Props) {
 
   const [selectedOption, setSelectedOption] = useState(userCategoriesProps);
   const idSelectedCategories = selectedOption?.map((selected) => selected.id);
-  console.log({ selectedOption });
-
   const [userCategories, setUserCategories] = useState(userCategoriesProps);
-
   const [nickname, setNickname] = useState(
     singleUserData.nickname ? singleUserData.nickname : '',
   );
   const [description, setDescription] = useState(
     singleUserData.description ? singleUserData.description : '',
   );
-
-  // const [error, setError] = useState<string>('');
-
   const [showInput, setShowInput] = useState(true);
+  // const [error, setError] = useState<string>('');
 
   const categories = props.categories;
   const userId = props.userId;
