@@ -31,7 +31,7 @@ export default async function RootLayout({
       <body>
         <Nav user={user} />
         {children}
-        <Footer />
+        {/* <Footer /> */}
       </body>
     </html>
   );

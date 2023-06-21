@@ -1,6 +1,6 @@
 'use client';
 
-import axios from 'axios';
+import Image from 'next/image';
 import React, { useState } from 'react';
 import Creatable from 'react-select';
 import { User } from '../../../database/users';
@@ -21,6 +21,7 @@ type Props = {
   imageUrl: string;
   setSelectedOption: any;
   setUserCategories: any;
+  setImageUrl: any;
 };
 
 interface CategoriesOption {
@@ -31,6 +32,7 @@ interface CategoriesOption {
 async function save({
   setSelectedOption,
   setUserCategories,
+  setImageUrl,
   setShowInput,
   idSelectedCategories,
   userId,
@@ -59,6 +61,7 @@ async function save({
       }
 
       if ('user' in data) {
+        setImageUrl(data.user.imageUrl);
         setUserCategories(data.userCategories);
         setSelectedOption(data.userCategories);
         console.log(data);
@@ -94,12 +97,13 @@ export default function ProfileForm(props: Props) {
     },
   );
 
-  const [imageUrl, setImageUrl] = useState();
+  const [imageUrl, setImageUrl] = useState(
+    singleUserData.imageUrl ? singleUserData.imageUrl : '',
+  );
   const [uploadData, setUploadData] = useState();
   console.log({ imageSrc: imageUrl, uploadData: uploadData });
 
-  function handleOnChange(changeEvent) {
-    console.log({ handleOnChange: changeEvent });
+  async function handleOnChange(changeEvent) {
     const reader = new FileReader();
 
     reader.onload = function (onLoadEvent) {
@@ -108,6 +112,25 @@ export default function ProfileForm(props: Props) {
     };
 
     reader.readAsDataURL(changeEvent.target.files[0]);
+
+    const formData = new FormData();
+
+    for (const file of changeEvent.target.files) {
+      formData.append('file', file);
+    }
+
+    formData.append('upload_preset', 'my-uploads');
+
+    const data = await fetch(
+      'https://api.cloudinary.com/v1_1/dkanovye3/image/upload',
+      {
+        method: 'POST',
+        body: formData,
+      },
+    ).then((r) => r.json());
+
+    setImageUrl(data.secure_url);
+    setUploadData(data);
   }
 
   async function handleOnSubmit(event) {
@@ -140,91 +163,103 @@ export default function ProfileForm(props: Props) {
 
   return (
     <div>
-      <LoadImage
-        handleOnChange={handleOnChange}
-        handleOnSubmit={handleOnSubmit}
-        imageUrl={imageUrl}
-        uploadData={uploadData}
-      />
-
-      <form
-        className={styles.form}
-        onSubmit={(event) => event.preventDefault()}
-      >
-        <p>id: {userId}</p>
-        {userCategories.map((c) => {
-          return (
-            <p>
-              {c.name} - {c.categoryId}
-            </p>
-          );
-        })}
-        <label htmlFor="nickname">Nickname</label>
-
-        {showInput ? (
-          <input
-            id="nickname"
-            value={nickname}
-            onChange={(event) => setNickname(event.currentTarget.value)}
-            required
+      <div className={styles.profileContainer}>
+        <div className={styles.imageUsernameContainer}>
+          <Image
+            alt="userImage"
+            src={imageUrl}
+            width={300}
+            height={300}
+            className={styles.userImage}
           />
-        ) : (
-          <p className={styles.profileData}>{nickname}</p>
-        )}
-
-        <label htmlFor="description">Description</label>
-        {showInput ? (
-          <textarea
-            style={{ fontSize: '14px' }}
-            name="description"
-            id="description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            required
-          >
-            Description
-          </textarea>
-        ) : (
-          <p className={styles.profileData}>{description}</p>
-        )}
-
-        <Creatable
-          className={styles.select}
-          closeMenuOnSelect={false}
-          components={categoriesOption}
-          onChange={setSelectedOption}
-          defaultValue={selectedOption}
-          isMulti
-          options={categoriesOption}
+          <p className={styles.name}>{singleUserData.username}</p>
+        </div>
+        <LoadImage
+          handleOnChange={handleOnChange}
+          handleOnSubmit={handleOnSubmit}
+          imageUrl={imageUrl}
+          uploadData={uploadData}
+          showInput={showInput}
         />
+        <form
+          className={styles.form}
+          onSubmit={(event) => event.preventDefault()}
+        >
+          {userCategories.map((c) => {
+            return (
+              <p>
+                {c.name} - {c.categoryId}
+              </p>
+            );
+          })}
 
-        {showInput ? (
-          <button
-            className={styles.buttonCreate}
-            onClick={async () => {
-              await save({
-                setSelectedOption,
-                setUserCategories,
-                setShowInput,
-                imageUrl,
-                idSelectedCategories,
-                userId,
-                nickname,
-                description,
-              });
-            }}
-          >
-            Save
-          </button>
-        ) : (
-          <button
-            className={styles.buttonEdit}
-            onClick={() => setShowInput(true)}
-          >
-            Edit
-          </button>
-        )}
-      </form>
+          <label htmlFor="nickname">Nickname</label>
+          {showInput ? (
+            <input
+              id="nickname"
+              value={nickname}
+              onChange={(event) => setNickname(event.currentTarget.value)}
+              required
+            />
+          ) : (
+            <p className={styles.profileData}>{nickname}</p>
+          )}
+
+          <label htmlFor="description">Description</label>
+          {showInput ? (
+            <textarea
+              style={{ fontSize: '14px' }}
+              name="description"
+              id="description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              required
+            >
+              Description
+            </textarea>
+          ) : (
+            <p className={styles.profileData}>{description}</p>
+          )}
+
+          <Creatable
+            className={styles.select}
+            closeMenuOnSelect={false}
+            components={categoriesOption}
+            onChange={setSelectedOption}
+            defaultValue={selectedOption}
+            isMulti
+            options={categoriesOption}
+          />
+
+          {showInput ? (
+            <button
+              className={styles.buttonCreate}
+              onClick={async () => {
+                await save({
+                  setSelectedOption,
+                  setUserCategories,
+                  setImageUrl,
+                  setShowInput,
+                  imageUrl,
+                  idSelectedCategories,
+                  userId,
+                  nickname,
+                  description,
+                });
+              }}
+            >
+              Save
+            </button>
+          ) : (
+            <button
+              className={styles.buttonEdit}
+              onClick={() => setShowInput(true)}
+            >
+              Edit
+            </button>
+          )}
+        </form>
+      </div>
     </div>
   );
 }

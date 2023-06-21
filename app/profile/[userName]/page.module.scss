@@ -21,8 +21,6 @@
 }
 
 .info {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
   padding: 0 150px;
 
   @media (max-width: 480px) {
@@ -32,38 +30,12 @@
   }
 
   @media (max-width: 480px) {
-    .imageUsernameContainer {
+    .dataUsernameContainer {
       display: flex;
-    }
-  }
-}
-
-.name {
-  text-align: center;
-  font-size: 1.125rem;
-  font-weight: bold;
-
-  @media (max-width: 480px) {
-    & {
-      margin-top: 20px;
-      margin-left: 20px;
-    }
-  }
-}
-
-.userImage {
-  border-radius: 150px;
-  text-align: center;
-  margin-top: -50px;
-  margin-left: 90px;
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-
-  @media (max-width: 480px) {
-    & {
-      margin-top: -50px;
-      margin-left: 60px;
-      width: 150px;
-      height: 150px;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
     }
   }
 }
