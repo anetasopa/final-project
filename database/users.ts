@@ -21,7 +21,19 @@ export type User = {
 
 export const getUsers = cache(async () => {
   const users = await sql<User[]>`
-    SELECT * FROM users
+    SELECT
+      u.id,
+      u.description,
+      u.username,
+      u.nickname,
+      u.image_url,
+      JSON_AGG(c.*) AS categories
+    FROM users u
+    LEFT JOIN user_categories uc ON u.id = uc.user_id
+    LEFT JOIN categories c ON c.id = uc.category_id
+    GROUP BY u.id
+    ;
+
  `;
 
   return users;
