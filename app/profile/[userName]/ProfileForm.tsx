@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import React, { useState } from 'react';
 import Creatable from 'react-select';
 import { User } from '../../../database/users';
@@ -77,6 +78,8 @@ export default function ProfileForm(props: Props) {
   const userCategoriesProps = props.userCategories;
 
   const [selectedOption, setSelectedOption] = useState(userCategoriesProps);
+  console.log({ selectedOption });
+
   const idSelectedCategories = selectedOption?.map((selected) => selected.id);
   const [userCategories, setUserCategories] = useState(userCategoriesProps);
   const [nickname, setNickname] = useState(
@@ -213,18 +216,25 @@ export default function ProfileForm(props: Props) {
           )}
           <p className={styles.interestsTitle}>Interests</p>
           {showInput ? (
-            <Creatable
-              className={styles.select}
-              closeMenuOnSelect={false}
-              components={categoriesOption}
-              onChange={setSelectedOption}
-              defaultValue={selectedOption}
-              isMulti
-              options={categoriesOption}
-            />
+            <>
+              {userCategories.map((category) => {
+                return (
+                  <p className={styles.categoriesTitle}>{category.label}</p>
+                );
+              })}
+              <Creatable
+                className={styles.select}
+                closeMenuOnSelect={false}
+                components={categoriesOption}
+                onChange={setSelectedOption}
+                defaultValue={selectedOption}
+                isMulti
+                options={categoriesOption}
+              />
+            </>
           ) : (
             userCategories.map((category) => {
-              return <p className={styles.categoriesTitle}>{category.name}</p>;
+              return <p className={styles.categoriesTitle}>{category.label}</p>;
             })
           )}
 
@@ -257,6 +267,10 @@ export default function ProfileForm(props: Props) {
           )}
         </form>
       </div>
+
+      <Link className={styles.link} href="/list">
+        Go to list...
+      </Link>
     </div>
   );
 }

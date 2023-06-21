@@ -81,7 +81,13 @@
 
   .select {
     margin-top: 10px;
-    color: var(--primary-accent-color);
+    color: var(--main-accent-color);
+
+    .select:focus {
+      outline: none !important;
+      border: 1px solid var(--main-accent-color);
+      box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    }
   }
 
   .interestsTitle {
@@ -133,4 +139,20 @@
   border: 1px solid var(--primary-accent-color);
   margin-top: 10px;
   text-align: center;
+}
+
+.link {
+  align-items: center;
+  margin-left: 5px;
+  padding: 10px 20px;
+  display: flex;
+  font-size: 1.125rem;
+  font-weight: bold;
+  border: none;
+  background-color: transparent;
+  padding-bottom: 50px;
+
+  &:hover {
+    cursor: pointer;
+  }
 }

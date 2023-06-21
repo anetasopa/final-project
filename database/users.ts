@@ -181,7 +181,9 @@ export const getUsersWithLimitAndOffsetBySessionToken = cache(
 export const getUserCategories = cache(async (userId: number) => {
   const userCategories = await sql<UserCategories[]>`
     SELECT
-      *
+      c.id,
+      c.name AS value,
+      c.name AS label
     FROM
       categories c
     INNER JOIN

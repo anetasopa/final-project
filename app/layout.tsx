@@ -1,13 +1,8 @@
 import './globals.scss';
 import { Inter } from 'next/font/google';
 import { cookies } from 'next/headers';
-import { notFound } from 'next/navigation';
-import {
-  getUserBySessionToken,
-  getUserByToken,
-  getUsersById,
-} from '../database/users';
-// import Modal from '../app/(auth)/module/Modal';
+import { notFound, useRouter } from 'next/navigation';
+import { getUserBySessionToken, getUsersById } from '../database/users';
 import Footer from './components/Footer';
 import Nav from './components/Nav';
 import styles from './page.module.scss';
@@ -32,20 +27,11 @@ export default async function RootLayout({
     : await getUserBySessionToken(sessionToken.value);
 
   if (!user) {
-    notFound();
+    console.log('error');
   }
 
-  const userId = user.id;
-
+  const userId = user?.id;
   const singleUserData = await getUsersById(userId);
-
-  if (!user) {
-    notFound();
-  }
-
-  if (!singleUserData) {
-    notFound();
-  }
 
   return (
     <html lang="en">

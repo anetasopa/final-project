@@ -9,6 +9,7 @@ type Props = {
 
 export function LogoutButton(props: Props) {
   const router = useRouter();
+
   return (
     <form>
       <button
