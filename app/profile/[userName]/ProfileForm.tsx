@@ -18,6 +18,9 @@ type Props = {
   idSelectedCategories: any[];
   nickname: string;
   description: string;
+  imageUrl: string;
+  setSelectedOption: any;
+  setUserCategories: any;
 };
 
 interface CategoriesOption {
@@ -31,6 +34,7 @@ async function save({
   setShowInput,
   idSelectedCategories,
   userId,
+  imageUrl,
   nickname,
   description,
 }: Props) {
@@ -42,6 +46,7 @@ async function save({
         userId,
         idSelectedCategories,
         nickname,
+        imageUrl,
         description,
       }),
     });
@@ -89,113 +94,137 @@ export default function ProfileForm(props: Props) {
     },
   );
 
-  const [file, setFile] = useState(null);
-  const [filename, setFilename] = useState('');
+  const [imageUrl, setImageUrl] = useState();
+  const [uploadData, setUploadData] = useState();
+  console.log({ imageSrc: imageUrl, uploadData: uploadData });
 
-  const handleFileChange = (event) => {
-    setFile(event.target.files[0]);
-    setFilename(event.target.files[0].name);
-  };
+  function handleOnChange(changeEvent) {
+    console.log({ handleOnChange: changeEvent });
+    const reader = new FileReader();
 
-  const handleSubmit = async (event) => {
+    reader.onload = function (onLoadEvent) {
+      setImageUrl(onLoadEvent.target.result);
+      setUploadData(undefined);
+    };
+
+    reader.readAsDataURL(changeEvent.target.files[0]);
+  }
+
+  async function handleOnSubmit(event) {
     event.preventDefault();
 
-    const formData = new FormData();
-    formData.append('file', file);
-    formData.append('upload_preset', 'YOUR_UPLOAD_PRESET_NAME');
+    const form = event.currentTarget;
+    const fileInput = Array.from(form.elements).find(
+      ({ name }) => name === 'file',
+    );
 
-    try {
-      const response = await axios.post(
-        'https://api.cloudinary.com/v1_1/your_cloud_name/image/upload',
-        formData,
-      );
-      console.log(response);
-    } catch (error) {
-      console.error(error);
+    const formData = new FormData();
+
+    for (const file of fileInput.files) {
+      formData.append('file', file);
     }
-  };
+
+    formData.append('upload_preset', 'my-uploads');
+
+    const data = await fetch(
+      'https://api.cloudinary.com/v1_1/dkanovye3/image/upload',
+      {
+        method: 'POST',
+        body: formData,
+      },
+    ).then((r) => r.json());
+
+    setImageUrl(data.secure_url);
+    setUploadData(data);
+  }
 
   return (
-    <form className={styles.form} onSubmit={(event) => event.preventDefault()}>
-      <p>id: {userId}</p>
-
+    <div>
       <LoadImage
-        handleSubmit={handleSubmit}
-        handleFileChange={handleFileChange}
-        filename={filename}
+        handleOnChange={handleOnChange}
+        handleOnSubmit={handleOnSubmit}
+        imageUrl={imageUrl}
+        uploadData={uploadData}
       />
 
-      {userCategories.map((c) => {
-        return (
-          <p>
-            {c.name} - {c.categoryId}
-          </p>
-        );
-      })}
-      <label htmlFor="nickname">Nickname</label>
+      <form
+        className={styles.form}
+        onSubmit={(event) => event.preventDefault()}
+      >
+        <p>id: {userId}</p>
+        {userCategories.map((c) => {
+          return (
+            <p>
+              {c.name} - {c.categoryId}
+            </p>
+          );
+        })}
+        <label htmlFor="nickname">Nickname</label>
 
-      {showInput ? (
-        <input
-          id="nickname"
-          value={nickname}
-          onChange={(event) => setNickname(event.currentTarget.value)}
-          required
+        {showInput ? (
+          <input
+            id="nickname"
+            value={nickname}
+            onChange={(event) => setNickname(event.currentTarget.value)}
+            required
+          />
+        ) : (
+          <p className={styles.profileData}>{nickname}</p>
+        )}
+
+        <label htmlFor="description">Description</label>
+        {showInput ? (
+          <textarea
+            style={{ fontSize: '14px' }}
+            name="description"
+            id="description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            required
+          >
+            Description
+          </textarea>
+        ) : (
+          <p className={styles.profileData}>{description}</p>
+        )}
+
+        <Creatable
+          className={styles.select}
+          closeMenuOnSelect={false}
+          components={categoriesOption}
+          onChange={setSelectedOption}
+          defaultValue={selectedOption}
+          isMulti
+          options={categoriesOption}
         />
-      ) : (
-        <p className={styles.profileData}>{nickname}</p>
-      )}
 
-      <label htmlFor="description">Description</label>
-      {showInput ? (
-        <textarea
-          style={{ fontSize: '14px' }}
-          name="description"
-          id="description"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          required
-        >
-          Description
-        </textarea>
-      ) : (
-        <p className={styles.profileData}>{description}</p>
-      )}
-
-      <Creatable
-        className={styles.select}
-        closeMenuOnSelect={false}
-        components={categoriesOption}
-        onChange={setSelectedOption}
-        defaultValue={selectedOption}
-        isMulti
-        options={categoriesOption}
-      />
-
-      {showInput ? (
-        <button
-          className={styles.buttonCreate}
-          onClick={async () => {
-            await save({
-              setSelectedOption,
-              setUserCategories,
-              setShowInput,
-              idSelectedCategories,
-              userId,
-              nickname,
-              description,
-            });
-          }}
-        >
-          Save
-        </button>
-      ) : (
-        <button
-          className={styles.buttonEdit}
-          onClick={() => setShowInput(true)}
-        >
-          Edit
-        </button>
-      )}
-    </form>
+        {showInput ? (
+          <button
+            className={styles.buttonCreate}
+            onClick={async () => {
+              await save({
+                setSelectedOption,
+                setUserCategories,
+                setShowInput,
+                imageUrl,
+                idSelectedCategories,
+                userId,
+                nickname,
+                description,
+              });
+            }}
+          >
+            Save
+          </button>
+        ) : (
+          <button
+            className={styles.buttonEdit}
+            onClick={() => setShowInput(true)}
+          >
+            Edit
+          </button>
+        )}
+      </form>
+    </div>
   );
 }

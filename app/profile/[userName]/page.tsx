@@ -1,7 +1,7 @@
 import { cookies } from 'next/headers';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
-import React from 'react';
+import React, { use } from 'react';
 import { getCategories } from '../../../database/categories';
 import {
   getUserBySessionToken,
@@ -53,6 +53,8 @@ export default async function Profile({ params }: Props) {
     notFound();
   }
 
+  console.log({ singleUserData, user });
+
   const categories: Category[] = await getCategories();
 
   return (
@@ -62,7 +64,7 @@ export default async function Profile({ params }: Props) {
         <div className={styles.imageUsernameContainer}>
           <Image
             alt="userImage"
-            src="/images/photo2.jpeg"
+            src={singleUserData.imageUrl}
             width={300}
             height={300}
             className={styles.userImage}

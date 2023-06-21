@@ -19,6 +19,7 @@ const userSchema = z.object({
   nickname: z.string(),
   description: z.string(),
   idSelectedCategories: z.array(z.number()),
+  imageUrl: z.string(),
   userId: z.number(),
 });
 
@@ -80,7 +81,7 @@ export async function PUT(
     );
   }
 
-  const user = await getUsersById(userId);
+  let user = await getUsersById(userId);
 
   if (!user) {
     return NextResponse.json(
@@ -91,10 +92,17 @@ export async function PUT(
     );
   }
 
-  await updateUserById(userId, result.data.nickname, result.data.description);
+  await updateUserById(
+    userId,
+    result.data.nickname,
+    result.data.imageUrl,
+    result.data.description,
+  );
 
   await updateCategoriesOfUserById(userId, result.data.idSelectedCategories);
   const userCategories = await getUserCategories(userId);
+
+  user = await getUsersById(userId);
 
   return NextResponse.json({
     user,

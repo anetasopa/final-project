@@ -25,7 +25,7 @@ export type User = {
   password_hash: string;
   // account_id: number;
   nickname: string;
-  // image_url: string;
+  imageUrl: string;
   description: string;
 };
 
@@ -38,7 +38,7 @@ export async function up(sql: Sql) {
       password_hash   varchar(100) NOT NULL,
       -- account_id      integer,
       nickname        varchar(30) DEFAULT NULL,
-      -- image_url       varchar(100) DEFAULT NULL,
+      image_url       varchar(100) DEFAULT NULL,
       description     varchar(200) DEFAULT NULL
     )
   `;

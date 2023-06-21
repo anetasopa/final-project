@@ -15,7 +15,7 @@ export type User = {
   username: string;
   email: string;
   nickname: string | null;
-  // image_url: string | null;
+  imageUrl: string | null;
   description: string | null;
 };
 
@@ -43,6 +43,7 @@ export const getUsersById = cache(async (id: number) => {
       username,
       email,
       nickname,
+      image_url,
       description
     FROM
     users
@@ -105,11 +106,18 @@ export const getUserBySessionToken = cache(async (token: string) => {
 // );
 
 export const updateUserById = cache(
-  async (id: number, nickname: string, description: string) => {
+  async (
+    id: number,
+    nickname: string,
+    imageUrl: string,
+    description: string,
+  ) => {
+    //  PostgresError: syntax error at or near "description"
     await sql`
       UPDATE users
       SET
       nickname = ${nickname},
+      image_url = ${imageUrl},
       description = ${description}
       WHERE
         id = ${id};
