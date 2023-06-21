@@ -267,7 +267,6 @@ export default function ProfileForm(props: Props) {
           )}
         </form>
       </div>
-
       <Link className={styles.link} href="/list">
         Go to list...
       </Link>

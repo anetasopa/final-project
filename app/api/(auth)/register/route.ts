@@ -57,10 +57,13 @@ export async function POST(
 
   const passwordHash = bcrypt.hash(result.data.password, 10);
 
+  const imageUrlDefault =
+    'https://res.cloudinary.com/dkanovye3/image/upload/v1687365996/my-uploads/isf7hqdsrdbvszwwkp7f.png';
   const newUser = await createUser(
     result.data.username,
     result.data.email,
     await passwordHash,
+    imageUrlDefault,
   );
 
   if (!newUser) {

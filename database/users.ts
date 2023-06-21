@@ -82,9 +82,14 @@ export const getUsersByUserName = cache(async (username: string) => {
 // });
 
 export const createUser = cache(
-  async (username: string, email: string, passwordHash: string) => {
+  async (
+    username: string,
+    email: string,
+    passwordHash: string,
+    imageUrl: string,
+  ) => {
     const [user] = await sql<User[]>`
-    INSERT INTO users (username, email, password_hash) VALUES(${username}, ${email}, ${passwordHash}) RETURNING id, username
+    INSERT INTO users (username, email, password_hash, image_url) VALUES(${username}, ${email}, ${passwordHash}, ${imageUrl}) RETURNING id, username
  `;
     return user;
   },
