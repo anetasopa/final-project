@@ -1,7 +1,12 @@
 import './globals.scss';
 import { Inter } from 'next/font/google';
 import { cookies } from 'next/headers';
-import { getUserBySessionToken, getUserByToken } from '../database/users';
+import { notFound } from 'next/navigation';
+import {
+  getUserBySessionToken,
+  getUserByToken,
+  getUsersById,
+} from '../database/users';
 // import Modal from '../app/(auth)/module/Modal';
 import Footer from './components/Footer';
 import Nav from './components/Nav';
@@ -26,10 +31,26 @@ export default async function RootLayout({
     ? undefined
     : await getUserBySessionToken(sessionToken.value);
 
+  if (!user) {
+    notFound();
+  }
+
+  const userId = user.id;
+
+  const singleUserData = await getUsersById(userId);
+
+  if (!user) {
+    notFound();
+  }
+
+  if (!singleUserData) {
+    notFound();
+  }
+
   return (
     <html lang="en">
       <body>
-        <Nav user={user} />
+        <Nav user={user} singleUserData={singleUserData} />
         {children}
         {/* <Footer /> */}
       </body>

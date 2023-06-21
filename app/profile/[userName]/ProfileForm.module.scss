@@ -64,6 +64,7 @@
   textarea {
     // background: url('/images/chat.svg') center center no-repeat;
     border: 1px solid #888;
+    margin-bottom: 10px;
     height: 150px;
     line-height: 30px;
     padding: 10px;
@@ -81,6 +82,11 @@
   .select {
     margin-top: 10px;
     color: var(--primary-accent-color);
+  }
+
+  .interestsTitle {
+    font-weight: bold;
+    margin-bottom: 5px;
   }
 
   .buttonCreate {
@@ -115,7 +121,16 @@
 }
 
 .profileData {
-  margin: 10px 0 20px 0;
   color: var(--primary-accent-color);
   font-weight: 200;
+  margin-bottom: 30px;
+}
+
+.categoriesTitle {
+  padding: 5px 10px;
+  color: var(--primary-accent-color);
+  border-radius: 50px;
+  border: 1px solid var(--primary-accent-color);
+  margin-top: 10px;
+  text-align: center;
 }

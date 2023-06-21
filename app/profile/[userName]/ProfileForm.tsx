@@ -101,7 +101,6 @@ export default function ProfileForm(props: Props) {
     singleUserData.imageUrl ? singleUserData.imageUrl : '',
   );
   const [uploadData, setUploadData] = useState();
-  console.log({ imageSrc: imageUrl, uploadData: uploadData });
 
   async function handleOnChange(changeEvent) {
     const reader = new FileReader();
@@ -185,14 +184,6 @@ export default function ProfileForm(props: Props) {
           className={styles.form}
           onSubmit={(event) => event.preventDefault()}
         >
-          {userCategories.map((c) => {
-            return (
-              <p>
-                {c.name} - {c.categoryId}
-              </p>
-            );
-          })}
-
           <label htmlFor="nickname">Nickname</label>
           {showInput ? (
             <input
@@ -220,16 +211,22 @@ export default function ProfileForm(props: Props) {
           ) : (
             <p className={styles.profileData}>{description}</p>
           )}
-
-          <Creatable
-            className={styles.select}
-            closeMenuOnSelect={false}
-            components={categoriesOption}
-            onChange={setSelectedOption}
-            defaultValue={selectedOption}
-            isMulti
-            options={categoriesOption}
-          />
+          <p className={styles.interestsTitle}>Interests</p>
+          {showInput ? (
+            <Creatable
+              className={styles.select}
+              closeMenuOnSelect={false}
+              components={categoriesOption}
+              onChange={setSelectedOption}
+              defaultValue={selectedOption}
+              isMulti
+              options={categoriesOption}
+            />
+          ) : (
+            userCategories.map((category) => {
+              return <p className={styles.categoriesTitle}>{category.name}</p>;
+            })
+          )}
 
           {showInput ? (
             <button
