@@ -31,7 +31,7 @@ export default async function List() {
 
   return (
     <main className={styles.listContainer}>
-      <p>List of users</p>
+      <h2>List of users</h2>
       <UsersList users={users} />
     </main>
   );

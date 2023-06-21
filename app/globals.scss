@@ -45,3 +45,7 @@ a {
 h1 {
   font-family: var(--font-family);
 }
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
