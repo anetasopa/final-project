@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import React from 'react';
 import styles from './page.module.scss';
 
@@ -21,7 +22,9 @@ export default function Home() {
             Unleash the power of shared interests and let your true self shine.
           </p>
           <div>
-            <button className={styles.heroButton}>Get started</button>
+            <Link className={styles.heroButton} href="/register">
+            Get started
+            </Link>
           </div>
         </div>
       </section>

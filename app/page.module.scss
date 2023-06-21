@@ -14,7 +14,6 @@
     width: 30%;
     display: flex;
     justify-content: center;
-    align-items: center;
     flex-direction: column;
     gap: 30px;
 
@@ -34,14 +33,28 @@
       line-height: 30px;
     }
 
+    .buttonSignup {
+      align-items: center;
+      margin-left: 5px;
+      padding: 10px 20px;
+      display: flex;
+      font-size: 1.125rem;
+      font-weight: bold;
+      border: none;
+      background-color: transparent;
+    }
+
+    .buttonSignup:hover {
+      cursor: pointer;
+    }
+
     .heroButton {
       padding: 10px 20px;
       background-color: var(--main-accent-color);
       color: var(--primary-accent-color);
       border-radius: 50px;
+      font-size: 0.8rem;
       border: none;
-      display: flex;
-      align-items: flex-start !important;
 
       .heroButton:hover {
         cursor: pointer;
