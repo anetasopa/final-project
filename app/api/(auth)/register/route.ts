@@ -28,6 +28,8 @@ export async function POST(
 ): Promise<NextResponse<RegisterResponseBodyPost>> {
   const body = await request.json();
 
+  console.log(request);
+
   const result = userSchema.safeParse(body);
 
   // try {

@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaExclamationCircle } from 'react-icons/fa';
 import { IoMdClose } from 'react-icons/io';
 import { LoginResponseBodyPost } from '../../api/(auth)/login/route';
@@ -14,9 +14,11 @@ export default function LoginForm(props: {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string>('');
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   async function login() {
+    setIsLoading(true);
     const response = await fetch('/api/login', {
       method: 'POST',
       body: JSON.stringify({
@@ -36,7 +38,16 @@ export default function LoginForm(props: {
       router.push(`profile/${data.user.username}`);
       router.refresh();
     }
+
+    setIsLoading(false);
+
+    // setUsername('');
+    // setPassword('');
   }
+
+  useEffect(() => {
+    setIsLoading(false);
+  }, [username, password]);
 
   return (
     <div className={styles.containerLogIn}>
@@ -99,7 +110,13 @@ export default function LoginForm(props: {
             await login();
           }}
         >
-          Log in
+          {isLoading ? (
+            <div className={styles.spinner}>
+              <p className={styles.loader}>Loading...</p>
+            </div>
+          ) : (
+            <p>Log In</p>
+          )}
         </button>
       </form>
     </div>

@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaExclamationCircle } from 'react-icons/fa';
 import { IoMdClose } from 'react-icons/io';
 import { RegisterResponseBodyPost } from '../../api/(auth)/register/route';
@@ -12,8 +12,10 @@ export default function Signup() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string>('');
+  const [isLoading, setIsLoading] = useState(false);
 
   async function register() {
+    setIsLoading(true);
     const response = await fetch('/api/register', {
       method: 'POST',
       body: JSON.stringify({ username, email, password }),
@@ -28,7 +30,17 @@ export default function Signup() {
     if ('user' in data) {
       setError(data.user);
     }
+
+    setIsLoading(false);
+
+    // setUsername('');
+    // setEmail('');
+    // setPassword('');
   }
+
+  useEffect(() => {
+    setIsLoading(false);
+  }, [username, email, password]);
 
   return (
     <div className={styles.containerSignUp}>
@@ -106,7 +118,13 @@ export default function Signup() {
             await register();
           }}
         >
-          Sign Up
+          {isLoading ? (
+            <div className={styles.spinner}>
+              <p className={styles.loader}>Loading...</p>
+            </div>
+          ) : (
+            <p>Sign Up</p>
+          )}
         </button>
       </form>
     </div>

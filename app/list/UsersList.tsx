@@ -73,40 +73,5 @@ export default async function UsersLis({ users }) {
         })}
       </ul>
     </div>
-    // <table>
-
-    //   <tr>
-    //     <th>Image</th>
-    //     <th>Username</th>
-    //     <th>Nackname</th>
-    //     <th>Description</th>
-    //     <th>Interests</th>
-    //   </tr>
-    //   {users.map((user) => {
-    //     return (
-    //       <>
-    //         <tr>
-    //           <td>
-    //             <Image
-    //               alt="userImage"
-    //               src={user.imageUrl}
-    //               width={100}
-    //               height={100}
-    //               className={styles.userImage}
-    //             />
-    //           </td>
-    //           <td>{user.username}</td>
-    //           <td>{user.nickname}</td>
-    //           <td>{user.description}</td>
-    //           <td>
-    //             {user.categories.map((category) => {
-    //               return category ? <p>{category.name}</p> : null;
-    //             })}
-    //           </td>
-    //         </tr>
-    //       </>
-    //     );
-    //   })}
-    // </table>
   );
 }
