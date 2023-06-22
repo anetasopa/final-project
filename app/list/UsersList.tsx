@@ -29,42 +29,43 @@ export default async function UsersLis({ users }) {
               <li className={styles.tableRow}>
                 <div
                   className={`${styles.col} ${styles.col1}`}
-                  data-label="Job Id"
+                  data-label="Image"
                 >
                   <Image
                     alt="userImage"
                     src={user.imageUrl}
                     width={100}
                     height={100}
-                    className={styles.userImage}
-                    style={{ borderRadius: '3px' }}
+                    style={{ borderRadius: '50px' }}
                   />
                 </div>
                 <div
                   className={`${styles.col} ${styles.col2}`}
-                  data-label="Customer Name"
+                  data-label="Username"
                 >
                   {user.username}
                 </div>
                 <div
                   className={`${styles.col} ${styles.col3}`}
-                  data-label="Amount"
+                  data-label="Nickname"
                 >
                   {user.nickname}
                 </div>
                 <div
                   className={`${styles.col} ${styles.col4}`}
-                  data-label="Payment Status"
+                  data-label="Description"
                 >
                   {user.description}
                 </div>
                 <div
                   className={`${styles.col} ${styles.col5}`}
-                  data-label="Payment Status"
+                  data-label="Interests"
                 >
-                  {user.categories.map((category) => {
-                    return category ? <p>{category.name}</p> : null;
-                  })}
+                  <div className={styles.categoriesContainer}>
+                    {user.categories.map((category) => {
+                      return category ? <p>{category.name}</p> : null;
+                    })}
+                  </div>
                 </div>
               </li>
             </>
