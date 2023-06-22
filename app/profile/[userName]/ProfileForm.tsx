@@ -2,11 +2,10 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Creatable from 'react-select';
 import { User } from '../../../database/users';
 import { Category } from '../../../migrations/1686916405-createTableCategories';
-import { cloudinaryLoader } from '../../../util/cloudinary';
 import { CreateResponseBodyPost } from '../../api/(auth)/users/[userId]/route';
 import { LoadImage } from './LoadImage';
 import styles from './ProfileForm.module.scss';
@@ -24,6 +23,7 @@ type Props = {
   setSelectedOption: any;
   setUserCategories: any;
   setImageUrl: any;
+  setIsLoading: any;
 };
 
 interface CategoriesOption {
@@ -37,6 +37,7 @@ async function save({
   setImageUrl,
   setShowInput,
   idSelectedCategories,
+  setIsLoading,
   userId,
   imageUrl,
   nickname,
@@ -44,6 +45,7 @@ async function save({
 }: Props) {
   setShowInput(false);
   try {
+    setIsLoading(true);
     const response = await fetch(`/api/users/${userId}`, {
       method: 'PUT',
       body: JSON.stringify({
@@ -55,7 +57,8 @@ async function save({
       }),
     });
 
-    console.log({ response });
+    setIsLoading(false);
+
     if (response.status !== 500) {
       const data: CreateResponseBodyPost = await response.json();
 
@@ -67,7 +70,6 @@ async function save({
         setImageUrl(data.user.imageUrl);
         setUserCategories(data.userCategories);
         setSelectedOption(data.userCategories);
-        console.log(data);
       }
     }
   } catch (e) {
@@ -79,6 +81,7 @@ export default function ProfileForm(props: Props) {
   const singleUserData = props.singleUserData;
   const userCategoriesProps = props.userCategories;
 
+  const [isLoading, setIsLoading] = useState(false);
   const [selectedOption, setSelectedOption] = useState(userCategoriesProps);
   console.log({ selectedOption });
 
@@ -165,6 +168,10 @@ export default function ProfileForm(props: Props) {
     setUploadData(data);
   }
 
+  useEffect(() => {
+    setIsLoading(false);
+  }, [nickname, description, userCategories]);
+
   return (
     <div>
       <div className={styles.profileContainer}>
@@ -249,6 +256,7 @@ export default function ProfileForm(props: Props) {
                   setUserCategories,
                   setImageUrl,
                   setShowInput,
+                  setIsLoading,
                   imageUrl,
                   idSelectedCategories,
                   userId,
@@ -257,7 +265,13 @@ export default function ProfileForm(props: Props) {
                 });
               }}
             >
-              Save
+              {isLoading ? (
+                <div className={styles.spinner}>
+                  <p className={styles.loader}>Loading...</p>
+                </div>
+              ) : (
+                <p>Save</p>
+              )}
             </button>
           ) : (
             <button
