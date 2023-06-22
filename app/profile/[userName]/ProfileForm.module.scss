@@ -3,6 +3,12 @@
   justify-content: space-around;
   flex: auto;
 
+  @media (max-width: 480px) {
+    & {
+      display: block;
+    }
+  }
+
   .name {
     text-align: center;
     font-size: 1.125rem;
@@ -40,6 +46,13 @@
   // padding: 30px;
   margin-top: 50px;
   width: 40%;
+
+  @media (max-width: 480px) {
+    & {
+      width: auto;
+      padding: 30px;
+    }
+  }
 
   label {
     margin-bottom: 5px;
