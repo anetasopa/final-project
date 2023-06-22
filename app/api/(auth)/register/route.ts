@@ -37,15 +37,6 @@ export async function POST(
   //   console.log({ e });
   // }
 
-  if (result.success) {
-    return NextResponse.json(
-      {
-        error: 'I just registered, you can go to login.',
-      },
-      { status: 200 },
-    );
-  }
-
   if (!result.success) {
     return NextResponse.json(
       {
