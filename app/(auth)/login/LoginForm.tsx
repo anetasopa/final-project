@@ -47,7 +47,7 @@ export default function LoginForm(props: {
 
   useEffect(() => {
     setIsLoading(false);
-  }, [username, password]);
+  }, []);
 
   return (
     <div className={styles.containerLogIn}>

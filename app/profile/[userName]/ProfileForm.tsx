@@ -170,7 +170,7 @@ export default function ProfileForm(props: Props) {
 
   useEffect(() => {
     setIsLoading(false);
-  }, [nickname, description, userCategories]);
+  }, []);
 
   return (
     <div>

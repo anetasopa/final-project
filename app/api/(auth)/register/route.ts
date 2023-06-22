@@ -28,8 +28,6 @@ export async function POST(
 ): Promise<NextResponse<RegisterResponseBodyPost>> {
   const body = await request.json();
 
-  console.log(request);
-
   const result = userSchema.safeParse(body);
 
   // try {
@@ -38,6 +36,15 @@ export async function POST(
   // } catch (e) {
   //   console.log({ e });
   // }
+
+  if (result.success) {
+    return NextResponse.json(
+      {
+        error: 'I just registered, you can go to login.',
+      },
+      { status: 200 },
+    );
+  }
 
   if (!result.success) {
     return NextResponse.json(

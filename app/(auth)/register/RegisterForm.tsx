@@ -12,6 +12,7 @@ export default function Signup() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string>('');
+  const [success, setSuccess] = useState<string>('');
   const [isLoading, setIsLoading] = useState(false);
 
   async function register() {
@@ -22,6 +23,7 @@ export default function Signup() {
     });
 
     const data: RegisterResponseBodyPost = await response.json();
+    console.log({ data });
 
     if ('error' in data) {
       setError(data.error);
@@ -40,7 +42,7 @@ export default function Signup() {
 
   useEffect(() => {
     setIsLoading(false);
-  }, [username, email, password]);
+  }, []);
 
   return (
     <div className={styles.containerSignUp}>
