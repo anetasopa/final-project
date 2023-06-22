@@ -32,14 +32,19 @@ export default function Nav({ user, singleUserData }) {
         {user ? (
           <>
             <LogoutButton logout={logout} />
-            <p>{user.username}</p>
-            <Image
-              alt="userImage"
-              src={singleUserData.imageUrl}
-              width={50}
-              height={50}
-              className={styles.profileImage}
-            />
+            <Link
+              className={styles.profileLink}
+              href={`/profile/${user.username}`}
+            >
+              <p className={styles.profileLinkName}>{user.username}</p>
+              <Image
+                alt="userImage"
+                src={singleUserData.imageUrl}
+                width={50}
+                height={50}
+                className={styles.profileImage}
+              />
+            </Link>
           </>
         ) : (
           <Link className={styles.buttonSignup} href="/register">
