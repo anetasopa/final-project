@@ -32,6 +32,7 @@ export default function Nav({ user, singleUserData }) {
         {user ? (
           <>
             <LogoutButton logout={logout} />
+
             <p>{user.username}</p>
             <Image
               alt="userImage"

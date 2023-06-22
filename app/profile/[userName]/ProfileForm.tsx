@@ -54,6 +54,7 @@ async function save({
       }),
     });
 
+    console.log({ response });
     if (response.status !== 500) {
       const data: CreateResponseBodyPost = await response.json();
 

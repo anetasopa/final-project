@@ -5,6 +5,7 @@ import {
   getUsersById,
   updateCategoriesOfUserById,
   updateUserById,
+  updateUserImageById,
   User,
 } from '../../../../../database/users';
 
@@ -92,20 +93,19 @@ export async function PUT(
     );
   }
 
-  await updateUserById(
-    userId,
-    result.data.nickname,
-    result.data.imageUrl,
-    result.data.description,
-  );
+  await updateUserById(userId, result.data.nickname, result.data.description);
 
   await updateCategoriesOfUserById(userId, result.data.idSelectedCategories);
   const userCategories = await getUserCategories(userId);
+
+  const userImage = await updateUserImageById(userId, result.data.imageUrl);
+  console.log({ userImage });
 
   user = await getUsersById(userId);
 
   return NextResponse.json({
     user,
     userCategories,
+    userImage,
   });
 }
