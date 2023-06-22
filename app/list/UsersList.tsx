@@ -2,7 +2,9 @@ import Image from 'next/image';
 import React from 'react';
 import styles from './UsersList.module.scss';
 
-export default async function UsersLis({ users }) {
+export default async function UsersLis({ users, userId }) {
+  const filteredUsers = users.filter((user) => user.id !== userId);
+
   return (
     <div className={styles.container}>
       <ul className={styles.responsiveTable}>
@@ -23,7 +25,7 @@ export default async function UsersLis({ users }) {
             Interests
           </div>
         </li>
-        {users.map((user) => {
+        {filteredUsers.map((user) => {
           return (
             <>
               <li className={styles.tableRow}>
