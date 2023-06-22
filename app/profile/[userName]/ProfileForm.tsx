@@ -6,6 +6,7 @@ import React, { useState } from 'react';
 import Creatable from 'react-select';
 import { User } from '../../../database/users';
 import { Category } from '../../../migrations/1686916405-createTableCategories';
+import { cloudinaryLoader } from '../../../util/cloudinary';
 import { CreateResponseBodyPost } from '../../api/(auth)/users/[userId]/route';
 import { LoadImage } from './LoadImage';
 import styles from './ProfileForm.module.scss';

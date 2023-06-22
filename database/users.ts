@@ -1,5 +1,4 @@
 import { cache } from 'react';
-import { Category } from '../migrations/1686916405-createTableCategories';
 import { UserCategories } from '../migrations/1687248585-createTableUserCategories';
 import { sql } from './connect';
 
