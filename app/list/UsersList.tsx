@@ -22,8 +22,8 @@ export default async function UsersLis({ users, userId, categories }: Props) {
   // console.log(uniqueChars);
 
   // console.log({ commonNames });
-  // const commonCategories = categories.map((category) => category.name);
-  // console.log({ commonCategories });
+  const commonCategories = categories.map((category) => category.name);
+  console.log({ commonCategories });
 
   return (
     <div className={styles.container}>
@@ -98,7 +98,7 @@ export default async function UsersLis({ users, userId, categories }: Props) {
                 >
                   <div className={styles.categoriesContainer}>
                     {/* {commonNames} */}
-                    {/* {user.categories.map((category) => {
+                    {user.categories.map((category) => {
                       if (
                         category &&
                         category.name.includes(commonCategories)
@@ -106,7 +106,7 @@ export default async function UsersLis({ users, userId, categories }: Props) {
                         return <p key={category.id}>{category.name}</p>;
                       }
                       return null;
-                    })} */}
+                    })}
                   </div>
                 </div>
               </li>

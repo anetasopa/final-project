@@ -25,6 +25,7 @@ export async function POST(
   request: NextRequest,
 ): Promise<NextResponse<LoginResponseBodyPost>> {
   const body = await request.json();
+  console.log({ body });
 
   const result = userSchema.safeParse(body);
 
