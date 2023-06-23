@@ -12,8 +12,18 @@ type Props = {
 
 export default async function UsersLis({ users, userId, categories }: Props) {
   const filteredUsers = users.filter((user) => user.id !== userId);
-  const commonCategories = categories.map((category) => category.name);
-  console.log({ commonCategories });
+  const usersCategories = categories;
+  console.log({ filteredUsers });
+  console.log({ usersCategories });
+
+  // let chars = ['A', 'B', 'A', 'C', 'B'];
+  // let uniqueChars = [...new Set(chars)];
+
+  // console.log(uniqueChars);
+
+  // console.log({ commonNames });
+  // const commonCategories = categories.map((category) => category.name);
+  // console.log({ commonCategories });
 
   return (
     <div className={styles.container}>
@@ -87,7 +97,8 @@ export default async function UsersLis({ users, userId, categories }: Props) {
                   data-label="Common interests"
                 >
                   <div className={styles.categoriesContainer}>
-                    {user.categories.map((category) => {
+                    {/* {commonNames} */}
+                    {/* {user.categories.map((category) => {
                       if (
                         category &&
                         category.name.includes(commonCategories)
@@ -95,7 +106,7 @@ export default async function UsersLis({ users, userId, categories }: Props) {
                         return <p key={category.id}>{category.name}</p>;
                       }
                       return null;
-                    })}
+                    })} */}
                   </div>
                 </div>
               </li>

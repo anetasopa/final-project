@@ -12,7 +12,7 @@ import {
 import { secureCookieOptions } from '../../../../util/cookies';
 
 type Error = {
-  error: string;
+  errors: z.ZodIssue[] | string;
 };
 
 export type RegisterResponseBodyPost = { user: User } | Error;
@@ -26,7 +26,7 @@ const userSchema = z.object({
     .max(10, { message: 'The password must be 10 characters or less' })
     .regex(
       /^[a-zA-Z0-9_]+$/,
-      'The username must contain only letters, numbers and underscore (_)',
+      'The password must contain only letters, numbers and underscore (_)',
     ),
 });
 
@@ -35,8 +35,8 @@ export async function POST(
 ): Promise<NextResponse<RegisterResponseBodyPost>> {
   const body = await request.json();
 
-  const result = userSchema.safeParse(body);
   const validationResult = userSchema.safeParse(body);
+  console.log(validationResult);
 
   // validationResult: {
   //   success: true,
@@ -47,35 +47,33 @@ export async function POST(
   //   }
   // }
 
-  // console.log({ validationResult, errors: validationResult.error });
-
-  if (!result.success) {
+  if (!validationResult.success) {
     return NextResponse.json(
       {
-        error: 'User, email or password missing!',
-        errors: validationResult.error,
+        errors: validationResult.error.issues,
       },
       { status: 406 },
     );
   }
 
-  if (await getUsersByUserName(result.data.username)) {
+  const userExists = await getUsersByUserName(validationResult.data.username);
+  if (userExists) {
     return NextResponse.json(
       {
-        error: 'User is already used!',
+        errors: 'User is already used!',
       },
       { status: 400 },
     );
   }
 
-  const passwordHash = bcrypt.hash(result.data.password, 10);
+  const passwordHash = bcrypt.hash(validationResult.data.password, 10);
 
   const imageUrlDefault =
     'https://res.cloudinary.com/dkanovye3/image/upload/v1687429458/my-uploads/pwzxdjpie5iqnou4vrhv.png';
 
   const newUser = await createUser(
-    result.data.username,
-    result.data.email,
+    validationResult.data.username,
+    validationResult.data.email,
     await passwordHash,
     imageUrlDefault,
   );
@@ -83,21 +81,20 @@ export async function POST(
   if (!newUser) {
     return NextResponse.json(
       {
-        error: 'Error creating the new user!',
+        errors: 'Error creating the new user!',
       },
       { status: 500 },
     );
   }
 
   const token = crypto.randomBytes(100).toString('base64');
-  // 6. Create the session record
 
   const session = await createSession(token, newUser.id);
 
   if (!session) {
     return NextResponse.json(
       {
-        error: 'Error creating the new session',
+        errors: 'Error creating the new session',
       },
       { status: 500 },
     );
@@ -110,5 +107,14 @@ export async function POST(
     ...secureCookieOptions,
   });
 
-  if (!newUser) return NextResponse.json({ user: newUser });
+  if (!newUser) {
+    return NextResponse.json(
+      {
+        errors: 'Error creating the new user',
+      },
+      { status: 500 },
+    );
+  }
+
+  return NextResponse.json({ user: newUser });
 }

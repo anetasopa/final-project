@@ -42,10 +42,6 @@ export default function LoginForm() {
     // setPassword('');
   }
 
-  // useEffect(() => {
-  //   setIsLoading(false);
-  // }, []);
-
   return (
     <div className={styles.containerLogIn}>
       <Link href="/">

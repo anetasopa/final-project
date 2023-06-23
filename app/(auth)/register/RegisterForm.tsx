@@ -8,11 +8,11 @@ import { IoMdClose } from 'react-icons/io';
 import { RegisterResponseBodyPost } from '../../api/(auth)/register/route';
 import styles from './RegisterForm.module.scss';
 
-export default function Signup() {
+export default function RegisterForm() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState<string>('');
+  const [errors, setErrors] = useState<string | []>('');
   const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
@@ -37,7 +37,7 @@ export default function Signup() {
   //   );
   // };
 
-  async function register({ setError, setIsLoading }: Props) {
+  async function register({ setErrors, setIsLoading }: Props) {
     setIsLoading(true);
     const response = await fetch('/api/register', {
       method: 'POST',
@@ -46,24 +46,25 @@ export default function Signup() {
 
     const data: RegisterResponseBodyPost = await response.json();
 
-    // const pathToCollect = data?.errors?.issues;
-    // const paths = pathToCollect.map((entry) => {
-    //   return entry.path[0];
-    // });
+    if ('errors' in data) {
+      if (typeof data.errors === 'string') {
+        setErrors(data.errors);
+      }
 
-    // const message = pathToCollect.map((entry) => {
-    //   return entry.message;
-    // });
-
-    // console.log({ paths: paths });
-    // console.log({ message: message });
-
-    if ('error' in data) {
-      setError(data.error);
+      if (Array.isArray(data.errors)) {
+        const pathToCollect = data?.errors;
+        const paths = pathToCollect.map((entry) => {
+          return entry.path[0];
+        });
+        const message = pathToCollect.map((entry) => {
+          return entry.message;
+        });
+        console.log({ message: message, paths: paths });
+      }
     }
 
     if ('user' in data) {
-      setError(data.user);
+      setErrors(data.user);
     }
 
     setIsLoading(false);
@@ -72,10 +73,6 @@ export default function Signup() {
     // setEmail('');
     // setPassword('');
   }
-
-  // useEffect(() => {
-  //   setIsLoading(false);
-  // }, []);
 
   return (
     <div className={styles.containerSignUp}>
@@ -113,9 +110,9 @@ export default function Signup() {
         />
         {/* {getError('userName')} */}
         {/* {renderError(error, 'userName')} */}
-        {error !== '' && (
+        {errors !== '' && (
           <div className={styles.errorContainer}>
-            <p className={styles.errorMessage}>{error}</p>{' '}
+            <p className={styles.errorMessage}>{errors}</p>{' '}
             <FaExclamationCircle className={styles.icon} />
           </div>
         )}
@@ -127,9 +124,9 @@ export default function Signup() {
           type="email"
           required
         />
-        {error !== '' && (
+        {errors !== '' && (
           <div className={styles.errorContainer}>
-            <p className={styles.errorMessage}>{error}</p>{' '}
+            <p className={styles.errorMessage}>{errors}</p>{' '}
             <FaExclamationCircle className={styles.icon} />
           </div>
         )}
@@ -142,9 +139,9 @@ export default function Signup() {
             onChange={(event) => setPassword(event.target.value)}
             required
           />
-          {error !== '' && (
+          {errors !== '' && (
             <div className={styles.errorContainer}>
-              <p className={styles.errorMessage}>{error}</p>{' '}
+              <p className={styles.errorMessage}>{errors}</p>{' '}
               <FaExclamationCircle className={styles.icon} />
             </div>
           )}
@@ -152,7 +149,7 @@ export default function Signup() {
         <button
           className={styles.buttonSignUp}
           onClick={async () => {
-            await register({ setError, setIsLoading });
+            await register({ setErrors, setIsLoading });
           }}
         >
           {isLoading ? (
