@@ -8,11 +8,16 @@ import { IoMdClose } from 'react-icons/io';
 import { RegisterResponseBodyPost } from '../../api/(auth)/register/route';
 import styles from './RegisterForm.module.scss';
 
+type ZodError = {
+  field?: string | number;
+  message: string;
+};
+
 export default function RegisterForm() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [errors, setErrors] = useState<string | []>('');
+  const [errors, setErrors] = useState<string | ZodError[]>('');
   const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
@@ -21,7 +26,8 @@ export default function RegisterForm() {
     setError: () => void;
     setIsLoading: any;
   };
-
+  const testmessage = 'test message';
+  let errorMessageUsername;
   // const renderError = (error, key) => {
   //   const errorName = error?.inner?.find((e) => e.path === key);
 
@@ -37,7 +43,7 @@ export default function RegisterForm() {
   //   );
   // };
 
-  async function register({ setErrors, setIsLoading }: Props) {
+  async function register() {
     setIsLoading(true);
     const response = await fetch('/api/register', {
       method: 'POST',
@@ -53,18 +59,19 @@ export default function RegisterForm() {
 
       if (Array.isArray(data.errors)) {
         const pathToCollect = data?.errors;
-        const paths = pathToCollect.map((entry) => {
-          return entry.path[0];
+        console.log(pathToCollect);
+        const zodErrors = pathToCollect.map((entry) => {
+          return { field: entry.path[0], message: entry.message };
         });
-        const message = pathToCollect.map((entry) => {
-          return entry.message;
-        });
-        console.log({ message: message, paths: paths });
+        console.log(zodErrors[0]?.message);
+
+        setErrors(zodErrors);
       }
+      return;
     }
 
     if ('user' in data) {
-      setErrors(data.user);
+      setErrors('');
     }
 
     setIsLoading(false);
@@ -110,12 +117,18 @@ export default function RegisterForm() {
         />
         {/* {getError('userName')} */}
         {/* {renderError(error, 'userName')} */}
-        {errors !== '' && (
+        {/* {typeof errors !== 'string' && (
           <div className={styles.errorContainer}>
-            <p className={styles.errorMessage}>{errors}</p>{' '}
+            <p className={styles.errorMessage}>
+              {JSON.stringify(
+                errors.filter((error) => error.field === 'username'),
+              )}
+              <p>{errorMessageUsername}</p>
+              <p>{testmessage}</p>
+            </p>{' '}
             <FaExclamationCircle className={styles.icon} />
           </div>
-        )}
+        )} */}
         <label htmlFor="email">Email Address</label>
         <input
           id="email"
@@ -124,12 +137,16 @@ export default function RegisterForm() {
           type="email"
           required
         />
-        {errors !== '' && (
+        {/* {typeof errors !== 'string' && (
           <div className={styles.errorContainer}>
-            <p className={styles.errorMessage}>{errors}</p>{' '}
+            <p className={styles.errorMessage}>
+              {JSON.stringify(
+                errors.filter((error) => error.field === 'email'),
+              )}
+            </p>{' '}
             <FaExclamationCircle className={styles.icon} />
           </div>
-        )}
+        )} */}
         <label htmlFor="password">Password</label>
         <div>
           <input
@@ -139,17 +156,21 @@ export default function RegisterForm() {
             onChange={(event) => setPassword(event.target.value)}
             required
           />
-          {errors !== '' && (
+          {/* {typeof errors !== 'string' && (
             <div className={styles.errorContainer}>
-              <p className={styles.errorMessage}>{errors}</p>{' '}
+              <p className={styles.errorMessage}>
+                {JSON.stringify(
+                  errors.filter((error) => error.field === 'password'),
+                )}
+              </p>{' '}
               <FaExclamationCircle className={styles.icon} />
             </div>
-          )}
+          )} */}
         </div>
         <button
           className={styles.buttonSignUp}
           onClick={async () => {
-            await register({ setErrors, setIsLoading });
+            await register();
           }}
         >
           {isLoading ? (
