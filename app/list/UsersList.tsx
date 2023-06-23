@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import React from 'react';
 import { User } from '../../database/users';
 import { Category } from '../../migrations/1686916405-createTableCategories';
@@ -68,7 +69,7 @@ export default async function UsersLis({ users, userId, categories }: Props) {
                   className={`${styles.col} ${styles.col2}`}
                   data-label="Username"
                 >
-                  {user.username}
+                  <Link href="/chat">{user.username}</Link>
                 </div>
                 <div
                   className={`${styles.col} ${styles.col3}`}
