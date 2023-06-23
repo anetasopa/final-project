@@ -175,7 +175,7 @@ export default function ProfileForm(props: Props) {
   return (
     <div>
       <div className={styles.profileContainer}>
-        <div className={styles.imageUsernameContainer}>
+        <div>
           <Image
             alt="userImage"
             src={imageUrl}

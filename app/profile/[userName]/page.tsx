@@ -29,6 +29,7 @@ export default async function Profile({ params }: Props) {
 
   const singleUserData = await getUsersById(userId);
   const userCategories = await getUserCategories(userId);
+  console.log(userCategories);
 
   if (!user) {
     notFound();

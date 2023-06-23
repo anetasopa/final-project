@@ -1,9 +1,19 @@
 import Image from 'next/image';
 import React from 'react';
+import { User } from '../../database/users';
+import { Category } from '../../migrations/1686916405-createTableCategories';
 import styles from './UsersList.module.scss';
 
-export default async function UsersLis({ users, userId }) {
+type Props = {
+  userId: number;
+  users: User[];
+  categories: Category[];
+};
+
+export default async function UsersLis({ users, userId, categories }: Props) {
   const filteredUsers = users.filter((user) => user.id !== userId);
+  const commonCategories = categories.map((category) => category.name);
+  console.log({ commonCategories });
 
   return (
     <div className={styles.container}>
@@ -24,6 +34,9 @@ export default async function UsersLis({ users, userId }) {
           <div className={`${styles.col} ${styles.col5} ${styles.bold}`}>
             Interests
           </div>
+          <div className={`${styles.col} ${styles.col5} ${styles.bold}`}>
+            Common interests
+          </div>
         </li>
         {filteredUsers.map((user) => {
           return (
@@ -38,7 +51,7 @@ export default async function UsersLis({ users, userId }) {
                     src={user.imageUrl}
                     width={100}
                     height={100}
-                    style={{ borderRadius: '50px' }}
+                    className={styles.profileImg}
                   />
                 </div>
                 <div
@@ -66,6 +79,22 @@ export default async function UsersLis({ users, userId }) {
                   <div className={styles.categoriesContainer}>
                     {user.categories.map((category) => {
                       return category ? <p>{category.name}</p> : null;
+                    })}
+                  </div>
+                </div>
+                <div
+                  className={`${styles.col} ${styles.col5}`}
+                  data-label="Common interests"
+                >
+                  <div className={styles.categoriesContainer}>
+                    {user.categories.map((category) => {
+                      if (
+                        category &&
+                        category.name.includes(commonCategories)
+                      ) {
+                        return <p key={category.id}>{category.name}</p>;
+                      }
+                      return null;
                     })}
                   </div>
                 </div>

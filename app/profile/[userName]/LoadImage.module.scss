@@ -9,6 +9,13 @@
     position: absolute;
     margin-top: 150px;
     margin-left: -350px;
+
+    @media (max-width: 480px) {
+      & {
+        margin-top: -150px;
+        margin-left: -90px;
+      }
+    }
   }
 }
 

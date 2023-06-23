@@ -19,8 +19,15 @@ export type RegisterResponseBodyPost = { user: User } | Error;
 
 const userSchema = z.object({
   username: z.string().min(5),
-  email: z.string().min(5),
-  password: z.string().min(5),
+  email: z.string().email().min(5),
+  password: z
+    .string()
+    .min(4, { message: 'The password must be 4 characters or more' })
+    .max(10, { message: 'The password must be 10 characters or less' })
+    .regex(
+      /^[a-zA-Z0-9_]+$/,
+      'The username must contain only letters, numbers and underscore (_)',
+    ),
 });
 
 export async function POST(
@@ -29,18 +36,24 @@ export async function POST(
   const body = await request.json();
 
   const result = userSchema.safeParse(body);
+  const validationResult = userSchema.safeParse(body);
 
-  // try {
-  //   const a = userSchema.safeParse(body);
-  //   console.log({ a: a, error: a.error });
-  // } catch (e) {
-  //   console.log({ e });
+  // validationResult: {
+  //   success: true,
+  //   data: {
+  //     username: 'dwde12',
+  //     email: 'dxdfsasdasd@asd.pl',
+  //     password: 'AA3232aaa_'
+  //   }
   // }
+
+  // console.log({ validationResult, errors: validationResult.error });
 
   if (!result.success) {
     return NextResponse.json(
       {
         error: 'User, email or password missing!',
+        errors: validationResult.error,
       },
       { status: 406 },
     );

@@ -8,9 +8,7 @@ import { IoMdClose } from 'react-icons/io';
 import { LoginResponseBodyPost } from '../../api/(auth)/login/route';
 import styles from './LoginForm.module.scss';
 
-export default function LoginForm(props: {
-  onFormSwitch: (login: string) => void;
-}) {
+export default function LoginForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string>('');
@@ -28,7 +26,6 @@ export default function LoginForm(props: {
     });
 
     const data: LoginResponseBodyPost = await response.json();
-    console.log(data);
 
     if ('error' in data) {
       setError(data.error);
@@ -45,9 +42,9 @@ export default function LoginForm(props: {
     // setPassword('');
   }
 
-  useEffect(() => {
-    setIsLoading(false);
-  }, []);
+  // useEffect(() => {
+  //   setIsLoading(false);
+  // }, []);
 
   return (
     <div className={styles.containerLogIn}>

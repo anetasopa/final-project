@@ -37,6 +37,11 @@
     .categoriesContainer {
       display: block;
     }
+
+    .profileImg {
+      object-fit: cover;
+      border-radius: 50px;
+    }
   }
   .col1 {
     flex-basis: 20%;

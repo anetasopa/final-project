@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { FaExclamationCircle } from 'react-icons/fa';
 import { IoMdClose } from 'react-icons/io';
@@ -12,10 +13,31 @@ export default function Signup() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string>('');
-  const [success, setSuccess] = useState<string>('');
   const [isLoading, setIsLoading] = useState(false);
 
-  async function register() {
+  const router = useRouter();
+
+  type Props = {
+    setError: () => void;
+    setIsLoading: any;
+  };
+
+  // const renderError = (error, key) => {
+  //   const errorName = error?.inner?.find((e) => e.path === key);
+
+  //   if (!errorName) {
+  //     return null;
+  //   }
+
+  //   return (
+  //     <div className={styles.errorContainer}>
+  //       <p className={styles.errorMessage}>{errorName.message}</p>{' '}
+  //       <FaExclamationCircle className={styles.icon} />
+  //     </div>
+  //   );
+  // };
+
+  async function register({ setError, setIsLoading }: Props) {
     setIsLoading(true);
     const response = await fetch('/api/register', {
       method: 'POST',
@@ -23,7 +45,18 @@ export default function Signup() {
     });
 
     const data: RegisterResponseBodyPost = await response.json();
-    console.log({ data });
+
+    // const pathToCollect = data?.errors?.issues;
+    // const paths = pathToCollect.map((entry) => {
+    //   return entry.path[0];
+    // });
+
+    // const message = pathToCollect.map((entry) => {
+    //   return entry.message;
+    // });
+
+    // console.log({ paths: paths });
+    // console.log({ message: message });
 
     if ('error' in data) {
       setError(data.error);
@@ -34,15 +67,15 @@ export default function Signup() {
     }
 
     setIsLoading(false);
-
+    router.refresh();
     // setUsername('');
     // setEmail('');
     // setPassword('');
   }
 
-  useEffect(() => {
-    setIsLoading(false);
-  }, []);
+  // useEffect(() => {
+  //   setIsLoading(false);
+  // }, []);
 
   return (
     <div className={styles.containerSignUp}>
@@ -78,6 +111,8 @@ export default function Signup() {
           onChange={(event) => setUsername(event.currentTarget.value)}
           required
         />
+        {/* {getError('userName')} */}
+        {/* {renderError(error, 'userName')} */}
         {error !== '' && (
           <div className={styles.errorContainer}>
             <p className={styles.errorMessage}>{error}</p>{' '}
@@ -117,7 +152,7 @@ export default function Signup() {
         <button
           className={styles.buttonSignUp}
           onClick={async () => {
-            await register();
+            await register({ setError, setIsLoading });
           }}
         >
           {isLoading ? (
