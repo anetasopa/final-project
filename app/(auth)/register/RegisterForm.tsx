@@ -28,20 +28,6 @@ export default function RegisterForm() {
   };
   const testmessage = 'test message';
   let errorMessageUsername;
-  // const renderError = (error, key) => {
-  //   const errorName = error?.inner?.find((e) => e.path === key);
-
-  //   if (!errorName) {
-  //     return null;
-  //   }
-
-  //   return (
-  //     <div className={styles.errorContainer}>
-  //       <p className={styles.errorMessage}>{errorName.message}</p>{' '}
-  //       <FaExclamationCircle className={styles.icon} />
-  //     </div>
-  //   );
-  // };
 
   async function register() {
     setIsLoading(true);
@@ -117,7 +103,7 @@ export default function RegisterForm() {
         />
         {/* {getError('userName')} */}
         {/* {renderError(error, 'userName')} */}
-        {/* {typeof errors !== 'string' && (
+        {typeof errors !== 'string' && (
           <div className={styles.errorContainer}>
             <p className={styles.errorMessage}>
               {JSON.stringify(
@@ -128,7 +114,7 @@ export default function RegisterForm() {
             </p>{' '}
             <FaExclamationCircle className={styles.icon} />
           </div>
-        )} */}
+        )}
         <label htmlFor="email">Email Address</label>
         <input
           id="email"
