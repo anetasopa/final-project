@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { FaExclamationCircle } from 'react-icons/fa';
 import { IoMdClose } from 'react-icons/io';
 import { RegisterResponseBodyPost } from '../../api/(auth)/register/route';
@@ -100,8 +100,6 @@ export default function RegisterForm() {
           value={username}
           onChange={(event) => setUsername(event.currentTarget.value)}
         />
-        {/* {getError('userName')} */}
-        {/* {renderError(error, 'userName')} */}
         {typeof errors !== 'string' && (
           <div className={styles.errorContainer}>
             {errors
