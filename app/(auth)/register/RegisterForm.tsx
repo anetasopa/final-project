@@ -105,14 +105,14 @@ export default function RegisterForm() {
         {/* {renderError(error, 'userName')} */}
         {typeof errors !== 'string' && (
           <div className={styles.errorContainer}>
-            <p className={styles.errorMessage}>
-              {JSON.stringify(
-                errors.filter((error) => error.field === 'username'),
-              )}
-              <p>{errorMessageUsername}</p>
-              <p>{testmessage}</p>
-            </p>{' '}
-            <FaExclamationCircle className={styles.icon} />
+            {errors
+              .filter((error) => error.field === 'username')
+              .map((error) => (
+                <div className={styles.errorMessage}>
+                  <p>{error.message}</p>
+                  {/* <FaExclamationCircle className={styles.icon} /> */}
+                </div>
+              ))}
           </div>
         )}
         <label htmlFor="email">Email Address</label>
@@ -123,16 +123,20 @@ export default function RegisterForm() {
           type="email"
           required
         />
-        {/* {typeof errors !== 'string' && (
+        {typeof errors !== 'string' && (
           <div className={styles.errorContainer}>
             <p className={styles.errorMessage}>
-              {JSON.stringify(
-                errors.filter((error) => error.field === 'email'),
-              )}
+              {errors
+                .filter((error) => error.field === 'email')
+                .map((error) => (
+                  <>
+                    <p>{error.message}</p>
+                    <FaExclamationCircle className={styles.icon} />
+                  </>
+                ))}
             </p>{' '}
-            <FaExclamationCircle className={styles.icon} />
           </div>
-        )} */}
+        )}
         <label htmlFor="password">Password</label>
         <div>
           <input
@@ -142,16 +146,20 @@ export default function RegisterForm() {
             onChange={(event) => setPassword(event.target.value)}
             required
           />
-          {/* {typeof errors !== 'string' && (
+          {typeof errors !== 'string' && (
             <div className={styles.errorContainer}>
               <p className={styles.errorMessage}>
-                {JSON.stringify(
-                  errors.filter((error) => error.field === 'password'),
-                )}
+                {errors
+                  .filter((error) => error.field === 'password')
+                  .map((error) => (
+                    <>
+                      <p>{error.message}</p>
+                      <FaExclamationCircle className={styles.icon} />
+                    </>
+                  ))}
               </p>{' '}
-              <FaExclamationCircle className={styles.icon} />
             </div>
-          )} */}
+          )}
         </div>
         <button
           className={styles.buttonSignUp}
