@@ -5,7 +5,16 @@ import util from 'util';
 import { User } from '../../database/users';
 import styles from './UsersList.module.scss';
 
-export default async function UsersLis({ result }) {
+type Props = {
+  userId: number;
+  users: User[];
+  result: any;
+};
+
+export default async function UsersLis({ users, myUser, result }: Props) {
+  console.log({ users });
+  console.log({ myUser });
+
   return (
     <div className={styles.container}>
       <ul className={styles.responsiveTable}>
@@ -40,40 +49,72 @@ export default async function UsersLis({ result }) {
                   className={`${styles.col} ${styles.col1}`}
                   data-label="Image"
                 >
-                  <Image
-                    alt="userImage"
-                    src={user.user.imageUrl}
-                    width={100}
-                    height={100}
-                    className={styles.profileImg}
-                  />
+                  <div className={styles.categoriesContainer}>
+                    <Image
+                      alt="userImage"
+                      src={user.user.imageUrl}
+                      width={100}
+                      height={100}
+                      className={styles.profileImg}
+                    />
+                  </div>
                 </div>
                 <div
                   className={`${styles.col} ${styles.col2}`}
                   data-label="Username"
                 >
-                  <Link href="/chat">{user.user.username}</Link>
+                  <div className={styles.categoriesContainer}>
+                    <Link href="/chat">{user.user.username}</Link>
+                  </div>
                 </div>
                 <div
                   className={`${styles.col} ${styles.col3}`}
                   data-label="Nickname"
                 >
-                  {user.user.nickname}
+                  <div className={styles.categoriesContainer}>
+                    {!user.user.nickname ? <p> - </p> : user.user.nickname}
+                  </div>
                 </div>
                 <div
                   className={`${styles.col} ${styles.col4}`}
                   data-label="Description"
                 >
-                  {user.user.description}
+                  <div className={styles.categoriesContainer}>
+                    {!user.user.description ? (
+                      <p> - </p>
+                    ) : (
+                      user.user.description
+                    )}
+                  </div>
                 </div>
                 <div
                   className={`${styles.col} ${styles.col5}`}
                   data-label="Interests"
                 >
                   <div className={styles.categoriesContainer}>
-                    {user.user.categories.map((category) => {
-                      return category ? <p>{category.name}</p> : null;
-                    })}
+                    {user.user.categories && user.user.categories.length > 0 ? (
+                      user.user.categories.map((category) => {
+                        return category ? <p>{category.name}</p> : null;
+                      })
+                    ) : (
+                      <p>-</p>
+                    )}
+                  </div>
+                </div>
+
+                <div
+                  className={`${styles.col} ${styles.col5}`}
+                  data-label="Common interests"
+                >
+                  <div className={styles.categoriesContainer}>
+                    {user.commonCategories &&
+                    user.commonCategories.length > 0 ? (
+                      user.commonCategories.map((category) => {
+                        return category ? <p>{category.name}</p> : null;
+                      })
+                    ) : (
+                      <p>-</p>
+                    )}
                   </div>
                 </div>
                 <div
@@ -81,7 +122,16 @@ export default async function UsersLis({ result }) {
                   data-label="Percentage"
                 >
                   <div className={styles.categoriesContainer}>
-                    {user.commonInterestsInPercentage}
+                    {user.commonInterestsInPercentage ? (
+                      <p>
+                        {Math.floor(
+                          Math.round(user.commonInterestsInPercentage),
+                        )}{' '}
+                        %
+                      </p>
+                    ) : (
+                      <p>-</p>
+                    )}
                   </div>
                 </div>
               </li>
