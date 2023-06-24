@@ -1,31 +1,11 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
+import util from 'util';
 import { User } from '../../database/users';
-import { Category } from '../../migrations/1686916405-createTableCategories';
 import styles from './UsersList.module.scss';
 
-type Props = {
-  userId: number;
-  users: User[];
-  categories: Category[];
-};
-
-export default async function UsersLis({ users, userId, categories }: Props) {
-  const filteredUsers = users.filter((user) => user.id !== userId);
-  const usersCategories = categories;
-  console.log({ filteredUsers });
-  console.log({ usersCategories });
-
-  // let chars = ['A', 'B', 'A', 'C', 'B'];
-  // let uniqueChars = [...new Set(chars)];
-
-  // console.log(uniqueChars);
-
-  // console.log({ commonNames });
-  const commonCategories = categories.map((category) => category.name);
-  console.log({ commonCategories });
-
+export default async function UsersLis({ result }) {
   return (
     <div className={styles.container}>
       <ul className={styles.responsiveTable}>
@@ -48,8 +28,11 @@ export default async function UsersLis({ users, userId, categories }: Props) {
           <div className={`${styles.col} ${styles.col5} ${styles.bold}`}>
             Common interests
           </div>
+          <div className={`${styles.col} ${styles.col5} ${styles.bold}`}>
+            Percentage
+          </div>
         </li>
-        {filteredUsers.map((user) => {
+        {result.map((user) => {
           return (
             <>
               <li className={styles.tableRow}>
@@ -59,7 +42,7 @@ export default async function UsersLis({ users, userId, categories }: Props) {
                 >
                   <Image
                     alt="userImage"
-                    src={user.imageUrl}
+                    src={user.user.imageUrl}
                     width={100}
                     height={100}
                     className={styles.profileImg}
@@ -69,45 +52,36 @@ export default async function UsersLis({ users, userId, categories }: Props) {
                   className={`${styles.col} ${styles.col2}`}
                   data-label="Username"
                 >
-                  <Link href="/chat">{user.username}</Link>
+                  <Link href="/chat">{user.user.username}</Link>
                 </div>
                 <div
                   className={`${styles.col} ${styles.col3}`}
                   data-label="Nickname"
                 >
-                  {user.nickname}
+                  {user.user.nickname}
                 </div>
                 <div
                   className={`${styles.col} ${styles.col4}`}
                   data-label="Description"
                 >
-                  {user.description}
+                  {user.user.description}
                 </div>
                 <div
                   className={`${styles.col} ${styles.col5}`}
                   data-label="Interests"
                 >
                   <div className={styles.categoriesContainer}>
-                    {user.categories.map((category) => {
+                    {user.user.categories.map((category) => {
                       return category ? <p>{category.name}</p> : null;
                     })}
                   </div>
                 </div>
                 <div
                   className={`${styles.col} ${styles.col5}`}
-                  data-label="Common interests"
+                  data-label="Percentage"
                 >
                   <div className={styles.categoriesContainer}>
-                    {/* {commonNames} */}
-                    {user.categories.map((category) => {
-                      if (
-                        category &&
-                        category.name.includes(commonCategories)
-                      ) {
-                        return <p key={category.id}>{category.name}</p>;
-                      }
-                      return null;
-                    })}
+                    {user.commonInterestsInPercentage}
                   </div>
                 </div>
               </li>

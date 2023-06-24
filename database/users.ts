@@ -1,4 +1,5 @@
 import { cache } from 'react';
+import { Category } from '../migrations/1686916405-createTableCategories';
 import { UserCategories } from '../migrations/1687248585-createTableUserCategories';
 import { sql } from './connect';
 
@@ -16,6 +17,7 @@ export type User = {
   nickname: string | null;
   imageUrl: string | null;
   description: string | null;
+  categories: Category[];
 };
 
 export const getUsers = cache(async () => {
@@ -38,6 +40,29 @@ export const getUsers = cache(async () => {
   return users;
 });
 
+// https://stackoverflow.com/questions/24155190/postgresql-left-join-json-agg-ignore-remove-null
+export const getUsers2 = cache(async (skipUserId: number) => {
+  const users = await sql<User[]>`
+    SELECT
+      u.id,
+      u.id AS user_id,
+      u.description,
+      u.username,
+      u.nickname,
+      u.image_url,
+      COALESCE(JSON_AGG(c.*)  FILTER (WHERE c.id IS NOT NULL), '[]') AS categories,
+      COALESCE(JSON_AGG(c.id)  FILTER (WHERE c.id IS NOT NULL), '[]') AS interests
+    FROM users u
+    LEFT JOIN user_categories uc ON u.id = uc.user_id
+    LEFT JOIN categories c ON c.id = uc.category_id
+    WHERE u.id != ${skipUserId}
+    GROUP BY u.id
+    ;
+ `;
+
+  return users;
+});
+
 export const getUsersWithPasswordHashByUserName = cache(
   async (username: string) => {
     const [user] = await sql<UserWithPasswordHash[]>`
@@ -47,19 +72,26 @@ export const getUsersWithPasswordHashByUserName = cache(
   },
 );
 
+//  column "u.id" must appear in the GROUP BY clause or be used in an aggregate function
 export const getUsersById = cache(async (id: number) => {
   const [user] = await sql<User[]>`
     SELECT
-      id,
-      username,
-      email,
-      nickname,
-      image_url,
-      description
+      u.id,
+      u.id AS user_id,
+      u.username,
+      u.email,
+      u.nickname,
+      u.image_url,
+      u.description,
+      COALESCE(JSON_AGG(c.*)  FILTER (WHERE c.id IS NOT NULL), '[]') AS categories,
+      COALESCE(JSON_AGG(c.id)  FILTER (WHERE c.id IS NOT NULL), '[]') AS interests
     FROM
-    users
+      users u
+    LEFT JOIN user_categories uc ON u.id = uc.user_id
+    LEFT JOIN categories c ON c.id = uc.category_id
     WHERE
-      id = ${id}
+      u.id = ${id}
+    GROUP BY u.id
   `;
   return user;
 });
