@@ -16,8 +16,11 @@ const links = [
 ];
 
 export default function Nav({ user, singleUserData }) {
-  // const [menuOpen, setMenuOpen] = useState(false);
-  // const click = () => setMenuOpen((prev) => !prev);`
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleMenuToggle = () => {
+    setIsOpen(!isOpen);
+  };
 
   return (
     <header className={styles.header}>
@@ -26,6 +29,22 @@ export default function Nav({ user, singleUserData }) {
           <Link href="/" className={styles.logo}>
             ChatSync
           </Link>
+        </div>
+
+        <div className={styles.hamburgerMenu}>
+          <div
+            className={`${styles.navIcon} ${isOpen ? styles.open : ''}`}
+            onClick={handleMenuToggle}
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <ul className={`${styles.menuItems} ${isOpen ? styles.open : ''}`}>
+            <li>Menu Item 1</li>
+            <li>Menu Item 2</li>
+            <li>Menu Item 3</li>
+          </ul>
         </div>
 
         {/* <div className={`${styles.nav} ${menuOpen ? styles[`navOpen`] : {}} `}> */}

@@ -43,7 +43,7 @@ async function save({
   nickname,
   description,
 }: Props) {
-  setShowInput(false);
+  setShowInput(true);
   try {
     setIsLoading(true);
     const response = await fetch(`/api/users/${userId}`, {
@@ -198,7 +198,7 @@ export default function ProfileForm(props: Props) {
           onSubmit={(event) => event.preventDefault()}
         >
           <label htmlFor="nickname">Nickname</label>
-          {showInput ? (
+          {!showInput ? (
             <input
               id="nickname"
               value={nickname}
@@ -210,7 +210,7 @@ export default function ProfileForm(props: Props) {
           )}
 
           <label htmlFor="description">Description</label>
-          {showInput ? (
+          {!showInput ? (
             <textarea
               style={{ fontSize: '14px' }}
               name="description"
@@ -225,7 +225,7 @@ export default function ProfileForm(props: Props) {
             <p className={styles.profileData}>{description}</p>
           )}
           <p className={styles.interestsTitle}>Interests</p>
-          {showInput ? (
+          {!showInput ? (
             <>
               {userCategories.map((category) => {
                 return (
@@ -248,7 +248,7 @@ export default function ProfileForm(props: Props) {
             })
           )}
 
-          {showInput ? (
+          {!showInput ? (
             <button
               className={styles.buttonCreate}
               onClick={async () => {
@@ -277,7 +277,7 @@ export default function ProfileForm(props: Props) {
           ) : (
             <button
               className={styles.buttonEdit}
-              onClick={() => setShowInput(true)}
+              onClick={() => setShowInput(false)}
             >
               Edit
             </button>
