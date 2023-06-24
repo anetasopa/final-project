@@ -80,6 +80,7 @@ async function save({
 export default function ProfileForm(props: Props) {
   const singleUserData = props.singleUserData;
   const userCategoriesProps = props.userCategories;
+  console.log({ singleUserData });
 
   const [isLoading, setIsLoading] = useState(false);
   const [selectedOption, setSelectedOption] = useState(userCategoriesProps);

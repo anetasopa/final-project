@@ -17,7 +17,7 @@ const links = [
 
 export default function Nav({ user, singleUserData }) {
   // const [menuOpen, setMenuOpen] = useState(false);
-  // const click = () => setMenuOpen((prev) => !prev);
+  // const click = () => setMenuOpen((prev) => !prev);`
 
   return (
     <header className={styles.header}>
