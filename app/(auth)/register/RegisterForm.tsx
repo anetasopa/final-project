@@ -61,7 +61,7 @@ export default function RegisterForm() {
     }
 
     setIsLoading(false);
-    router.refresh();
+    // router.refresh();
     // setUsername('');
     // setEmail('');
     // setPassword('');
