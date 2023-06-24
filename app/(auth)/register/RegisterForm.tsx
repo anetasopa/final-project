@@ -99,7 +99,6 @@ export default function RegisterForm() {
           id="userName"
           value={username}
           onChange={(event) => setUsername(event.currentTarget.value)}
-          required
         />
         {/* {getError('userName')} */}
         {/* {renderError(error, 'userName')} */}
@@ -121,20 +120,17 @@ export default function RegisterForm() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           type="email"
-          required
         />
         {typeof errors !== 'string' && (
           <div className={styles.errorContainer}>
-            <p className={styles.errorMessage}>
-              {errors
-                .filter((error) => error.field === 'email')
-                .map((error) => (
-                  <>
-                    <p>{error.message}</p>
-                    <FaExclamationCircle className={styles.icon} />
-                  </>
-                ))}
-            </p>{' '}
+            {errors
+              .filter((error) => error.field === 'email')
+              .map((error) => (
+                <div className={styles.errorMessage}>
+                  <p>{error.message}</p>
+                  {/* <FaExclamationCircle className={styles.icon} /> */}
+                </div>
+              ))}
           </div>
         )}
         <label htmlFor="password">Password</label>
@@ -144,20 +140,17 @@ export default function RegisterForm() {
             id="password"
             value={password}
             onChange={(event) => setPassword(event.target.value)}
-            required
           />
           {typeof errors !== 'string' && (
             <div className={styles.errorContainer}>
-              <p className={styles.errorMessage}>
-                {errors
-                  .filter((error) => error.field === 'password')
-                  .map((error) => (
-                    <>
-                      <p>{error.message}</p>
-                      <FaExclamationCircle className={styles.icon} />
-                    </>
-                  ))}
-              </p>{' '}
+              {errors
+                .filter((error) => error.field === 'password')
+                .map((error) => (
+                  <div className={styles.errorMessage}>
+                    <p>{error.message}</p>
+                    {/* <FaExclamationCircle className={styles.icon} /> */}
+                  </div>
+                ))}
             </div>
           )}
         </div>
