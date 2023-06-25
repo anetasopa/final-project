@@ -1,6 +1,6 @@
 import { cookies } from 'next/headers';
 import { notFound } from 'next/navigation';
-import React, { use } from 'react';
+import React from 'react';
 import { getCategories } from '../../../database/categories';
 import {
   getUserBySessionToken,
@@ -29,7 +29,6 @@ export default async function Profile({ params }: Props) {
 
   const singleUserData = await getUsersById(userId);
   const userCategories = await getUserCategories(userId);
-  console.log({ singleUserData });
 
   if (!user) {
     notFound();

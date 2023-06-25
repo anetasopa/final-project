@@ -8,6 +8,7 @@ import {
   getUsersById,
 } from '../../database/users';
 import styles from './page.module.scss';
+import Search from './Search';
 import UsersList from './UsersList';
 
 const usersWithSimilarInterests = (users, myUser) =>
@@ -65,6 +66,7 @@ export default async function List() {
   const myUser = await getUsersById(userId);
 
   const result = usersWithSimilarInterests(users, myUser);
+  console.log({ result });
 
   console.log(
     util.inspect(
@@ -78,8 +80,7 @@ export default async function List() {
 
   return (
     <main className={styles.listContainer}>
-      <h2>List of users</h2>
-      <UsersList result={result} />
+      <UsersList result={result} users={users} />
     </main>
   );
 }
