@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
-import util from 'util';
 import { User } from '../../database/users';
 import styles from './UsersList.module.scss';
 
@@ -11,10 +10,7 @@ type Props = {
   result: any;
 };
 
-export default async function UsersLis({ users, myUser, result }: Props) {
-  console.log({ users });
-  console.log({ myUser });
-
+export default async function UsersLis({ result }: Props) {
   return (
     <div className={styles.container}>
       <ul className={styles.responsiveTable}>

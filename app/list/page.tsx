@@ -76,42 +76,10 @@ export default async function List() {
     ),
   );
 
-  // const users = [
-  //   {
-  //     id: 24,
-  //     description: 'cdnscndjsnc',
-  //     username: 'natalia',
-  //     nickname: 'jnjcd',
-  //     imageUrl:
-  //       'https://res.cloudinary.com/dkanovye3/image/upload/v1687507288/my-uploads/l7iahp4ftyii5chpdgsg.png',
-  //     categories: [
-  //       { id: 2, name: 'computer game', label: 'Computer game' },
-  //       { id: 3, name: 'trip', label: 'Trip' },
-  //       { id: 4, name: 'programming', label: 'Programming' },
-  //       { id: 5, name: 'football', label: 'Football' },
-  //     ],
-  //   },
-  // ];
-
-  // const users = [
-  //   {
-  //        userId: 1,
-  //        interests: [1, 2, 3, 4]
-  //    },
-  // ];
-
-  //const getUsersCommonCategories = await getUsersCategories();
-  //console.log({ getUsersCommonCategories });
-
   return (
     <main className={styles.listContainer}>
       <h2>List of users</h2>
-      <UsersList
-        users={users}
-        userId={userId}
-        myUser={myUser}
-        result={result}
-      />
+      <UsersList result={result} />
     </main>
   );
 }
