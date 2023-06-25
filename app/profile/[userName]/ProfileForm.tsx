@@ -227,11 +227,11 @@ export default function ProfileForm(props: Props) {
           <p className={styles.interestsTitle}>Interests</p>
           {!showInput ? (
             <>
-              {userCategories.map((category) => {
+              {/* {userCategories.map((category) => {
                 return (
                   <p className={styles.categoriesTitle}>{category.label}</p>
                 );
-              })}
+              })} */}
               <Creatable
                 className={styles.select}
                 closeMenuOnSelect={false}
