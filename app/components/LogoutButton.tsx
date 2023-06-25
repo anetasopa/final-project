@@ -1,6 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import { RiLogoutCircleRLine } from 'react-icons/ri';
 import styles from './LogoutButton.module.scss';
 
 type Props = {
@@ -20,7 +21,14 @@ export function LogoutButton(props: Props) {
           router.refresh();
         }}
       >
+        {' '}
         Logout
+        {/* <RiLogoutCircleRLine
+          style={{
+            marginRight: '30px',
+          }}
+          size="30px"
+        /> */}
       </button>
     </form>
   );
