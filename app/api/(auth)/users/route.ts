@@ -21,14 +21,6 @@ export type Error = {
 
 type UsersResponseBodyGet = { animals: User[] } | Error;
 
-const animalSchema = z.object({
-  username: z.string(),
-  email: z.string(),
-  password_hash: z.string(),
-  nickname: z.string(),
-  description: z.string(),
-});
-
 export async function GET(
   request: NextRequest,
 ): Promise<NextResponse<UsersResponseBodyGet>> {
@@ -39,8 +31,6 @@ export async function GET(
   const session =
     sessionTokenCookie &&
     (await getValidSessionByToken(sessionTokenCookie.value));
-
-  console.log('This comes from the API', session);
 
   if (!session) {
     return NextResponse.json(
@@ -63,7 +53,7 @@ export async function GET(
     );
   }
 
-  // query the database to get all the animals only if a valid session token is passed
+  // query the database to get all the users only if a valid session token is passed
   const users = await getUsersWithLimitAndOffsetBySessionToken(
     limit,
     offset,

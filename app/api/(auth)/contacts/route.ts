@@ -20,7 +20,7 @@ export async function PUT(
   const userId = Number(params.userId);
   const body = await request.json();
 
-  console.log({ body });
+  console.log({ body123: body });
 
   if (!userId) {
     return NextResponse.json(
@@ -53,11 +53,13 @@ export async function PUT(
     );
   }
 
-  await updateUserContacts(userId);
+  const userContacts = await updateUserContacts(userId, result.data.userId);
+  console.log({ userContacts123: userContacts });
 
   user = await getUsersById(userId);
 
   return NextResponse.json({
     user,
+    userContacts,
   });
 }

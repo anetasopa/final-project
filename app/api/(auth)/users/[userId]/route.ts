@@ -99,7 +99,6 @@ export async function PUT(
   const userCategories = await getUserCategories(userId);
 
   const userImage = await updateUserImageById(userId, result.data.imageUrl);
-  console.log({ userImage });
 
   user = await getUsersById(userId);
 

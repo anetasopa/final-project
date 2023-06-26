@@ -44,7 +44,7 @@ export default function UsersLis({ result, users, userId }: Props) {
   console.log({ user123: userId });
 
   const userName = users.map((user) => user.username);
-  console.log(userName);
+  // console.log(userName);
 
   return (
     <>
