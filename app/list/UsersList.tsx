@@ -152,9 +152,14 @@ export default function UsersLis({ result, users }: Props) {
                     className={`${styles.col} ${styles.col2}`}
                     data-label="Add"
                   >
-                    <div className={styles.categoriesContainer}>
-                      <CgAddR />
+                    <div>
+                      <button className={styles.buttonAdd}>
+                        <CgAddR />
+                      </button>
                     </div>
+                    {/* <div className={styles.categoriesContainer}>
+                      <CgAddR />
+                    </div> */}
                   </div>
                 </li>
               </>

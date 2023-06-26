@@ -23,8 +23,12 @@
   backface-visibility: hidden;
   transform-style: preserve-3d;
 
+  @media screen and (max-width: 480px) {
+    width: 60%;
+  }
+
   &::placeholder {
-    color: color(#575756 a(0.8));
+    color: color(#575756 (0.8));
     text-transform: uppercase;
     letter-spacing: 1.5px;
   }
