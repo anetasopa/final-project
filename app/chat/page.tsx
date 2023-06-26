@@ -25,18 +25,18 @@ export default async function Chat() {
   return (
     <main className={styles.profileContainer}>
       <div className={styles.list}>
-        <div className={styles.imageUsernameContainer}>
-          {/* <div> */}
-          <Image
-            alt="userImage"
-            src="/images/photo2.jpeg"
-            width={50}
-            height={50}
-            className={styles.userImage}
-          />
-          <div className={styles.availability}></div>
-          <p className={styles.name}>{user.username}</p>
-          {/* </div> */}
+        <div className={styles.dataContainer}>
+          <div className={styles.data}>
+            <Image
+              alt="userImage"
+              src="/images/photo2.jpeg"
+              width={50}
+              height={50}
+              className={styles.userImage}
+            />
+            <div className={styles.availability}></div>
+            <p className={styles.name}>{user.username}</p>
+          </div>
           <div className={styles.editIcon}>
             <FaPen />
           </div>
