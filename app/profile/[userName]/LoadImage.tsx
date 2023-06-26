@@ -1,14 +1,9 @@
 'use client';
+
 import Image from 'next/image';
 import styles from './LoadImage.module.scss';
 
-export function LoadImage({
-  handleOnChange,
-  handleOnSubmit,
-  imageUrl,
-  uploadData,
-  showInput,
-}) {
+export function LoadImage({ handleOnChange, showInput }) {
   return (
     <>
       {showInput ? (

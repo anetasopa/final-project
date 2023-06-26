@@ -8,7 +8,6 @@ import {
   getUsersById,
 } from '../../database/users';
 import styles from './page.module.scss';
-import Search from './Search';
 import UsersList from './UsersList';
 
 const usersWithSimilarInterests = (users, myUser) =>

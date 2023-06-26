@@ -14,6 +14,28 @@ type Props = {
   result: any;
 };
 
+async function add() {
+  try {
+    const response = await fetch(`/api/users/${userId}`, {
+      method: 'PUT',
+      body: JSON.stringify({}),
+    });
+
+    if (response.status !== 500) {
+      const data: CreateResponseBodyPost = await response.json();
+
+      if ('error' in data) {
+        console.log(data.error);
+      }
+
+      if ('user' in data) {
+      }
+    }
+  } catch (e) {
+    console.log({ e });
+  }
+}
+
 export default function UsersLis({ result, users }: Props) {
   const [searchName, setSearchName] = useState('');
   console.log({ searchName });
@@ -153,13 +175,15 @@ export default function UsersLis({ result, users }: Props) {
                     data-label="Add"
                   >
                     <div>
-                      <button className={styles.buttonAdd}>
+                      <button
+                        onClick={async () => {
+                          await add();
+                        }}
+                        className={styles.buttonAdd}
+                      >
                         <CgAddR />
                       </button>
                     </div>
-                    {/* <div className={styles.categoriesContainer}>
-                      <CgAddR />
-                    </div> */}
                   </div>
                 </li>
               </>

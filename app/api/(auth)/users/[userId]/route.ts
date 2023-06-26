@@ -14,7 +14,7 @@ type Error = {
 };
 
 export type CreateResponseBodyGet = { user: User } | Error;
-export type CreateResponseBodyPost = { user: User } | Error;
+export type CreateResponseBodyPut = { user: User } | Error;
 
 const userSchema = z.object({
   nickname: z.string(),
@@ -56,7 +56,7 @@ export async function GET(
 export async function PUT(
   request: NextRequest,
   { params }: { params: Record<string, string | string[]> },
-): Promise<NextResponse<CreateResponseBodyPost>> {
+): Promise<NextResponse<CreateResponseBodyPut>> {
   const userId = Number(params.userId);
   const body = await request.json();
 

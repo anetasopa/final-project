@@ -34,7 +34,6 @@ export const getUsers = cache(async () => {
     LEFT JOIN categories c ON c.id = uc.category_id
     GROUP BY u.id
     ;
-
  `;
 
   return users;
@@ -96,7 +95,7 @@ export const getUsersById = cache(async (id: number) => {
   return user;
 });
 
-export const getUserContacts = cache(async (id: number) => {
+export const updateUserContacts = cache(async (id: number) => {
   const [user] = await sql<User[]>`
    SELECT
       u.id AS user_id,

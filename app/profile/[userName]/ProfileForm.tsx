@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react';
 import Creatable from 'react-select';
 import { User } from '../../../database/users';
 import { Category } from '../../../migrations/1686916405-createTableCategories';
-import { CreateResponseBodyPost } from '../../api/(auth)/users/[userId]/route';
+import { CreateResponseBodyPut } from '../../api/(auth)/users/[userId]/route';
 import { LoadImage } from './LoadImage';
 import styles from './ProfileForm.module.scss';
 
@@ -60,7 +60,7 @@ async function save({
     setIsLoading(false);
 
     if (response.status !== 500) {
-      const data: CreateResponseBodyPost = await response.json();
+      const data: CreateResponseBodyPut = await response.json();
 
       if ('error' in data) {
         console.log(data.error);
