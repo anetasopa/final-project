@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useState } from 'react';
+import { CgAddR } from 'react-icons/cg';
 import { User } from '../../database/users';
 import Search from './Search';
 import styles from './UsersList.module.scss';
@@ -48,6 +49,9 @@ export default function UsersLis({ result, users }: Props) {
             </div>
             <div className={`${styles.col} ${styles.col5} ${styles.bold}`}>
               Percentage
+            </div>
+            <div className={`${styles.col} ${styles.col5} ${styles.bold}`}>
+              Add
             </div>
           </li>
           {result.map((user) => {
@@ -142,6 +146,14 @@ export default function UsersLis({ result, users }: Props) {
                       ) : (
                         <p>-</p>
                       )}
+                    </div>
+                  </div>
+                  <div
+                    className={`${styles.col} ${styles.col2}`}
+                    data-label="Add"
+                  >
+                    <div className={styles.categoriesContainer}>
+                      <CgAddR />
                     </div>
                   </div>
                 </li>

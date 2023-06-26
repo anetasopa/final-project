@@ -4,7 +4,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React, { use, useState } from 'react';
 import { CgClose, CgProfile } from 'react-icons/cg';
-import { RiLoginCircleLine } from 'react-icons/ri';
 import { RxHamburgerMenu } from 'react-icons/rx';
 import { logout } from '../(auth)/logout/actions';
 import { LogoutButton } from './LogoutButton';
@@ -35,25 +34,9 @@ export default function Nav({ user, singleUserData }) {
             ))}
           </ul>
         </div>
-
         <button onClick={handleMenuToggle} className={styles.hamburgerIcon}>
           {isOpen ? <RxHamburgerMenu /> : <CgClose />}
         </button>
-
-        {/* <div
-          className={`${styles.navigation} ${isOpen ? styles[`navOpen`] : {}} `}
-        >
-          <ul className={styles.tekst}>
-            {links.map(({ id, title, link }) => (
-              <Link href={link} key={`key-${id}`}>
-                <li>{title}</li>
-              </Link>
-            ))}
-          </ul>
-        </div>
-        <button className={styles.hamburgerIcon} onClick={handleMenuToggle}>
-          {!isOpen ? 'o' : 'x'}
-        </button> */}
 
         <div>
           <Link href="/" className={styles.logo}>
