@@ -3,7 +3,7 @@ import { Sql } from 'postgres';
 export type Contacts = {
   id: number;
   userId: number;
-  usersId: number;
+  followedUserId: number;
 };
 
 export async function up(sql: Sql) {
@@ -11,7 +11,7 @@ export async function up(sql: Sql) {
     CREATE TABLE contacts (
       id integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
       user_id integer NOT NULL REFERENCES users (id) ON DELETE CASCADE,
-      users_id integer NOT NULL REFERENCES users (id)
+      followed_user_id integer NOT NULL REFERENCES users (id) ON DELETE CASCADE
     )
   `;
 }
