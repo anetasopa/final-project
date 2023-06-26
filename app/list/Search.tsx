@@ -8,7 +8,7 @@ export default function Search({ searchName, setSearchName }) {
         onChange={(e) => setSearchName(e.target.value)}
         className={styles.searchInput}
         type="text"
-        placeholder="Search"
+        placeholder="Search by username"
       />
     </div>
   );

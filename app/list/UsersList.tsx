@@ -43,8 +43,15 @@ export default function UsersLis({ result, users, userId }: Props) {
   console.log({ searchName });
   console.log({ user123: userId });
 
-  const userName = users.map((user) => user.username);
-  // console.log(userName);
+  function searchAndFilterArray() {
+    return result.filter((user) => {
+      return user.user.username
+        .toLowerCase()
+        .includes(searchName.toLowerCase());
+    });
+  }
+
+  const filteredResults = searchAndFilterArray();
 
   return (
     <>
@@ -78,7 +85,7 @@ export default function UsersLis({ result, users, userId }: Props) {
               Add
             </div>
           </li>
-          {result.map((user) => {
+          {filteredResults.map((user) => {
             console.log({ user });
             return (
               <>
