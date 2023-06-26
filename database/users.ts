@@ -96,6 +96,26 @@ export const getUsersById = cache(async (id: number) => {
   return user;
 });
 
+export const getUserContacts = cache(async (id: number) => {
+  const [user] = await sql<User[]>`
+   SELECT
+      u.id AS user_id,
+      u.username,
+      u.email,
+      u.nickname,
+      u.image_url,
+      u.description,
+      COALESCE(JSON_AGG(c.*) FILTER (WHERE c.id IS NOT NULL), '[]') AS contacts
+    FROM
+      users AS u
+    LEFT JOIN contacts AS c ON u.id = c.user_id
+    WHERE
+      u.id = ${id}
+    GROUP BY u.id
+  `;
+  return user;
+});
+
 export const getUsersByUserName = cache(async (username: string) => {
   const [user] = await sql<User[]>`
     SELECT id, username FROM users WHERE users.username = ${username}

@@ -26,8 +26,6 @@ export default function RegisterForm() {
     setError: () => void;
     setIsLoading: any;
   };
-  const testmessage = 'test message';
-  let errorMessageUsername;
 
   async function register() {
     setIsLoading(true);
