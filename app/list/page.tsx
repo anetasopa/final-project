@@ -79,7 +79,7 @@ export default async function List() {
 
   return (
     <main className={styles.listContainer}>
-      <UsersList result={result} users={users} />
+      <UsersList result={result} users={users} userId={userId} />
     </main>
   );
 }

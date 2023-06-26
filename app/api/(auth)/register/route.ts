@@ -36,7 +36,6 @@ export async function POST(
   const body = await request.json();
 
   const validationResult = userSchema.safeParse(body);
-  console.log(validationResult);
 
   // validationResult: {
   //   success: true,

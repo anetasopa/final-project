@@ -95,7 +95,7 @@ export const getUsersById = cache(async (id: number) => {
   return user;
 });
 
-export const updateUserContacts = cache(async (id: number) => {
+export const getUserContacts = cache(async (id: number) => {
   const [user] = await sql<User[]>`
    SELECT
       u.id AS user_id,
@@ -109,10 +109,21 @@ export const updateUserContacts = cache(async (id: number) => {
       users AS u
     LEFT JOIN contacts AS c ON u.id = c.user_id
     WHERE
-      u.id = ${id}
+      u.id = 30
     GROUP BY u.id
   `;
   return user;
+});
+
+export const updateUserContacts = cache(async (id: number, userId: number) => {
+  await sql`
+      INSERT contacts
+      SET
+      user_id = ${userId},
+      followed_user_id  = ${id}
+      WHERE
+        id = ${userId};
+    `;
 });
 
 export const getUsersByUserName = cache(async (username: string) => {

@@ -5,6 +5,7 @@ import Link from 'next/link';
 import React, { useState } from 'react';
 import { CgAddR } from 'react-icons/cg';
 import { User } from '../../database/users';
+import { CreateResponseBodyPut } from '../api/(auth)/contacts/route';
 import Search from './Search';
 import styles from './UsersList.module.scss';
 
@@ -14,21 +15,22 @@ type Props = {
   result: any;
 };
 
-async function add() {
+async function add({ id, userId }) {
   try {
-    const response = await fetch(`/api/users/${userId}`, {
+    const response = await fetch(`/api/contacts/${userId}`, {
       method: 'PUT',
-      body: JSON.stringify({}),
+      body: JSON.stringify({ id, userId }),
     });
 
     if (response.status !== 500) {
-      const data: CreateResponseBodyPost = await response.json();
+      const data: CreateResponseBodyPut = await response.json();
 
       if ('error' in data) {
         console.log(data.error);
       }
 
       if ('user' in data) {
+        console.log(data.user);
       }
     }
   } catch (e) {
@@ -36,10 +38,10 @@ async function add() {
   }
 }
 
-export default function UsersLis({ result, users }: Props) {
+export default function UsersLis({ result, users, userId }: Props) {
   const [searchName, setSearchName] = useState('');
   console.log({ searchName });
-  console.log({ result });
+  console.log({ user123: userId });
 
   const userName = users.map((user) => user.username);
   console.log(userName);
@@ -77,6 +79,7 @@ export default function UsersLis({ result, users }: Props) {
             </div>
           </li>
           {result.map((user) => {
+            console.log({ user });
             return (
               <>
                 <li className={styles.tableRow}>
@@ -171,13 +174,13 @@ export default function UsersLis({ result, users }: Props) {
                     </div>
                   </div>
                   <div
-                    className={`${styles.col} ${styles.col2}`}
+                    className={`${styles.col} ${styles.col2} ${styles.addContainer}`}
                     data-label="Add"
                   >
                     <div>
                       <button
                         onClick={async () => {
-                          await add();
+                          await add({ id: user.user.id, userId: userId });
                         }}
                         className={styles.buttonAdd}
                       >

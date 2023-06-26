@@ -49,6 +49,12 @@
       z-index: 10;
     }
 
+    .addContainer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
     .buttonAdd:hover {
       cursor: pointer;
     }
