@@ -60,13 +60,17 @@ export const getUsers2 = cache(async (skipUserId: number) => {
       u.username,
       u.nickname,
       u.image_url,
+      CASE WHEN con.id IS NULL THEN true ELSE false END is_contact,
       COALESCE(JSON_AGG(c.*)  FILTER (WHERE c.id IS NOT NULL), '[]') AS categories,
       COALESCE(JSON_AGG(c.id)  FILTER (WHERE c.id IS NOT NULL), '[]') AS interests
     FROM users u
     LEFT JOIN user_categories uc ON u.id = uc.user_id
     LEFT JOIN categories c ON c.id = uc.category_id
+    LEFT JOIN contacts con ON
+      con.followed_user_id = u.id AND
+      con.user_id = ${skipUserId}
     WHERE u.id != ${skipUserId}
-    GROUP BY u.id
+    GROUP BY u.id, con.id
     ;
  `;
 

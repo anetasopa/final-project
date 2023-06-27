@@ -16,31 +16,35 @@ type Props = {
   id: number;
 };
 
-async function add({ followedUserId }) {
-  try {
-    const response = await fetch('/api/contacts', {
-      method: 'POST',
-      body: JSON.stringify({ followedUserId }),
-    });
-
-    if (response.status !== 500) {
-      const data: CreateResponseBodyPut = await response.json();
-
-      if ('error' in data) {
-        console.log(data.error);
-      }
-
-      if ('user' in data) {
-        console.log(data.user);
-      }
-    }
-  } catch (e) {
-    console.log({ e });
-  }
-}
-
 export default function UsersLis({ result }: Props) {
   const [searchName, setSearchName] = useState('');
+  const [isLoading, setIsLoading] = useState(null);
+
+  async function add({ followedUserId }) {
+    try {
+      setIsLoading(followedUserId);
+      const response = await fetch('/api/contacts', {
+        method: 'POST',
+        body: JSON.stringify({ followedUserId }),
+      });
+
+      if (response.status !== 500) {
+        const data: CreateResponseBodyPut = await response.json();
+
+        if ('error' in data) {
+          console.log(data.error);
+        }
+
+        if ('user' in data) {
+          console.log(data.user);
+        }
+
+        setIsLoading(null);
+      }
+    } catch (e) {
+      console.log({ e });
+    }
+  }
 
   function searchAndFilterArray() {
     return result.filter((user) => {
@@ -85,7 +89,7 @@ export default function UsersLis({ result }: Props) {
             </div>
           </li>
           {filteredResults.map((user) => {
-            console.log({ user });
+            console.log({ user12345: user });
             return (
               <>
                 <li className={styles.tableRow}>
@@ -183,16 +187,33 @@ export default function UsersLis({ result }: Props) {
                     className={`${styles.col} ${styles.col2} ${styles.addContainer}`}
                     data-label="Add"
                   >
-                    <div>
-                      <button
-                        onClick={async () => {
-                          await add({ followedUserId: user.user.id });
-                        }}
-                        className={styles.buttonAdd}
-                      >
-                        <CgAddR />
-                      </button>
-                    </div>
+                    {/* {isLoading ? (
+                      <div className={styles.spinner}>
+                        <p className={styles.loader}>Loading...</p>
+                      </div>
+                    ) : (
+                      <p>Log In</p>
+                    )} */}
+                    {user.user.isContact === true ? (
+                      <p>Added</p>
+                    ) : (
+                      <div>
+                        <button
+                          onClick={async () => {
+                            await add({ followedUserId: user.user.id });
+                          }}
+                          className={styles.buttonAdd}
+                        >
+                          {isLoading === user.user.id ? (
+                            <div className={styles.spinner}>
+                              <p className={styles.loader}>Loading...</p>
+                            </div>
+                          ) : (
+                            <CgAddR />
+                          )}
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </li>
               </>

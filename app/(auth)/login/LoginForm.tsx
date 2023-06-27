@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { FaExclamationCircle } from 'react-icons/fa';
 import { IoMdClose } from 'react-icons/io';
 import { LoginResponseBodyPost } from '../../api/(auth)/login/route';
