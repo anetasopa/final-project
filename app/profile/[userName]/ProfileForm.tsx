@@ -299,10 +299,10 @@ export default function ProfileForm(props: Props) {
             <div className={`${styles.col} ${styles.col4} ${styles.bold}`}>
               Description
             </div>
-            {/* <div className={`${styles.col} ${styles.col5} ${styles.bold}`}>
+            <div className={`${styles.col} ${styles.col5} ${styles.bold}`}>
               Interests
             </div>
-            <div className={`${styles.col} ${styles.col5} ${styles.bold}`}>
+            {/* <div className={`${styles.col} ${styles.col5} ${styles.bold}`}>
               Common interests
             </div>
             <div className={`${styles.col} ${styles.col5} ${styles.bold}`}>
@@ -312,7 +312,7 @@ export default function ProfileForm(props: Props) {
               Add
             </div>
           </li>
-          {userContactsPropsFollowed.map((followedUser) => {
+          {userContactsProps.map((followedUser) => {
             console.log({
               userContactsPropsFollowed12345: userContactsPropsFollowed,
             });
@@ -365,20 +365,21 @@ export default function ProfileForm(props: Props) {
                       )}
                     </div>
                   </div>
-                  {/* <div
+                  <div
                     className={`${styles.col} ${styles.col5}`}
                     data-label="Interests"
                   >
                     <div className={styles.categoriesContainer}>
-                      {categories && user.user.categories.length > 0 ? (
-                        user.user.categories.map((category) => {
+                      {followedUser.categories &&
+                      followedUser.categories.length > 0 ? (
+                        followedUser.categories.map((category) => {
                           return category ? <p>{category.name}</p> : null;
                         })
                       ) : (
                         <p>-</p>
                       )}
                     </div>
-                  </div> */}
+                  </div>
 
                   {/* <div
                     className={`${styles.col} ${styles.col5}`}

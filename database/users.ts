@@ -96,7 +96,7 @@ export const getUsersById = cache(async (id: number) => {
 });
 
 export const getUserContacts = cache(async (id: number) => {
-  const [user] = await sql<User[]>`
+  const users = await sql<User[]>`
     SELECT
       u.id AS user_id,
       u.username,
@@ -104,17 +104,17 @@ export const getUserContacts = cache(async (id: number) => {
       u.nickname,
       u.image_url,
       u.description,
-      COALESCE(JSON_AGG(c.*) FILTER (WHERE c.id IS NOT NULL), '[]') AS contacts,
-      COALESCE(JSON_AGG(fu.*) FILTER (WHERE fu.id IS NOT NULL), '[]') AS followed_users
+      COALESCE(JSON_AGG(cat.*) FILTER (WHERE cat.id IS NOT NULL), '[]') AS categories
     FROM
-      users AS u
-    LEFT JOIN contacts AS c ON u.id = c.user_id
-    LEFT JOIN users AS fu ON c.followed_user_id = fu.id
+      contacts c
+    LEFT JOIN users AS u ON c.followed_user_id = u.id
+    LEFT JOIN user_categories AS uc ON uc.user_id = u.id
+    LEFT JOIN categories AS cat ON uc.category_id = cat.id
     WHERE
-      u.id = ${id}
+      c.user_id = ${id}
     GROUP BY u.id;
   `;
-  return user;
+  return users;
 });
 
 export const updateUserContacts = cache(

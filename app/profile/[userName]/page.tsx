@@ -1,6 +1,7 @@
 import { cookies } from 'next/headers';
 import { notFound } from 'next/navigation';
 import React from 'react';
+import util from 'util';
 import { getCategories } from '../../../database/categories';
 import {
   getUserBySessionToken,
@@ -41,6 +42,16 @@ export default async function Profile({ params }: Props) {
 
   const userContacts = await getUserContacts(userId);
   const categories: Category[] = await getCategories();
+
+  console.log(
+    util.inspect(
+      {
+        userContacts,
+      },
+
+      { showHidden: false, depth: null, colors: true },
+    ),
+  );
 
   return (
     <main className={styles.profileContainer}>
