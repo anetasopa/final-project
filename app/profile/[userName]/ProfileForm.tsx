@@ -35,6 +35,30 @@ interface CategoriesOption {
   readonly label: string;
 }
 
+async function remove({ contactId }) {
+  console.log({ contactId });
+  try {
+    const response = await fetch(`/api/contacts/${contactId}`, {
+      method: 'DELETE',
+      body: JSON.stringify({ contactId }),
+    });
+
+    if (response.status !== 500) {
+      const data: CreateResponseBodyPut = await response.json();
+
+      if ('error' in data) {
+        console.log(data.error);
+      }
+
+      if ('user' in data) {
+        console.log(data.user);
+      }
+    }
+  } catch (e) {
+    console.log({ e });
+  }
+}
+
 async function save({
   setSelectedOption,
   setUserCategories,
@@ -315,6 +339,7 @@ export default function ProfileForm(props: Props) {
             </div>
           </li>
           {userContactsProps.map((followedUser) => {
+            console.log({ followedUser });
             return (
               <>
                 <li className={styles.tableRow}>
@@ -418,7 +443,7 @@ export default function ProfileForm(props: Props) {
                     <div>
                       <button
                         onClick={async () => {
-                          await delete { followedUserId: user.user.id };
+                          await remove({ contactId: followedUser.userId });
                         }}
                         className={styles.buttonDelete}
                       >

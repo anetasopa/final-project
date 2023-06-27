@@ -2,6 +2,7 @@ import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import {
+  deleteUserById,
   getUserBySessionToken,
   getUsersById,
   updateUserContacts,
@@ -13,6 +14,7 @@ type Error = {
 };
 
 export type CreateResponseBodyPut = { user: User } | Error;
+export type CreateResponseBodyDelete = { user: User } | Error;
 
 const userSchema = z.object({
   userId: z.number(),
@@ -51,7 +53,6 @@ export async function POST(
       { status: 401 },
     );
   }
-  console.log({ loggedInUser });
 
   // select the user you want to follow/add to contacts
   const body = await request.json();

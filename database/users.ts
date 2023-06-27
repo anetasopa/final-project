@@ -20,6 +20,17 @@ export type User = {
   categories: Category[];
 };
 
+export const deleteUserById = cache(async (id: number) => {
+  const [user] = await sql<User[]>`
+      DELETE FROM
+        contacts
+      WHERE
+        followed_user_id = ${id}
+        RETURNING *
+    `;
+  return user;
+});
+
 export const getUsers = cache(async () => {
   const users = await sql<User[]>`
     SELECT

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import {
+  deleteUserById,
   getUserCategories,
   getUsersById,
   updateCategoriesOfUserById,
@@ -15,6 +16,7 @@ type Error = {
 
 export type CreateResponseBodyGet = { user: User } | Error;
 export type CreateResponseBodyPut = { user: User } | Error;
+export type CreateResponseBodyDelete = { user: User } | Error;
 
 const userSchema = z.object({
   nickname: z.string(),
@@ -59,8 +61,6 @@ export async function PUT(
 ): Promise<NextResponse<CreateResponseBodyPut>> {
   const userId = Number(params.userId);
   const body = await request.json();
-
-  console.log({ body });
 
   if (!userId) {
     return NextResponse.json(
