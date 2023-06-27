@@ -1,4 +1,5 @@
 import { Sql } from 'postgres';
+import { Contacts } from './1687774485-createTableContacts';
 
 // export type User = {
 //   id: number;
@@ -27,6 +28,7 @@ export type User = {
   nickname: string;
   imageUrl: string;
   description: string;
+  contacts: Contacts[];
 };
 
 export async function up(sql: Sql) {

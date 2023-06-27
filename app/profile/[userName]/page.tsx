@@ -13,9 +13,7 @@ import { Category } from '../../../migrations/1686916405-createTableCategories';
 import styles from './page.module.scss';
 import ProfileForm from './ProfileForm';
 
-type Props = { params: { userName: string } };
-
-export default async function Profile({ params }: Props) {
+export default async function Profile() {
   const cookieStore = cookies();
   const sessionToken = cookieStore.get('sessionToken');
 

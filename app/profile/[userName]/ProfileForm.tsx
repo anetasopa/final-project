@@ -3,9 +3,11 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
+import { CiCircleRemove } from 'react-icons/ci';
 import Creatable from 'react-select';
 import { User } from '../../../database/users';
 import { Category } from '../../../migrations/1686916405-createTableCategories';
+import { Contacts } from '../../../migrations/1687774485-createTableContacts';
 import { CreateResponseBodyPut } from '../../api/(auth)/users/[userId]/route';
 import { LoadImage } from './LoadImage';
 import styles from './ProfileForm.module.scss';
@@ -25,6 +27,7 @@ type Props = {
   setImageUrl: any;
   setIsLoading: any;
   userContacts: Contacts[];
+  result: any;
 };
 
 interface CategoriesOption {
@@ -82,7 +85,6 @@ export default function ProfileForm(props: Props) {
   const singleUserData = props.singleUserData;
   const userCategoriesProps = props.userCategories;
   const userContactsProps = props.userContacts;
-  const userContactsPropsFollowed = props.userContacts.followedUsers;
 
   const [isLoading, setIsLoading] = useState(false);
   const [selectedOption, setSelectedOption] = useState(userCategoriesProps);
@@ -309,13 +311,10 @@ export default function ProfileForm(props: Props) {
               Percentage
             </div> */}
             <div className={`${styles.col} ${styles.col5} ${styles.bold}`}>
-              Add
+              Delete
             </div>
           </li>
           {userContactsProps.map((followedUser) => {
-            console.log({
-              userContactsPropsFollowed12345: userContactsPropsFollowed,
-            });
             return (
               <>
                 <li className={styles.tableRow}>
@@ -380,7 +379,6 @@ export default function ProfileForm(props: Props) {
                       )}
                     </div>
                   </div>
-
                   {/* <div
                     className={`${styles.col} ${styles.col5}`}
                     data-label="Common interests"
@@ -415,10 +413,17 @@ export default function ProfileForm(props: Props) {
                   </div> */}
                   <div
                     className={`${styles.col} ${styles.col2} ${styles.addContainer}`}
-                    data-label="Add"
+                    data-label="Delete"
                   >
                     <div>
-                      <button className={styles.buttonAdd}></button>
+                      <button
+                        onClick={async () => {
+                          await delete { followedUserId: user.user.id };
+                        }}
+                        className={styles.buttonDelete}
+                      >
+                        <CiCircleRemove />
+                      </button>
                     </div>
                   </div>
                 </li>

@@ -17,7 +17,6 @@ type Props = {
 };
 
 async function add({ followedUserId }) {
-  console.log({ id123: followedUserId });
   try {
     const response = await fetch('/api/contacts', {
       method: 'POST',
@@ -40,10 +39,8 @@ async function add({ followedUserId }) {
   }
 }
 
-export default function UsersLis({ result, users, userId }: Props) {
+export default function UsersLis({ result }: Props) {
   const [searchName, setSearchName] = useState('');
-  console.log({ searchName });
-  console.log({ user123: userId });
 
   function searchAndFilterArray() {
     return result.filter((user) => {

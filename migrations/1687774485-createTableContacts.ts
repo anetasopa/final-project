@@ -1,9 +1,14 @@
 import { Sql } from 'postgres';
+import { Category } from './1686916405-createTableCategories';
 
 export type Contacts = {
   id: number;
   userId: number;
   followedUserId: number;
+  nickname: string;
+  description: string;
+  imageUrl: string;
+  categories: Category[];
 };
 
 export async function up(sql: Sql) {

@@ -320,8 +320,19 @@
       align-items: center;
     }
 
-    .buttonAdd:hover {
-      cursor: pointer;
+    .buttonDelete {
+      display: flex;
+      text-align: center;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      border: none;
+      background-color: transparent;
+      z-index: 10;
+
+      &:hover {
+        cursor: pointer;
+      }
     }
 
     .categoriesContainer {

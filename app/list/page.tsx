@@ -10,24 +10,13 @@ import {
 import styles from './page.module.scss';
 import UsersList from './UsersList';
 
-const usersWithSimilarInterests = (users, myUser) =>
+const usersWithSimilarInterests = (users: string, myUser: string) =>
   users.map((user) => {
     const commonInterests = user.interests.filter((interest) =>
       myUser.interests.includes(interest),
     );
 
-    console.log(
-      util.inspect(
-        { user },
-
-        { showHidden: false, depth: null, colors: true },
-      ),
-    );
-
     const commonCategories = user.categories.filter((category) => {
-      // TypeError: Cannot read properties of undefined (reading 'map')
-      // const categoryIds = myUser.categories.map((cat) => cat.id);
-
       const categoryIds = myUser.categories.map((category) => category.id);
 
       return categoryIds.includes(category.id);
@@ -59,8 +48,6 @@ export default async function List() {
   }
 
   const userId = user.id;
-
-  //const categories = await getUserCategories(userId);
   const users = await getUsers2(userId);
   const myUser = await getUsersById(userId);
 
@@ -78,7 +65,7 @@ export default async function List() {
 
   return (
     <main className={styles.listContainer}>
-      <UsersList result={result} users={users} userId={userId} />
+      <UsersList result={result} />
     </main>
   );
 }
