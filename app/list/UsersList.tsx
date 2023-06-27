@@ -89,7 +89,6 @@ export default function UsersLis({ result }: Props) {
             </div>
           </li>
           {filteredResults.map((user) => {
-            console.log({ user12345: user });
             return (
               <>
                 <li className={styles.tableRow}>
