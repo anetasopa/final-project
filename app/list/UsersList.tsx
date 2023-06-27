@@ -158,7 +158,7 @@ export default function UsersLis({ result, users, userId }: Props) {
                       {user.commonCategories &&
                       user.commonCategories.length > 0 ? (
                         user.commonCategories.map((category) => {
-                          return category ? <p>{category.name}</p> : null;
+                          return <p>{category.name}</p>;
                         })
                       ) : (
                         <p>-</p>

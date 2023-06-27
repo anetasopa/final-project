@@ -82,12 +82,10 @@ export default function ProfileForm(props: Props) {
   const singleUserData = props.singleUserData;
   const userCategoriesProps = props.userCategories;
   const userContactsProps = props.userContacts;
-
-  console.log({ userContactsProps123455678: userContactsProps });
+  const userContactsPropsFollowed = props.userContacts.followedUsers;
 
   const [isLoading, setIsLoading] = useState(false);
   const [selectedOption, setSelectedOption] = useState(userCategoriesProps);
-  console.log({ selectedOption });
 
   const idSelectedCategories = selectedOption?.map((selected) => selected.id);
   const [userCategories, setUserCategories] = useState(userCategoriesProps);
@@ -286,7 +284,148 @@ export default function ProfileForm(props: Props) {
         Go to list...
       </Link>
 
-      <div></div>
+      <div className={styles.container}>
+        <ul className={styles.responsiveTable}>
+          <li className={styles.tableHeader}>
+            <div className={`${styles.col} ${styles.col1} ${styles.bold}`}>
+              Image
+            </div>
+            <div className={`${styles.col} ${styles.col2} ${styles.bold}`}>
+              Username
+            </div>
+            <div className={`${styles.col} ${styles.col3} ${styles.bold}`}>
+              Nackname
+            </div>
+            <div className={`${styles.col} ${styles.col4} ${styles.bold}`}>
+              Description
+            </div>
+            {/* <div className={`${styles.col} ${styles.col5} ${styles.bold}`}>
+              Interests
+            </div>
+            <div className={`${styles.col} ${styles.col5} ${styles.bold}`}>
+              Common interests
+            </div>
+            <div className={`${styles.col} ${styles.col5} ${styles.bold}`}>
+              Percentage
+            </div> */}
+            <div className={`${styles.col} ${styles.col5} ${styles.bold}`}>
+              Add
+            </div>
+          </li>
+          {userContactsPropsFollowed.map((followedUser) => {
+            console.log({
+              userContactsPropsFollowed12345: userContactsPropsFollowed,
+            });
+            return (
+              <>
+                <li className={styles.tableRow}>
+                  <div
+                    className={`${styles.col} ${styles.col1}`}
+                    data-label="Image"
+                  >
+                    <div className={styles.categoriesContainer}>
+                      <Image
+                        alt="userImage"
+                        src={followedUser.imageUrl}
+                        width={100}
+                        height={100}
+                        className={styles.profileImg}
+                      />
+                    </div>
+                  </div>
+                  <div
+                    className={`${styles.col} ${styles.col2}`}
+                    data-label="Username"
+                  >
+                    <div className={styles.categoriesContainer}>
+                      <Link href="/chat">{followedUser.username}</Link>
+                    </div>
+                  </div>
+                  <div
+                    className={`${styles.col} ${styles.col3}`}
+                    data-label="Nickname"
+                  >
+                    <div className={styles.categoriesContainer}>
+                      {!followedUser.nickname ? (
+                        <p> - </p>
+                      ) : (
+                        followedUser.nickname
+                      )}
+                    </div>
+                  </div>
+                  <div
+                    className={`${styles.col} ${styles.col4}`}
+                    data-label="Description"
+                  >
+                    <div className={styles.categoriesContainer}>
+                      {!followedUser.description ? (
+                        <p> - </p>
+                      ) : (
+                        followedUser.description
+                      )}
+                    </div>
+                  </div>
+                  {/* <div
+                    className={`${styles.col} ${styles.col5}`}
+                    data-label="Interests"
+                  >
+                    <div className={styles.categoriesContainer}>
+                      {categories && user.user.categories.length > 0 ? (
+                        user.user.categories.map((category) => {
+                          return category ? <p>{category.name}</p> : null;
+                        })
+                      ) : (
+                        <p>-</p>
+                      )}
+                    </div>
+                  </div> */}
+
+                  {/* <div
+                    className={`${styles.col} ${styles.col5}`}
+                    data-label="Common interests"
+                  >
+                    <div className={styles.categoriesContainer}>
+                      {user.commonCategories &&
+                      user.commonCategories.length > 0 ? (
+                        user.commonCategories.map((category) => {
+                          return category ? <p>{category.name}</p> : null;
+                        })
+                      ) : (
+                        <p>-</p>
+                      )}
+                    </div>
+                  </div> */}
+                  {/* <div
+                    className={`${styles.col} ${styles.col5}`}
+                    data-label="Percentage"
+                  >
+                    <div className={styles.categoriesContainer}>
+                      {user.commonInterestsInPercentage ? (
+                        <p>
+                          {Math.floor(
+                            Math.round(user.commonInterestsInPercentage),
+                          )}{' '}
+                          %
+                        </p>
+                      ) : (
+                        <p>-</p>
+                      )}
+                    </div>
+                  </div> */}
+                  <div
+                    className={`${styles.col} ${styles.col2} ${styles.addContainer}`}
+                    data-label="Add"
+                  >
+                    <div>
+                      <button className={styles.buttonAdd}></button>
+                    </div>
+                  </div>
+                </li>
+              </>
+            );
+          })}
+        </ul>
+      </div>
     </div>
   );
 }

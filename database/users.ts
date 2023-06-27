@@ -97,20 +97,22 @@ export const getUsersById = cache(async (id: number) => {
 
 export const getUserContacts = cache(async (id: number) => {
   const [user] = await sql<User[]>`
-   SELECT
+    SELECT
       u.id AS user_id,
       u.username,
       u.email,
       u.nickname,
       u.image_url,
       u.description,
-      COALESCE(JSON_AGG(c.*) FILTER (WHERE c.id IS NOT NULL), '[]') AS contacts
+      COALESCE(JSON_AGG(c.*) FILTER (WHERE c.id IS NOT NULL), '[]') AS contacts,
+      COALESCE(JSON_AGG(fu.*) FILTER (WHERE fu.id IS NOT NULL), '[]') AS followed_users
     FROM
       users AS u
     LEFT JOIN contacts AS c ON u.id = c.user_id
+    LEFT JOIN users AS fu ON c.followed_user_id = fu.id
     WHERE
       u.id = ${id}
-    GROUP BY u.id
+    GROUP BY u.id;
   `;
   return user;
 });

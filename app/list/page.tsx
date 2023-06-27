@@ -65,7 +65,6 @@ export default async function List() {
   const myUser = await getUsersById(userId);
 
   const result = usersWithSimilarInterests(users, myUser);
-  console.log({ result });
 
   console.log(
     util.inspect(
