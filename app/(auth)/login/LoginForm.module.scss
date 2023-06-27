@@ -52,6 +52,10 @@
           transition: 0.3s ease-in;
           color: var(--main-accent-color);
         }
+
+        &:active {
+          color: var(--main-accent-color);
+        }
       }
     }
   }

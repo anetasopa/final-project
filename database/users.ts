@@ -109,22 +109,22 @@ export const getUserContacts = cache(async (id: number) => {
       users AS u
     LEFT JOIN contacts AS c ON u.id = c.user_id
     WHERE
-      u.id = 30
+      u.id = ${id}
     GROUP BY u.id
   `;
   return user;
 });
 
-export const updateUserContacts = cache(async (id: number, userId: number) => {
-  await sql`
-      INSERT contacts
-      SET
-      user_id = ${userId},
-      followed_user_id  = ${id}
-      WHERE
-        id = ${userId};
+export const updateUserContacts = cache(
+  async (userId: number, followedUserId: number) => {
+    await sql`
+      INSERT INTO contacts
+        (user_id, followed_user_id)
+      VALUES
+        (${userId}, ${followedUserId});
     `;
-});
+  },
+);
 
 export const getUsersByUserName = cache(async (username: string) => {
   const [user] = await sql<User[]>`

@@ -1,6 +1,11 @@
+import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
-import { getUsersById, updateUserContacts } from '../../../../database/users';
+import {
+  getUserBySessionToken,
+  getUsersById,
+  updateUserContacts,
+} from '../../../../database/users';
 import { User } from '../users/route';
 
 type Error = {
@@ -13,16 +18,47 @@ const userSchema = z.object({
   userId: z.number(),
 });
 
-export async function PUT(
+export async function POST(
   request: NextRequest,
   { params }: { params: Record<string, string | string[]> },
 ): Promise<NextResponse<CreateResponseBodyPut>> {
-  const userId = Number(params.userId);
+  // make sure the parameters are ok
+  // const result = userSchema.safeParse(params);
+  // console.log({ result });
+
+  // if (!result.success) {
+  //   return NextResponse.json(
+  //     {
+  //       error: 'The data is incomplete',
+  //     },
+  //     { status: 400 },
+  //   );
+  // }
+
+  // get the currently logged in user
+  const cookieStore = cookies();
+  const sessionToken = cookieStore.get('sessionToken');
+
+  const loggedInUser = !sessionToken?.value
+    ? undefined
+    : await getUserBySessionToken(sessionToken.value);
+
+  if (!loggedInUser) {
+    return NextResponse.json(
+      {
+        error: 'There is no such user!',
+      },
+      { status: 401 },
+    );
+  }
+  console.log({ loggedInUser });
+
+  // select the user you want to follow/add to contacts
   const body = await request.json();
+  const followedUserId = body.followedUserId;
+  let followedUser = await getUsersById(followedUserId);
 
-  console.log({ body123: body });
-
-  if (!userId) {
+  if (!followedUser) {
     return NextResponse.json(
       {
         error: 'There is no such user!',
@@ -31,35 +67,7 @@ export async function PUT(
     );
   }
 
-  const result = userSchema.safeParse(body);
+  await updateUserContacts(loggedInUser.id, followedUser.id);
 
-  if (!result.success) {
-    return NextResponse.json(
-      {
-        error: 'The data is incomplete',
-      },
-      { status: 400 },
-    );
-  }
-
-  let user = await getUsersById(userId);
-
-  if (!user) {
-    return NextResponse.json(
-      {
-        error: 'User Not Found',
-      },
-      { status: 404 },
-    );
-  }
-
-  const userContacts = await updateUserContacts(userId, result.data.userId);
-  console.log({ userContacts123: userContacts });
-
-  user = await getUsersById(userId);
-
-  return NextResponse.json({
-    user,
-    userContacts,
-  });
+  return NextResponse.json({ message: 'User added to your contacts' });
 }

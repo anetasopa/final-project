@@ -13,13 +13,15 @@ type Props = {
   userId: number;
   users: User[];
   result: any;
+  id: number;
 };
 
-async function add({ id, userId }) {
+async function add({ followedUserId }) {
+  console.log({ id123: followedUserId });
   try {
-    const response = await fetch(`/api/contacts/${userId}`, {
-      method: 'PUT',
-      body: JSON.stringify({ id, userId }),
+    const response = await fetch('/api/contacts', {
+      method: 'POST',
+      body: JSON.stringify({ followedUserId }),
     });
 
     if (response.status !== 500) {
@@ -187,7 +189,7 @@ export default function UsersLis({ result, users, userId }: Props) {
                     <div>
                       <button
                         onClick={async () => {
-                          await add({ id: user.user.id, userId: userId });
+                          await add({ followedUserId: user.user.id });
                         }}
                         className={styles.buttonAdd}
                       >
