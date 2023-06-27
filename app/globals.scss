@@ -7,6 +7,7 @@
   margin: 0;
   padding: 0;
 }
+
 :root {
   --font-family: Montserrat, sans-serif;
   --font-family-main: Poppins, sans-serif;
@@ -56,7 +57,3 @@ a {
 h1 {
   font-family: var(--font-family);
 }
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
