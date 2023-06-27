@@ -5,6 +5,7 @@ import { getCategories } from '../../../database/categories';
 import {
   getUserBySessionToken,
   getUserCategories,
+  getUserContacts,
   getUsersById,
 } from '../../../database/users';
 import { Category } from '../../../migrations/1686916405-createTableCategories';
@@ -38,6 +39,7 @@ export default async function Profile({ params }: Props) {
     notFound();
   }
 
+  const userContacts = await getUserContacts(userId);
   const categories: Category[] = await getCategories();
 
   return (
@@ -50,6 +52,7 @@ export default async function Profile({ params }: Props) {
             userId={userId}
             categories={categories}
             userCategories={userCategories}
+            userContacts={userContacts}
           />
         </div>
       </div>

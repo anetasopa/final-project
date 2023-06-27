@@ -24,6 +24,7 @@ type Props = {
   setUserCategories: any;
   setImageUrl: any;
   setIsLoading: any;
+  userContacts: Contacts[];
 };
 
 interface CategoriesOption {
@@ -80,7 +81,9 @@ async function save({
 export default function ProfileForm(props: Props) {
   const singleUserData = props.singleUserData;
   const userCategoriesProps = props.userCategories;
-  console.log({ singleUserData });
+  const userContactsProps = props.userContacts;
+
+  console.log({ userContactsProps123455678: userContactsProps });
 
   const [isLoading, setIsLoading] = useState(false);
   const [selectedOption, setSelectedOption] = useState(userCategoriesProps);
@@ -282,6 +285,8 @@ export default function ProfileForm(props: Props) {
       <Link className={styles.link} href="/list">
         Go to list...
       </Link>
+
+      <div></div>
     </div>
   );
 }
