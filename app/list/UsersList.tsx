@@ -187,15 +187,8 @@ export default function UsersLis({ result }: Props) {
                     className={`${styles.col} ${styles.col2} ${styles.addContainer}`}
                     data-label="Add"
                   >
-                    {/* {isLoading ? (
-                      <div className={styles.spinner}>
-                        <p className={styles.loader}>Loading...</p>
-                      </div>
-                    ) : (
-                      <p>Log In</p>
-                    )} */}
                     {user.user.isContact === true ? (
-                      <p>Added</p>
+                      <p className={styles.addedText}>Added</p>
                     ) : (
                       <div>
                         <button
