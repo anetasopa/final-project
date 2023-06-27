@@ -1,9 +1,8 @@
 import { cookies } from 'next/headers';
-import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import React from 'react';
-import { FaPen } from 'react-icons/fa';
 import { getUserBySessionToken, getUsersById } from '../../database/users';
+import ChatForm from './ChatForm';
 import styles from './page.module.scss';
 
 export default async function Chat() {
@@ -20,31 +19,11 @@ export default async function Chat() {
 
   const userId = user.id;
 
-  const singleUserData = getUsersById(userId);
-  console.log({ singleUserData });
+  // const singleUserData = getUsersById(userId);
+
   return (
     <main className={styles.profileContainer}>
-      <div className={styles.list}>
-        <div className={styles.dataContainer}>
-          <div className={styles.data}>
-            <Image
-              alt="userImage"
-              src="/images/photo2.jpeg"
-              width={50}
-              height={50}
-              className={styles.userImage}
-            />
-            <div className={styles.availability}></div>
-            <p className={styles.name}>{user.username}</p>
-          </div>
-          <div className={styles.editIcon}>
-            <FaPen />
-          </div>
-        </div>
-        <div></div>
-        <div></div>
-      </div>
-      <div className={styles.chat}>Chat</div>
+      <ChatForm user={user} />
     </main>
   );
 }
