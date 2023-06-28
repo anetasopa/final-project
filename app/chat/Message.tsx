@@ -10,7 +10,7 @@ export default function Message({ message, setMessage }) {
       onSubmit={(event) => event.preventDefault()}
       role="search"
     >
-      <label className={styles.messageLabel} for="search">
+      <label className={styles.messageLabel} htmlFor="search">
         Search for stuff
       </label>
       <input
@@ -19,7 +19,6 @@ export default function Message({ message, setMessage }) {
         id="search"
         type={message}
         placeholder="Message..."
-        autofocus
         required
       />
       <button className={styles.messageButton} type="submit">

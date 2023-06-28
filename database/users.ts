@@ -152,7 +152,7 @@ export const getUsersByUserName = cache(async (username: string) => {
 });
 
 // export const getUserByToken = cache(async (token: string) => {
-//   const [user] = await sql<User[]>`
+//   const [user] = await sql<User[]>
 //   SELECT u.* FROM users u
 //   INNER JOIN sessions s ON u.id = s.user_id
 //   WHERE s.token = ${token}

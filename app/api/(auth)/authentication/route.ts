@@ -8,10 +8,11 @@ export type Error = {
   error: string;
 };
 
-type UsersResponseBodyGet = { token: Ably.Types.TokenRequest } | Error;
+type UsersResponseBodyGet = Ably.Types.TokenRequest | Error;
 
 export async function GET(): Promise<NextResponse<UsersResponseBodyGet>> {
   console.log('/api/authentication called');
+  // console.log('auth key? :', process.env.ABLY_API_KEY);
 
   if (!process.env.ABLY_API_KEY) {
     return NextResponse.json(
@@ -31,7 +32,5 @@ export async function GET(): Promise<NextResponse<UsersResponseBodyGet>> {
     clientId: clientId,
   });
 
-  return NextResponse.json({
-    token: tokenRequestData,
-  });
+  return NextResponse.json(tokenRequestData);
 }

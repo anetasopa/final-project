@@ -9,12 +9,13 @@ export type Error = {
   error: string;
 };
 
-type UsersResponseBodyPOST = { message: Ably.Rest } | Error;
+type UsersResponseBodyPOST = Error;
 
 export async function POST(
   request: NextRequest,
-): Promise<NextResponse<UsersResponseBodyPOST>> {
+): Promise<NextResponse | NextResponse<UsersResponseBodyPOST>> {
   console.log('/api/public called');
+  const body = await request.json();
 
   if (!process.env.ABLY_API_KEY) {
     return NextResponse.json(
@@ -30,13 +31,14 @@ export async function POST(
 
   const client = new Ably.Rest(process.env.ABLY_API_KEY);
 
-  var channel = client.channels.get('status-updates');
-  const message: { text: string } = request.body;
+  let channel = client.channels.get('status-updates');
+  const message: string = body.text;
 
   const disallowedWords = ['foo', 'bar', 'fizz', 'buzz'];
 
+  console.log('message log ', message);
   const containsDisallowedWord = disallowedWords.some((word) => {
-    return message.text.match(new RegExp(`\\b${word}\\b`));
+    return message.match(new RegExp(`\\b${word}\\b`));
   });
 
   if (containsDisallowedWord) {
@@ -48,18 +50,20 @@ export async function POST(
     );
   }
 
-  await channel.publish('update-from-server', message);
-
-  if (message) {
-    return NextResponse.json(
-      {
-        error: 'Message.',
-      },
-      { status: 200 },
-    );
+  if (containsDisallowedWord) {
+    console.log('bad word');
   }
 
-  return NextResponse.json({
-    message: message,
-  });
+  await channel.publish('update-from-server', 'HELLO');
+  console.log('good');
+  // if (message) {
+  //   return NextResponse.json(
+  //     {
+  //       error: 'Message.',
+  //     },
+  //     { status: 200 },
+  //   );
+  // }
+
+  return NextResponse.json({});
 }

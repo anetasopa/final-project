@@ -28,6 +28,11 @@ export default function ChatForm({ user }) {
     });
 
     const _channel = ably.channels.get('status-updates');
+
+    // _channel.subscribe((message: Ably.Types.Message) => {
+    //   setLogs(['message income']);
+    // });
+
     _channel.subscribe((message: Ably.Types.Message) => {
       setLogs((prev) => [
         ...prev,
@@ -47,23 +52,10 @@ export default function ChatForm({ user }) {
     _event: MouseEvent<HTMLButtonElement>,
   ) => {
     if (channel === null) return;
+    console.log('messageText', messageText);
 
     channel.publish('update-from-client', {
       text: `${messageText} @ ${new Date().toISOString()}`,
-    });
-  };
-
-  const publicFromServerHandler: MouseEventHandler = (
-    _event: MouseEvent<HTMLButtonElement>,
-  ) => {
-    fetch('/api/pub-sub/publish', {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-      },
-      body: JSON.stringify({
-        text: `${messageText} @ ${new Date().toISOString()}`,
-      }),
     });
   };
 
@@ -104,16 +96,14 @@ export default function ChatForm({ user }) {
             <button onClick={publicFromClientHandler}>
               Publish from client
             </button>
-            <button onClick={publicFromServerHandler}>
-              Publish from server
-            </button>
           </div>
         </section>
 
         <section>
           <h3>Subscribe</h3>
-          {JSON.stringify(logs)}
-          {JSON.stringify(channel?.history)}
+
+          {/* {JSON.stringify(logs)}
+          {JSON.stringify(channel?.basePath)} */}
           <Logger logEntries={logs} />
         </section>
 
