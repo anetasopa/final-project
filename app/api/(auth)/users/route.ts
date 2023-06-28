@@ -19,7 +19,7 @@ export type Error = {
   error: string;
 };
 
-type UsersResponseBodyGet = { animals: User[] } | Error;
+type UsersResponseBodyGet = { users: User[] } | Error;
 
 export async function GET(
   request: NextRequest,
