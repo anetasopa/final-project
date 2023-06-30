@@ -13,6 +13,7 @@ export default function LoginForm() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string>('');
   const [isLoading, setIsLoading] = useState(false);
+  const [linkClicked, setLinkClicked] = useState(false);
   const router = useRouter();
 
   async function login() {
@@ -42,6 +43,10 @@ export default function LoginForm() {
     // setPassword('');
   }
 
+  const handleClick = () => {
+    setLinkClicked(true);
+  };
+
   return (
     <div className={styles.containerLogIn}>
       <Link href="/">
@@ -52,7 +57,12 @@ export default function LoginForm() {
       <div>
         <p className={styles.textAccount}>Account</p>
         <div className={styles.buttons}>
-          <Link className={styles.link} href="/login">
+          <Link
+            onClick={handleClick}
+            style={{ color: linkClicked ? '#6bd9ec' : 'inherit' }}
+            className={styles.link}
+            href="/login"
+          >
             Login
           </Link>
           <Link

@@ -2,112 +2,184 @@
 
 import { configureAbly } from '@ably-labs/react-hooks';
 import * as Ably from 'ably/promises';
+import dotenv from 'dotenv';
+import { getAnalytics } from 'firebase/analytics';
+// Import the functions you need from the SDKs you need
+import { initializeApp } from 'firebase/app';
+import { getDatabase, onValue, ref, set } from 'firebase/database';
 import Image from 'next/image';
+import Link from 'next/link';
 import { MouseEvent, MouseEventHandler, useEffect, useState } from 'react';
 import { FaPen } from 'react-icons/fa';
+import { getUserContacts } from '../../database/users';
+import firebase from '../../util/firebase';
+import { CreateResponseBodyPost } from '../api/(auth)/messages/route';
+// import Layout from '../components/layout';
+import Chat, { LogEntry } from './Chat';
 // import homeStyles from '../styles/Home.module.css';
 import styles from './ChatForm.module.scss';
-// import Layout from '../components/layout';
-import Logger, { LogEntry } from './Logger';
 import Message from './Message';
 
-export default function ChatForm({ user }) {
-  const [message, setMessage] = useState('');
-  const [logs, setLogs] = useState<Array<LogEntry>>([]);
-  const [channel, setChannel] =
-    useState<Ably.Types.RealtimeChannelPromise | null>(null);
-  const [messageText, setMessageText] = useState<string>('A message');
+dotenv.config();
+
+export default function ChatForm({
+  user,
+  userId,
+  userContacts,
+  firebaseConfig,
+}) {
+  const [messages, setMessages] = useState([]);
+  const [inputMessage, setInputMessage] = useState('');
+  console.log({ userContacts });
+  console.log({ key123456: process.env.FIREBASE_API_KEY });
+
+  const [receiverId, setReceiverId] = useState(null);
+  console.log('receiverId12345', receiverId);
+
+  //const firebaseConfig = firebase;
+
+  const getReceiverID = (userID) => {
+    // const user = userID;
+    setReceiverId(userID);
+    console.log('userID is clicked: ', userID);
+  };
+
+  const app = initializeApp(firebaseConfig);
+  // const analytics = getAnalytics(app);
+  // const database = getDatabase(app);
+
+  const db = getDatabase();
 
   useEffect(() => {
-    const ably: Ably.Types.RealtimePromise = configureAbly({
-      authUrl: '/api/authentication',
-    });
+    if (userId !== null && receiverId !== null) {
+      const smallerId = Math.min(userId, receiverId);
+      const biggerId = Math.max(userId, receiverId);
+      const key = `users/${smallerId}-${biggerId}`;
 
-    ably.connection.on((stateChange: Ably.Types.ConnectionStateChange) => {
-      console.log(stateChange);
-    });
+      const starCountRef = ref(db, key);
+      onValue(starCountRef, (snapshot) => {
+        const data = snapshot.val();
 
-    const _channel = ably.channels.get('status-updates');
+        setMessages(data ? data : []);
+      });
+    }
+  }, [userId, receiverId]);
 
-    // _channel.subscribe((message: Ably.Types.Message) => {
-    //   setLogs(['message income']);
-    // });
+  // useEffect(() => {
+  //   const starCountRef = ref(db, `users/24-${userId}`);
+  //   onValue(starCountRef, (snapshot) => {
+  //     const data = snapshot.val();
 
-    _channel.subscribe((message: Ably.Types.Message) => {
-      setLogs((prev) => [
-        ...prev,
-        new LogEntry(
-          `✉️ event name: ${message.name} text: ${message.data.text}`,
-        ),
-      ]);
-    });
-    setChannel(_channel);
+  //     console.log('data from chatform ', data);
 
-    return () => {
-      _channel.unsubscribe();
-    };
-  }, []); // Only run the client
+  //     setMessages(data ? data : []);
+  //   });
+  // }, []);
 
-  const publicFromClientHandler: MouseEventHandler = (
-    _event: MouseEvent<HTMLButtonElement>,
-  ) => {
-    if (channel === null) return;
-    console.log('messageText', messageText);
+  // const [logs, setLogs] = useState<Array<LogEntry>>([]);
+  // const [channel, setChannel] =
+  //   useState<Ably.Types.RealtimeChannelPromise | null>(null);
+  // const [messageText, setMessageText] = useState<string>('');
 
-    channel.publish('update-from-client', {
-      text: `${messageText} @ ${new Date().toISOString()}`,
-    });
-  };
+  // useEffect(() => {
+  //   const ably: Ably.Types.RealtimePromise = configureAbly({
+  //     authUrl: '/api/authentication',
+  //   });
+
+  //   ably.connection.on((stateChange: Ably.Types.ConnectionStateChange) => {
+  //     console.log(stateChange);
+  //   });
+
+  //   const _channel = ably.channels.get('status-updates');
+
+  //   _channel.subscribe((message: Ably.Types.Message) => {
+  //     setLogs((prev) => [...prev, new LogEntry(message.data.text)]);
+  //   });
+  //   setChannel(_channel);
+
+  //   return () => {
+  //     _channel.unsubscribe();
+  //   };
+  // }, []); // Only run the client
+
+  // const publicFromClientHandler: MouseEventHandler = async (
+  //   _event: MouseEvent<HTMLButtonElement>,
+  // ) => {
+  //   try {
+  //     const response = fetch('/api/messages', {
+  //       method: 'POST',
+  //       body: JSON.stringify({ messageText }),
+  //     });
+
+  //     if ((await response).status !== 500) {
+  //       const data: CreateResponseBodyPost = await (await response).json();
+
+  //       if ('error' in data) {
+  //         console.log(data.error);
+  //       }
+
+  //       if ('user' in data) {
+  //         console.log(data.user);
+  //       }
+  //     }
+  //   } catch (e) {
+  //     console.log({ e });
+  //   }
+  //   if (channel === null) return;
+  //   channel.publish('update-from-client', {
+  //     text: messageText,
+  //     // text: `${messageText} @ ${new Date().toISOString()}`,
+  //   });
+  // };
 
   return (
     <>
       <div className={styles.list}>
-        <div className={styles.dataContainer}>
-          <div className={styles.data}>
-            <Image
-              alt="userImage"
-              src="/images/photo2.jpeg"
-              width={50}
-              height={50}
-              className={styles.userImage}
-            />
-            <div className={styles.availability}></div>
-            <p className={styles.name}>{user.username}</p>
-          </div>
-          <div className={styles.editIcon}>
-            <FaPen />
-          </div>
-        </div>
+        {userContacts.map((user) => {
+          return (
+            <div className={styles.dataContainer}>
+              <div className={styles.data}>
+                <Image
+                  alt="userImage"
+                  src={user.imageUrl}
+                  width={50}
+                  height={50}
+                  className={styles.userImage}
+                />
+                <div className={styles.availability}></div>
+                <Link onClick={() => getReceiverID(user.userId)} href="/chat">
+                  <p className={styles.name}>{user.username}</p>
+                </Link>
+              </div>
+            </div>
+          );
+        })}
       </div>
       <div className={styles.chat}>
-        <div>Chat</div>
-        <section className={styles.publish}>
-          <h3>Publish</h3>
-          <div>
-            <label htmlFor="message">Message text</label>
-            <input
-              type="text"
-              placeholder="message to publish"
-              value={messageText}
-              onChange={(e) => setMessageText(e.target.value)}
-            />
-          </div>
-          <div>
-            <button onClick={publicFromClientHandler}>
-              Publish from client
-            </button>
-          </div>
-        </section>
-
-        <section>
-          <h3>Subscribe</h3>
-
-          {/* {JSON.stringify(logs)}
-          {JSON.stringify(channel?.basePath)} */}
-          <Logger logEntries={logs} />
-        </section>
-
-        <Message message={message} setMessage={setMessage} />
+        {/* {messages.map((m) => (
+        <li>{m.message}</li>
+      ))} */}
+        {/* {messages.map((m) => (
+          <li>{m.message}</li>
+        ))} */}
+        <div className={styles.messages}>
+          <Chat
+            // logEntries={logs}
+            messages={messages}
+            userId={userId}
+            receiverId={receiverId}
+          />
+        </div>
+        <Message
+          messages={messages}
+          inputMessage={inputMessage}
+          setInputMessage={setInputMessage}
+          userId={userId}
+          receiverId={receiverId}
+          // messageText={messageText}
+          // setMessageText={setMessageText}
+          // publicFromClientHandler={publicFromClientHandler}
+        />
       </div>
     </>
   );

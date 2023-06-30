@@ -34,7 +34,7 @@ export async function POST(
       {
         error: 'Email or password missing!',
       },
-      { status: 406 },
+      { status: 400 },
     );
   }
 

@@ -2,12 +2,13 @@ import { cache } from 'react';
 import { sql } from './connect';
 
 export const saveMessages = cache(
-  async (creatorUserId: number, receiverUserId: number) => {
+  async (creatorUserId: number, content: string) => {
     await sql`
       INSERT INTO messages
-        (creator_user_id, receiver_user_id)
+        (creator_user_id, content)
       VALUES
-        (${creatorUserId}, ${receiverUserId});
+        (${creatorUserId}, ${content})
+        RETURNING *
     `;
   },
 );

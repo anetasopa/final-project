@@ -8,6 +8,7 @@
 
     .data {
       display: flex;
+      margin-top: 30px;
 
       .name {
         text-align: center;
@@ -20,6 +21,11 @@
             margin-left: 20px;
           }
         }
+      }
+
+      .buttonName {
+        border: none;
+        background-color: transparent;
       }
     }
 
@@ -47,9 +53,12 @@
 }
 
 .chat {
+  // align-items: end;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  float: right;
+  justify-content: end;
 }
 
 .availability {
@@ -59,4 +68,11 @@
   margin-left: -10px;
   width: 15px;
   height: 15px;
+}
+
+.messages {
+  margin-right: 30px;
+  // gap: 20px;
+  // float: right;
+  // justify-content: end;
 }

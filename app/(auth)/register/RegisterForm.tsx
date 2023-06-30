@@ -19,6 +19,7 @@ export default function RegisterForm() {
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState<string | ZodError[]>('');
   const [isLoading, setIsLoading] = useState(false);
+  const [linkClicked, setLinkClicked] = useState(false);
 
   const router = useRouter();
 
@@ -65,6 +66,10 @@ export default function RegisterForm() {
     // setPassword('');
   }
 
+  const handleClick = () => {
+    setLinkClicked(true);
+  };
+
   return (
     <div className={styles.containerSignUp}>
       <Link href="/">
@@ -79,6 +84,8 @@ export default function RegisterForm() {
             Login
           </Link>
           <Link
+            onClick={handleClick}
+            style={{ color: linkClicked ? '#6bd9ec' : 'inherit' }}
             className={`${styles.link} ${styles.buttonRight}`}
             href="/register"
           >

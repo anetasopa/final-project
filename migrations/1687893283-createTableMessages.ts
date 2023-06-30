@@ -14,8 +14,8 @@ export async function up(sql: Sql) {
       id integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
       content varchar(200) DEFAULT NULL,
       timestamp timestamp NOT NULL DEFAULT NOW(),
-      creator_user_id integer NOT NULL REFERENCES users (id),
-      receiver_user_id integer NOT NULL REFERENCES users (id)
+      creator_user_id integer DEFAULT NULL REFERENCES users (id),
+      receiver_user_id integer DEFAULT NULL REFERENCES users (id)
     )
   `;
 }

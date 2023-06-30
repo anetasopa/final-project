@@ -36,7 +36,6 @@ interface CategoriesOption {
 }
 
 async function remove({ contactId }) {
-  console.log({ contactId });
   try {
     const response = await fetch(`/api/contacts/${contactId}`, {
       method: 'DELETE',
@@ -339,7 +338,6 @@ export default function ProfileForm(props: Props) {
             </div>
           </li>
           {userContactsProps.map((followedUser) => {
-            console.log({ followedUser });
             return (
               <>
                 <li className={styles.tableRow}>

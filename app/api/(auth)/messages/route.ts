@@ -1,5 +1,6 @@
 import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
+import { saveMessages } from '../../../../database/messages';
 import {
   getUserBySessionToken,
   getUsersById,
@@ -17,12 +18,19 @@ export async function POST(
   request: NextRequest,
   { params }: { params: Record<string, string | string[]> },
 ): Promise<NextResponse<CreateResponseBodyPost>> {
+  const body = await request.json();
+  const message = body.messageText;
+
+  console.log({ message1234567: message });
+
   const cookieStore = cookies();
   const sessionToken = cookieStore.get('sessionToken');
 
   const creatorUserId = !sessionToken?.value
     ? undefined
     : await getUserBySessionToken(sessionToken.value);
+
+  console.log({ creatorUserId1234567: creatorUserId });
 
   if (!creatorUserId) {
     return NextResponse.json(
@@ -33,11 +41,9 @@ export async function POST(
     );
   }
 
-  const body = await request.json();
-  const receiverUserId = body.receiverUserId;
-  let receiverUser = await getUsersById(receiverUserId);
+  let creatorUser = await getUsersById(creatorUserId);
 
-  if (!receiverUser) {
+  if (!creatorUser) {
     return NextResponse.json(
       {
         error: 'There is no such user!',
@@ -46,7 +52,7 @@ export async function POST(
     );
   }
 
-  await updateUserContacts(creatorUserId.id, followedUser.id);
+  await saveMessages(creatorUser.id, message);
 
   return NextResponse.json({ message: 'Message is added!' });
 }
