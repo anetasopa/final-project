@@ -35,12 +35,15 @@ interface CategoriesOption {
   readonly label: string;
 }
 
-async function remove({ contactId }) {
+async function remove({ contactId, setIsLoadingRemove }) {
+  setIsLoadingRemove(true);
   try {
     const response = await fetch(`/api/contacts/${contactId}`, {
       method: 'DELETE',
       body: JSON.stringify({ contactId }),
     });
+
+    setIsLoadingRemove(false);
 
     if (response.status !== 500) {
       const data: CreateResponseBodyPut = await response.json();
@@ -110,6 +113,7 @@ export default function ProfileForm(props: Props) {
   const userContactsProps = props.userContacts;
 
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingRemove, setIsLoadingRemove] = useState(false);
   const [selectedOption, setSelectedOption] = useState(userCategoriesProps);
 
   const idSelectedCategories = selectedOption?.map((selected) => selected.id);
@@ -441,11 +445,22 @@ export default function ProfileForm(props: Props) {
                     <div>
                       <button
                         onClick={async () => {
-                          await remove({ contactId: followedUser.userId });
+                          await remove({
+                            contactId: followedUser.userId,
+                            setIsLoadingRemove,
+                          });
                         }}
                         className={styles.buttonDelete}
                       >
-                        <CiCircleRemove />
+                        {isLoadingRemove === followedUser.id ? (
+                          <div className={styles.spinner2}>
+                            <p className={styles.loader2}>Loading...</p>
+                          </div>
+                        ) : (
+                          <CiCircleRemove />
+                        )}
+
+                        {/* <CiCircleRemove /> */}
                       </button>
                     </div>
                   </div>
