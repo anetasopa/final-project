@@ -26,7 +26,6 @@ interface ChatProps {
 }
 
 const renderMessage = (message, userId, userContacts, userData, receiverId) => {
-  console.log({ userData123456: userData });
   const receiverUser = userContacts.find(
     (contact) => contact.userId === receiverId,
   );

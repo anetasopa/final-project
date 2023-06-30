@@ -19,6 +19,7 @@ import Chat, { LogEntry } from './Chat';
 // import homeStyles from '../styles/Home.module.css';
 import styles from './ChatForm.module.scss';
 import Message from './Message';
+import Profile from './Profile';
 
 dotenv.config();
 
@@ -161,12 +162,9 @@ export default function ChatForm({
         })}
       </div>
       <div className={styles.chat}>
-        {/* {messages.map((m) => (
-        <li>{m.message}</li>
-      ))} */}
-        {/* {messages.map((m) => (
-          <li>{m.message}</li>
-        ))} */}
+        <div className={styles.profile}>
+          <Profile userContacts={userContacts} receiverId={receiverId} />
+        </div>
         <div className={styles.messages}>
           <Chat
             // logEntries={logs}
