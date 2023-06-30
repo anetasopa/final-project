@@ -35,7 +35,12 @@ interface CategoriesOption {
   readonly label: string;
 }
 
-async function remove({ contactId, setIsLoadingRemove }) {
+interface RemoveParams {
+  contactId: string;
+  setIsLoadingRemove: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+async function remove({ contactId, setIsLoadingRemove }: RemoveParams) {
   setIsLoadingRemove(true);
   try {
     const response = await fetch(`/api/contacts/${contactId}`, {
