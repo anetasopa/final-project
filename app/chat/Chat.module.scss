@@ -1,10 +1,11 @@
 .messages {
-  margin: 30px;
+  margin: 30px 0;
 
   .rightContainer {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+
     .right {
       display: flex;
       justify-content: flex-end;
@@ -15,20 +16,41 @@
       border-radius: 50px;
       width: fit-content;
       float: right;
-      margin-bottom: 3px;
+      margin-bottom: 10px;
     }
   }
 
-  .left {
-    margin-left: 20px;
-    justify-content: flex-start;
+  .leftContainer {
     display: flex;
-    // justify-content: start;
-    padding: 10px 15px;
-    margin-bottom: 3px;
-    border: 1px solid var(--primary-accent-color);
-    border-radius: 50px;
-    color: var(--primary-accent-color);
-    width: fit-content;
+
+    .userImage {
+      border-radius: 150px;
+      margin: 10px 0 0 30px;
+      text-align: center;
+      box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+      margin-top: -5px;
+
+      // @media (max-width: 480px) {
+      //   & {
+      //     margin-top: -50px;
+      //     margin-left: 60px;
+      //     width: 150px;
+      //     height: 150px;
+      //   }
+      // }
+    }
+
+    .left {
+      margin-left: 20px;
+      justify-content: flex-start;
+      display: flex;
+      // justify-content: start;
+      padding: 10px 15px;
+      margin-bottom: 10px;
+      border: 1px solid var(--primary-accent-color);
+      border-radius: 50px;
+      color: var(--primary-accent-color);
+      width: fit-content;
+    }
   }
 }

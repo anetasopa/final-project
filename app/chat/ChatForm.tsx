@@ -30,11 +30,8 @@ export default function ChatForm({
 }) {
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
-  console.log({ userContacts });
-  console.log({ key123456: process.env.FIREBASE_API_KEY });
 
   const [receiverId, setReceiverId] = useState(null);
-  console.log('receiverId12345', receiverId);
 
   //const firebaseConfig = firebase;
 
@@ -165,6 +162,8 @@ export default function ChatForm({
         <div className={styles.messages}>
           <Chat
             // logEntries={logs}
+            userContacts={userContacts}
+            user={user}
             messages={messages}
             userId={userId}
             receiverId={receiverId}
