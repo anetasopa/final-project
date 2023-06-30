@@ -1,4 +1,6 @@
 import Image from 'next/image';
+import { User } from '../../database/users';
+import { Messages } from '../../migrations/1687893283-createTableMessages';
 import styles from './Chat.module.scss';
 
 // export class LogEntry {
@@ -14,6 +16,14 @@ import styles from './Chat.module.scss';
 // export type LoggingProps = {
 //   logEntries: Array<LogEntry>;
 // };
+
+interface ChatProps {
+  messages: Messages[];
+  userId: string;
+  receiverId: string | null;
+  userContacts: User[];
+  userData: any; // Replace 'any' with the appropriate type for userData
+}
 
 const renderMessage = (message, userId, userContacts, userData, receiverId) => {
   console.log({ userData123456: userData });
@@ -58,7 +68,7 @@ export default function Chat({
   receiverId,
   userContacts,
   userData,
-}): Props {
+}: ChatProps) {
   return (
     <div className={styles.messages}>
       {messages.map((message) =>

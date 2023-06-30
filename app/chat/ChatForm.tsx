@@ -11,7 +11,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { MouseEvent, MouseEventHandler, useEffect, useState } from 'react';
 import { FaPen } from 'react-icons/fa';
-import { getUserContacts, getUsersById } from '../../database/users';
+import { getUserContacts, getUsersById, User } from '../../database/users';
 import firebase from '../../util/firebase';
 import { CreateResponseBodyPost } from '../api/(auth)/messages/route';
 // import Layout from '../components/layout';
@@ -22,13 +22,21 @@ import Message from './Message';
 
 dotenv.config();
 
+interface ChatFormProps {
+  user: User;
+  userId: string;
+  userContacts: User[];
+  firebaseConfig: any;
+  userData: number;
+}
+
 export default function ChatForm({
   user,
   userId,
   userContacts,
   firebaseConfig,
-  userData
-}) {
+  userData,
+}: ChatFormProps) {
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
   const [receiverId, setReceiverId] = useState(null);
