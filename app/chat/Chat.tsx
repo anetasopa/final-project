@@ -15,14 +15,24 @@ import styles from './Chat.module.scss';
 //   logEntries: Array<LogEntry>;
 // };
 
-const renderMessage = (message, userId, userContacts, user, receiverId) => {
+const renderMessage = (message, userId, userContacts, userData, receiverId) => {
+  console.log({ userData123456: userData });
   const receiverUser = userContacts.find(
     (contact) => contact.userId === receiverId,
   );
-  const imageUrl = receiverUser ? receiverUser.imageUrl : '';
+  const receiverImageUrl = receiverUser ? receiverUser.imageUrl : '';
 
   return message.creatorUserId === userId ? (
     <div className={styles.rightContainer}>
+      <div>
+        <Image
+          alt="userImage"
+          src={userData.imageUrl}
+          width={50}
+          height={50}
+          className={styles.creatorImageUrl}
+        />
+      </div>
       <p className={styles.right}>{message.message}</p>
     </div>
   ) : (
@@ -30,10 +40,10 @@ const renderMessage = (message, userId, userContacts, user, receiverId) => {
       {receiverUser && (
         <Image
           alt="userImage"
-          src={imageUrl}
+          src={receiverImageUrl}
           width={50}
           height={50}
-          className={styles.userImage}
+          className={styles.receiverImageUrl}
         />
       )}
       <p className={styles.left}>{message.message}</p>
@@ -47,12 +57,12 @@ export default function Chat({
   userId,
   receiverId,
   userContacts,
-  user,
+  userData,
 }): Props {
   return (
     <div className={styles.messages}>
       {messages.map((message) =>
-        renderMessage(message, userId, userContacts, user, receiverId),
+        renderMessage(message, userId, userContacts, userData, receiverId),
       )}
       {/* {logEntries
         .sort((a: LogEntry, b: LogEntry) => {

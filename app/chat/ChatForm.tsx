@@ -11,7 +11,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { MouseEvent, MouseEventHandler, useEffect, useState } from 'react';
 import { FaPen } from 'react-icons/fa';
-import { getUserContacts } from '../../database/users';
+import { getUserContacts, getUsersById } from '../../database/users';
 import firebase from '../../util/firebase';
 import { CreateResponseBodyPost } from '../api/(auth)/messages/route';
 // import Layout from '../components/layout';
@@ -27,10 +27,10 @@ export default function ChatForm({
   userId,
   userContacts,
   firebaseConfig,
+  userData
 }) {
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
-
   const [receiverId, setReceiverId] = useState(null);
 
   //const firebaseConfig = firebase;
@@ -163,7 +163,7 @@ export default function ChatForm({
           <Chat
             // logEntries={logs}
             userContacts={userContacts}
-            user={user}
+            userData={userData}
             messages={messages}
             userId={userId}
             receiverId={receiverId}

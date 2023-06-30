@@ -1,7 +1,11 @@
 import { cookies } from 'next/headers';
 import { notFound } from 'next/navigation';
 import React from 'react';
-import { getUserBySessionToken, getUserContacts } from '../../database/users';
+import {
+  getUserBySessionToken,
+  getUserContacts,
+  getUsersById,
+} from '../../database/users';
 import ChatForm from './ChatForm';
 import styles from './page.module.scss';
 
@@ -20,6 +24,7 @@ export default async function Chat() {
   const userId = user.id;
 
   const userContacts = await getUserContacts(userId);
+  const userData = await getUsersById(userId);
 
   // const singleUserData = getUsersById(userId);
 
@@ -41,6 +46,7 @@ export default async function Chat() {
         userId={userId}
         userContacts={userContacts}
         firebaseConfig={firebaseConfig}
+        userData={userData}
       />
     </main>
   );
