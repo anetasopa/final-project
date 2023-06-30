@@ -66,8 +66,8 @@ export default function Message({
           }
         }}
       >
-        Send
-        {/* <BsSend className={styles.sendIcon} /> */}
+        {/* Send */}
+        <BsSend className={styles.sendIcon} />
       </button>
     </form>
   );
