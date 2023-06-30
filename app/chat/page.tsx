@@ -1,11 +1,7 @@
 import { cookies } from 'next/headers';
 import { notFound } from 'next/navigation';
 import React from 'react';
-import {
-  getUserBySessionToken,
-  getUserContacts,
-  getUsersById,
-} from '../../database/users';
+import { getUserBySessionToken, getUserContacts } from '../../database/users';
 import ChatForm from './ChatForm';
 import styles from './page.module.scss';
 

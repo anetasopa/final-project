@@ -1,8 +1,6 @@
 import './globals.scss';
 import { Inter } from 'next/font/google';
 import { cookies } from 'next/headers';
-import Link from 'next/link';
-import { notFound, useRouter } from 'next/navigation';
 import { getUserBySessionToken, getUsersById } from '../database/users';
 import Footer from './components/Footer';
 import Nav from './components/Nav';

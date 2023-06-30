@@ -2,8 +2,8 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { use, useState } from 'react';
-import { CgClose, CgProfile } from 'react-icons/cg';
+import React, { useState } from 'react';
+import { CgClose } from 'react-icons/cg';
 import { RxHamburgerMenu } from 'react-icons/rx';
 import { logout } from '../(auth)/logout/actions';
 import { LogoutButton } from './LogoutButton';
