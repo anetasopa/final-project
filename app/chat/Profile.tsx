@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import styles from './Profile.module.scss';
 
 export default function Profile({ userContacts, receiverId }) {
@@ -7,10 +8,13 @@ export default function Profile({ userContacts, receiverId }) {
   );
   const receiverImageUrl = receiverUser ? receiverUser.imageUrl : '';
   const receiverNickname = receiverUser ? receiverUser.nickname : '';
+  // const receiverUsername = receiverUser ? receiverUser.username : '';
 
   return (
     <div
-      className={`${styles.profileContainer} ${receiverId ? 'showLine' : ''}`}
+      className={`${styles.profileContainer} ${
+        receiverId ? styles.showLine : ''
+      }`}
     >
       {receiverUser && (
         <Image
