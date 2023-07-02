@@ -3,6 +3,8 @@
 import { getAnalytics } from 'firebase/analytics';
 import { initializeApp } from 'firebase/app';
 import { getDatabase, onValue, ref, set } from 'firebase/database';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { BsSend } from 'react-icons/bs';
 import styles from './Message.module.scss';
 
@@ -19,6 +21,45 @@ export default function Message({
 }) {
   // const app = initializeApp(firebaseConfig);
   const db = getDatabase();
+  const [error, setError] = useState<string>('');
+  const router = useRouter();
+
+  async function saveMessages() {
+    if (userId && receiverId) {
+      const smallerId = Math.min(userId, receiverId);
+      const biggerId = Math.max(userId, receiverId);
+      const key = `users/${smallerId}-${biggerId}`;
+
+      const newMessages = [...messages];
+
+      newMessages.push({
+        creatorUserId: userId,
+        receiverUserId: receiverId,
+        message: inputMessage,
+      });
+      set(ref(db, key), newMessages);
+    }
+
+    const response = await fetch('/api/messages', {
+      method: 'POST',
+      body: JSON.stringify({
+        userId,
+        receiverId,
+        inputMessage,
+      }),
+    });
+
+    const data: LoginResponseBodyPost = await response.json();
+
+    if ('error' in data) {
+      setError(data.error);
+    }
+
+    if ('user' in data) {
+      router.push(`profile/${data.user.username}`);
+      router.refresh();
+    }
+  }
 
   return (
     <form
@@ -46,23 +87,25 @@ export default function Message({
       </p> */}
       <button
         className={styles.messageButton}
-        onClick={() => {
-          if (userId && receiverId) {
-            const smallerId = Math.min(userId, receiverId);
-            const biggerId = Math.max(userId, receiverId);
-            const key = `users/${smallerId}-${biggerId}`;
-
-            const newMessages = [...messages];
-
-            newMessages.push({
-              creatorUserId: userId,
-              receiverUserId: receiverId,
-              message: inputMessage,
-              time: Date.now(),
-            });
-            set(ref(db, key), newMessages);
-          }
+        onClick={async () => {
+          await saveMessages();
         }}
+        // onClick={() => {
+        //   if (userId && receiverId) {
+        //     const smallerId = Math.min(userId, receiverId);
+        //     const biggerId = Math.max(userId, receiverId);
+        //     const key = `users/${smallerId}-${biggerId}`;
+
+        //     const newMessages = [...messages];
+
+        //     newMessages.push({
+        //       creatorUserId: userId,
+        //       receiverUserId: receiverId,
+        //       message: inputMessage,
+        //     });
+        //     set(ref(db, key), newMessages);
+        //   }
+        // }}
       >
         {/* Send */}
         <BsSend className={styles.sendIcon} />

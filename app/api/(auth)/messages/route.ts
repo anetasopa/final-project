@@ -19,40 +19,39 @@ export async function POST(
   { params }: { params: Record<string, string | string[]> },
 ): Promise<NextResponse<CreateResponseBodyPost>> {
   const body = await request.json();
-  const message = body.messageText;
 
-  console.log({ message1234567: message });
+  console.log({ body1234567: body });
 
-  const cookieStore = cookies();
-  const sessionToken = cookieStore.get('sessionToken');
+  // const cookieStore = cookies();
+  // const sessionToken = cookieStore.get('sessionToken');
 
-  const creatorUserId = !sessionToken?.value
-    ? undefined
-    : await getUserBySessionToken(sessionToken.value);
+  // const creatorUserId = !sessionToken?.value
+  //   ? undefined
+  //   : await getUserBySessionToken(sessionToken.value);
 
-  console.log({ creatorUserId1234567: creatorUserId });
+  // console.log({ creatorUserId1234567: creatorUserId });
 
-  if (!creatorUserId) {
-    return NextResponse.json(
-      {
-        error: 'There is no such user!',
-      },
-      { status: 401 },
-    );
-  }
+  // if (!creatorUserId) {
+  //   return NextResponse.json(
+  //     {
+  //       error: 'There is no such user!',
+  //     },
+  //     { status: 401 },
+  //   );
+  // }
 
-  let creatorUser = await getUsersById(creatorUserId);
+  // let creatorUser = await getUsersById(creatorUserId);
 
-  if (!creatorUser) {
-    return NextResponse.json(
-      {
-        error: 'There is no such user!',
-      },
-      { status: 400 },
-    );
-  }
+  // if (!creatorUser) {
+  //   return NextResponse.json(
+  //     {
+  //       error: 'There is no such user!',
+  //     },
+  //     { status: 400 },
+  //   );
+  // }
 
-  await saveMessages(creatorUser.id, message);
+  await saveMessages(body.inputMessage, body.userId, body.receiverId);
 
   return NextResponse.json({ message: 'Message is added!' });
 }
