@@ -8,18 +8,17 @@ import styles from './Message.module.scss';
 
 export default function Message({
   messages,
-  setMessages,
-  inputMessage,
-  setInputMessage,
-  userId,
-  receiverId,
-  // messageText,
-  // setMessageText,
-  // publicFromClientHandler,
+  // setMessages,
+  // inputMessage,
+  // setInputMessage,
+  // userId,
+  // receiverId,
+  messageText,
+  setMessageText,
+  publicFromClientHandler,
 }) {
   // const app = initializeApp(firebaseConfig);
-  const db = getDatabase();
-
+  // const db = getDatabase();
   return (
     <form
       className={styles.messageForm}
@@ -31,20 +30,21 @@ export default function Message({
       </label>
       <input
         className={styles.messageInput}
-        onChange={(e) => setInputMessage(e.target.value)}
+        onChange={(e) => setMessageText(e.target.value)}
         id="search"
-        type={inputMessage}
+        type={messageText}
         placeholder="Message..."
         required
       />
 
-      {/* <p className={styles.message}>
+      <p className={styles.message}>
         {' '}
         {messages.map((m) => (
           <p>{m.message}</p>
         ))}
-      </p> */}
-      <button
+      </p>
+
+      {/* <button
         className={styles.messageButton}
         onClick={() => {
           if (userId && receiverId) {
@@ -64,9 +64,9 @@ export default function Message({
           }
         }}
       >
-        {/* Send */}
+
         <BsSend className={styles.sendIcon} />
-      </button>
+      </button> */}
     </form>
   );
 }

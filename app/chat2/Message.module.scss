@@ -1,0 +1,84 @@
+.messageForm {
+  position: relative;
+  width: 85%;
+  background: var(--main-accent-color);
+  border-radius: var(--rad);
+  margin: 0 auto;
+  box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+.messageInput,
+.messageButton {
+  height: var(--height);
+  font-family: var(--font-fam);
+  border: 0;
+  color: var(--color-dark);
+  font-size: 1rem;
+  width: 97%;
+  border-radius: var(--rad);
+  padding-left: 30px;
+}
+
+.messageInput[type='search'] {
+  outline: 0;
+  width: 100%;
+  background: var(--color-light);
+  padding: 0 1.6rem;
+  appearance: none;
+  transition-property: width, border-radius;
+  z-index: 1;
+  position: relative;
+  border-radius: var(--rad);
+}
+
+.messageInput[type='search']:focus,
+.messageInput:focus {
+  outline: none;
+}
+
+.messageButton {
+  padding-left: 0px;
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: var(--btn-width);
+  font-weight: bold;
+  background: var(--main-accent-color);
+  border-radius: 0 var(--rad) var(--rad) 0;
+  border-radius: var(--rad);
+  color: var(--primary-accent-color);
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  .sendIcon {
+    margin-left: -3px;
+    margin-top: 5px;
+    width: 25px;
+    height: 25px;
+    color: var(--primary-accent-color);
+  }
+}
+
+.messageInput:not(:placeholder-shown) {
+  border-radius: var(--rad) 0 0 var(--rad);
+  width: calc(100% - var(--btn-width));
+  + button {
+    display: block;
+    border-radius: var(--rad);
+  }
+}
+
+.messageLabel {
+  position: absolute;
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 0;
+  border: 0;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  border-radius: var(--rad);
+}

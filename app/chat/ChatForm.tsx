@@ -45,7 +45,6 @@ export default function ChatForm({
   //const firebaseConfig = firebase;
 
   const getReceiverID = (userID) => {
-    // const user = userID;
     setReceiverId(userID);
     console.log('userID is clicked: ', userID);
   };
@@ -70,17 +69,6 @@ export default function ChatForm({
       });
     }
   }, [userId, receiverId]);
-
-  // useEffect(() => {
-  //   const starCountRef = ref(db, `users/24-${userId}`);
-  //   onValue(starCountRef, (snapshot) => {
-  //     const data = snapshot.val();
-
-  //     console.log('data from chatform ', data);
-
-  //     setMessages(data ? data : []);
-  //   });
-  // }, []);
 
   // const [logs, setLogs] = useState<Array<LogEntry>>([]);
   // const [channel, setChannel] =
