@@ -1,0 +1,80 @@
+.list {
+  background-color: #f5f5f5;
+  display: block;
+
+  .dataContainer {
+    display: flex;
+    justify-content: space-between;
+
+    .data {
+      display: flex;
+      margin-top: 30px;
+
+      .name {
+        text-align: center;
+        margin-top: 20px;
+        margin-left: 10px;
+
+        @media (max-width: 480px) {
+          & {
+            margin-top: 20px;
+            margin-left: 20px;
+          }
+        }
+      }
+
+      .buttonName {
+        border: none;
+        background-color: transparent;
+      }
+    }
+
+    .userImage {
+      border-radius: 150px;
+      margin: 10px 0 0 30px;
+      text-align: center;
+      box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+
+      @media (max-width: 480px) {
+        & {
+          margin-top: -50px;
+          margin-left: 60px;
+          width: 150px;
+          height: 150px;
+        }
+      }
+    }
+
+    .editIcon {
+      float: right;
+      padding: 20px;
+    }
+  }
+}
+
+.chat {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  float: right;
+  justify-content: end;
+
+  .profile {
+    position: absolute;
+    top: 80px;
+
+  }
+}
+
+.availability {
+  background-color: green;
+  border-radius: 50px;
+  margin-top: 10px;
+  margin-left: -10px;
+  width: 15px;
+  height: 15px;
+}
+
+.messages {
+  margin: 0 60px 0 50px;
+}

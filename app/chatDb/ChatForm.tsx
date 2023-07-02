@@ -1,15 +1,22 @@
 'use client';
 
+import { configureAbly } from '@ably-labs/react-hooks';
+import * as Ably from 'ably/promises';
 import dotenv from 'dotenv';
 import { getAnalytics } from 'firebase/analytics';
+// Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app';
 import { getDatabase, onValue, ref, set } from 'firebase/database';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
-import { User } from '../../database/users';
+import { MouseEvent, MouseEventHandler, useEffect, useState } from 'react';
+import { FaPen } from 'react-icons/fa';
+import { getUserContacts, getUsersById, User } from '../../database/users';
 import firebase from '../../util/firebase';
-import Chat from './Chat';
+import { CreateResponseBodyPost } from '../api/(auth)/messages/route';
+// import Layout from '../components/layout';
+import Chat, { LogEntry } from './Chat';
+// import homeStyles from '../styles/Home.module.css';
 import styles from './ChatForm.module.scss';
 import Message from './Message';
 import Profile from './Profile';
@@ -30,7 +37,15 @@ export default function ChatForm({
   userContacts,
   firebaseConfig,
   userData,
+  usersMessages,
 }: ChatFormProps) {
+  const content = usersMessages.map((con) => con.content);
+  const creatorUserIds = usersMessages.map((creator) => creator.creatorUserId);
+  const receiverUserIds = usersMessages.map(
+    (receiver) => receiver.receiverUserId,
+  );
+
+  console.log(usersMessages, content, creatorUserIds, receiverUserIds);
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
   const [receiverId, setReceiverId] = useState(null);
@@ -63,6 +78,62 @@ export default function ChatForm({
     }
   }, [userId, receiverId]);
 
+  // const [logs, setLogs] = useState<Array<LogEntry>>([]);
+  // const [channel, setChannel] =
+  //   useState<Ably.Types.RealtimeChannelPromise | null>(null);
+  // const [messageText, setMessageText] = useState<string>('');
+
+  // useEffect(() => {
+  //   const ably: Ably.Types.RealtimePromise = configureAbly({
+  //     authUrl: '/api/authentication',
+  //   });
+
+  //   ably.connection.on((stateChange: Ably.Types.ConnectionStateChange) => {
+  //     console.log(stateChange);
+  //   });
+
+  //   const _channel = ably.channels.get('status-updates');
+
+  //   _channel.subscribe((message: Ably.Types.Message) => {
+  //     setLogs((prev) => [...prev, new LogEntry(message.data.text)]);
+  //   });
+  //   setChannel(_channel);
+
+  //   return () => {
+  //     _channel.unsubscribe();
+  //   };
+  // }, []); // Only run the client
+
+  // const publicFromClientHandler: MouseEventHandler = async (
+  //   _event: MouseEvent<HTMLButtonElement>,
+  // ) => {
+  //   try {
+  //     const response = fetch('/api/messages', {
+  //       method: 'POST',
+  //       body: JSON.stringify({ messageText }),
+  //     });
+
+  //     if ((await response).status !== 500) {
+  //       const data: CreateResponseBodyPost = await (await response).json();
+
+  //       if ('error' in data) {
+  //         console.log(data.error);
+  //       }
+
+  //       if ('user' in data) {
+  //         console.log(data.user);
+  //       }
+  //     }
+  //   } catch (e) {
+  //     console.log({ e });
+  //   }
+  //   if (channel === null) return;
+  //   channel.publish('update-from-client', {
+  //     text: messageText,
+  //     // text: `${messageText} @ ${new Date().toISOString()}`,
+  //   });
+  // };
+
   return (
     <>
       <div className={styles.list}>
@@ -92,6 +163,7 @@ export default function ChatForm({
         </div>
         <div className={styles.messages}>
           <Chat
+            // logEntries={logs}
             userContacts={userContacts}
             userData={userData}
             messages={messages}
@@ -105,6 +177,9 @@ export default function ChatForm({
           setInputMessage={setInputMessage}
           userId={userId}
           receiverId={receiverId}
+          // messageText={messageText}
+          // setMessageText={setMessageText}
+          // publicFromClientHandler={publicFromClientHandler}
         />
       </div>
     </>

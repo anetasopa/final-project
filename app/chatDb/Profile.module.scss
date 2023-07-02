@@ -1,0 +1,37 @@
+.profileContainer {
+  padding: 20px 0 0 50px;
+  display: flex;
+
+  .profileContainer.showLine::after {
+    content: ' ';
+    display: block;
+    position: absolute;
+    height: 3px;
+    background: #f3f3f3;
+    width: 900px;
+    top: 60px;
+    border-radius: 10px;
+  }
+
+  .receiverImageUrl {
+    border-radius: 150px;
+    text-align: center;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    margin-top: -3px;
+    margin-left: 30px;
+
+    // @media (max-width: 480px) {
+    //   & {
+    //     margin-top: -50px;
+    //     margin-left: 60px;
+    //     width: 150px;
+    //     height: 150px;
+    //   }
+    // }
+  }
+
+  .nickname {
+    margin: 5px 0 0 20px;
+    font-size: 0.8rem;
+  }
+}

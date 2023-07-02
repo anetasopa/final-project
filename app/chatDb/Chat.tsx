@@ -3,6 +3,20 @@ import { User } from '../../database/users';
 import { Messages } from '../../migrations/1687893283-createTableMessages';
 import styles from './Chat.module.scss';
 
+// export class LogEntry {
+//   public timestamp: Date;
+//   public message: string;
+
+//   constructor(message: string) {
+//     this.timestamp = new Date();
+//     this.message = message;
+//   }
+// }
+
+// export type LoggingProps = {
+//   logEntries: Array<LogEntry>;
+// };
+
 interface ChatProps {
   messages: Messages[];
   userId: string;
@@ -47,6 +61,7 @@ const renderMessage = (message, userId, userContacts, userData, receiverId) => {
 };
 
 export default function Chat({
+  // logEntries,
   messages,
   userId,
   receiverId,
@@ -58,6 +73,18 @@ export default function Chat({
       {messages.map((message) =>
         renderMessage(message, userId, userContacts, userData, receiverId),
       )}
+      {/* {logEntries
+        .sort((a: LogEntry, b: LogEntry) => {
+          return b.timestamp.getTime() - a.timestamp.getTime();
+        })
+        .map((logEntry: LogEntry, index: number) => {
+          return (
+            <p className={styles.message} key={index}> */}
+      {/* {logEntry.timestamp.toISOString()}:  */}
+      {/* {logEntry.message}
+            </p>
+          );
+        })} */}
     </div>
   );
 }

@@ -1,5 +1,7 @@
 import { cookies } from 'next/headers';
 import { notFound } from 'next/navigation';
+import React from 'react';
+import { getMessages } from '../../database/messages';
 import {
   getUserBySessionToken,
   getUserContacts,
@@ -24,6 +26,7 @@ export default async function Chat() {
 
   const userContacts = await getUserContacts(userId);
   const userData = await getUsersById(userId);
+  const usersMessages = await getMessages();
 
   // const singleUserData = getUsersById(userId);
 
@@ -46,6 +49,7 @@ export default async function Chat() {
         userContacts={userContacts}
         firebaseConfig={firebaseConfig}
         userData={userData}
+        usersMessages={usersMessages}
       />
     </main>
   );
