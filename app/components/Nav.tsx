@@ -38,11 +38,13 @@ export default function Nav({ user, singleUserData }) {
           {isOpen ? <RxHamburgerMenu /> : <CgClose />}
         </button>
 
-        <div>
-          <Link href="/" className={styles.logo}>
-            ChatSync
-          </Link>
-        </div>
+        {!user ? (
+          <div>
+            <Link href="/" className={styles.logo}>
+              ChatSync
+            </Link>
+          </div>
+        ) : null}
 
         {user ? (
           <>
