@@ -12,7 +12,7 @@ export function LogoutButton(props: Props) {
   const router = useRouter();
 
   return (
-    <form>
+    <form className={styles.form}>
       <button
         className={styles.buttonLogout}
         formAction={async () => {

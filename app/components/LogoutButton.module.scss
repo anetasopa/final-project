@@ -1,22 +1,25 @@
-.buttonLogout {
-  align-items: center;
-  margin-left: 5px;
-  padding: 10px 20px;
-  display: flex;
-  font-size: 1.125rem;
-  font-weight: bold;
-  border: none;
+.form {
   z-index: 10;
-  background-color: transparent;
+  .buttonLogout {
+    align-items: center;
+    margin-left: 5px;
+    padding: 10px 20px;
+    display: flex;
+    font-size: 1.125rem;
+    font-weight: bold;
+    border: none;
+    z-index: 10;
+    background-color: transparent;
 
-  @media (max-width: 480px) {
-    & {
-      padding: 0;
-      z-index: 10;
+    @media (max-width: 480px) {
+      & {
+        padding-right: 30px;
+        z-index: 10;
+      }
     }
   }
-}
 
-.buttonLogout:hover {
-  cursor: pointer;
+  .buttonLogout:hover {
+    cursor: pointer;
+  }
 }
