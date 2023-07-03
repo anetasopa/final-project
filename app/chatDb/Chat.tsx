@@ -73,7 +73,6 @@ export default function Chat({
 
   return (
     <div className={styles.messages}>
-      <p>{inputMessage}</p>
       {usersMessages.map((message) =>
         renderMessage(message, userId, userContacts, userData, receiverId),
       )}
