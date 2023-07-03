@@ -121,7 +121,7 @@ export default function ProfileForm(props: Props) {
   const [isLoadingRemove, setIsLoadingRemove] = useState(false);
   const [selectedOption, setSelectedOption] = useState(userCategoriesProps);
 
-  const idSelectedCategories = selectedOption?.map((selected) => selected.id);
+  const idSelectedCategories = selectedOption.map((selected) => selected.id);
   const [userCategories, setUserCategories] = useState(userCategoriesProps);
   const [nickname, setNickname] = useState(
     singleUserData.nickname ? singleUserData.nickname : '',
