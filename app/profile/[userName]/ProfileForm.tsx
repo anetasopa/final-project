@@ -348,7 +348,7 @@ export default function ProfileForm(props: Props) {
           </li>
           {userContactsProps.map((followedUser) => {
             return (
-              <>
+              <div key={`user-${followedUser.id}`}>
                 <li className={styles.tableRow}>
                   <div
                     className={`${styles.col} ${styles.col1}`}
@@ -369,7 +369,7 @@ export default function ProfileForm(props: Props) {
                     data-label="Username"
                   >
                     <div className={styles.categoriesContainer}>
-                      <Link href="/chat">{followedUser.username}</Link>
+                      <Link href="/chatDb">{followedUser.username}</Link>
                     </div>
                   </div>
                   <div
@@ -470,7 +470,7 @@ export default function ProfileForm(props: Props) {
                     </div>
                   </div>
                 </li>
-              </>
+              </div>
             );
           })}
         </ul>

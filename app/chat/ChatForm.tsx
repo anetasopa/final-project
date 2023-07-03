@@ -35,7 +35,7 @@ export default function ChatForm({
   const [inputMessage, setInputMessage] = useState('');
   const [receiverId, setReceiverId] = useState(null);
 
-  //const firebaseConfig = firebase;
+  // const firebaseConfig = firebase;
 
   const getReceiverID = (userID) => {
     setReceiverId(userID);
@@ -68,7 +68,7 @@ export default function ChatForm({
       <div className={styles.list}>
         {userContacts.map((user) => {
           return (
-            <div className={styles.dataContainer}>
+            <div key={`user-${user.id}`} className={styles.dataContainer}>
               <div className={styles.data}>
                 <Image
                   alt="userImage"
@@ -77,7 +77,7 @@ export default function ChatForm({
                   height={50}
                   className={styles.userImage}
                 />
-                <div className={styles.availability}></div>
+                <div className={styles.availability} />
                 <Link onClick={() => getReceiverID(user.userId)} href="/chat">
                   <p className={styles.name}>{user.username}</p>
                 </Link>

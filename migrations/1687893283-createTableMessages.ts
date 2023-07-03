@@ -1,6 +1,6 @@
 import { Sql } from 'postgres';
 
-export type Messages = {
+export type Message = {
   id: number;
   content: string;
   timestamp: Date;

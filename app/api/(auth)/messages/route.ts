@@ -1,23 +1,17 @@
-import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 import { saveMessages } from '../../../../database/messages';
-import {
-  getUserBySessionToken,
-  getUsersById,
-  updateUserContacts,
-} from '../../../../database/users';
-import { User } from '../users/route';
+import { Message } from '../../../../migrations/1687893283-createTableMessages';
 
 type Error = {
   error: string;
 };
 
-export type CreateResponseBodyPost = { user: User } | Error;
+export type SaveMessagesResponseBodyPost = { message: Message } | Error;
 
 export async function POST(
   request: NextRequest,
   { params }: { params: Record<string, string | string[]> },
-): Promise<NextResponse<CreateResponseBodyPost>> {
+): Promise<NextResponse<SaveMessagesResponseBodyPost>> {
   const body = await request.json();
 
   console.log({ body1234567: body });
