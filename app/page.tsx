@@ -23,7 +23,7 @@ export default function Home() {
           </p>
           <div>
             <Link className={styles.heroButton} href="/register">
-            Get started
+              Get started
             </Link>
           </div>
         </div>
@@ -47,8 +47,8 @@ export default function Home() {
             className={styles.image}
             src="./images/common2.svg"
             alt="chat image"
-            width={500}
-            height={300}
+            width={600}
+            height={400}
           />
           <div className={styles.benefitsText}>
             <h5>Common Ground</h5>
@@ -74,6 +74,24 @@ export default function Home() {
               Interacting with others who share your interests can be incredibly
               inspiring. You'll have the opportunity to learn from each other,
               discover new perspectives, and expand your horizons together.
+            </p>
+          </div>
+        </div>
+        <div className={styles.benefits}>
+          <Image
+            className={styles.image}
+            src="./images/support2.svg"
+            alt="chat image"
+            width={700}
+            height={500}
+            style={{ marginTop: '-150px' }}
+          />
+          <div className={styles.benefitsText}>
+            <h5>Support and Encouragement</h5>
+            <p>
+              Connecting with individuals who share your interests can offer a
+              strong support system. You can find encouragement, motivation, and
+              inspiration from like-minded peers who understand your passion.
             </p>
           </div>
         </div>
