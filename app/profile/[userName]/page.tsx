@@ -53,7 +53,7 @@ export default async function Profile() {
 
   return (
     <main className={styles.profileContainer}>
-      <div className={styles.background}></div>
+      <div className={styles.background} />
       <div className={styles.info}>
         <div className={styles.dataUsernameContainer}>
           <ProfileForm
