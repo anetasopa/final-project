@@ -31,6 +31,8 @@ const renderMessage = (message, userId, userContacts, userData, receiverId) => {
   );
   const receiverImageUrl = receiverUser ? receiverUser.imageUrl : '';
 
+  console.log(receiverId, userId);
+
   return message.creatorUserId === userId ? (
     <div className={styles.rightContainer}>
       <div>

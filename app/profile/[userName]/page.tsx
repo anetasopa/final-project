@@ -8,8 +8,11 @@ import {
   getUserCategories,
   getUserContacts,
   getUsersById,
+  User,
+  UserWithCategory,
 } from '../../../database/users';
 import { Category } from '../../../migrations/1686916405-createTableCategories';
+import { Contacts } from '../../../migrations/1687774485-createTableContacts';
 import styles from './page.module.scss';
 import ProfileForm from './ProfileForm';
 
@@ -38,7 +41,7 @@ export default async function Profile() {
     notFound();
   }
 
-  const userContacts = await getUserContacts(userId);
+  const userContacts: UserWithCategory[] = await getUserContacts(userId);
   const categories: Category[] = await getCategories();
 
   console.log(

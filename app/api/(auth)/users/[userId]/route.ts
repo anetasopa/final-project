@@ -9,13 +9,16 @@ import {
   updateUserImageById,
   User,
 } from '../../../../../database/users';
+import { Category } from '../../../../../migrations/1686916405-createTableCategories';
 
 type Error = {
   error: string;
 };
 
 export type CreateResponseBodyGet = { user: User } | Error;
-export type CreateResponseBodyPut = { user: User } | Error;
+export type CreateResponseBodyPut =
+  | { user: User; userCategories: Category[] }
+  | Error;
 export type CreateResponseBodyDelete = { user: User } | Error;
 
 const userSchema = z.object({
@@ -101,6 +104,8 @@ export async function PUT(
   const userImage = await updateUserImageById(userId, result.data.imageUrl);
 
   user = await getUsersById(userId);
+
+  console.log({ userCategories, user, userImage });
 
   return NextResponse.json({
     user,

@@ -10,7 +10,7 @@ export type UserWithPasswordHash = {
   passwordHash: string;
 };
 
-export type User = {
+export type UserWithCategory = {
   id: number;
   username: string;
   email: string;

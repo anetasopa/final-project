@@ -31,6 +31,8 @@ export type User = {
   contacts: Contacts[];
 };
 
+export type UserWithContacts = {};
+
 export async function up(sql: Sql) {
   await sql`
     CREATE TABLE users (

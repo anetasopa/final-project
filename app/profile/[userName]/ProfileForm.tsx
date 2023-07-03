@@ -5,7 +5,7 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { CiCircleRemove } from 'react-icons/ci';
 import Creatable from 'react-select';
-import { User } from '../../../database/users';
+import { User, UserWithCategory } from '../../../database/users';
 import { Category } from '../../../migrations/1686916405-createTableCategories';
 import { Contacts } from '../../../migrations/1687774485-createTableContacts';
 import { CreateResponseBodyPut } from '../../api/(auth)/users/[userId]/route';
@@ -17,17 +17,20 @@ type Props = {
   userId: number;
   singleUserData: User;
   userCategories: any[];
-  setShowInput: boolean;
-  idSelectedCategories: any[];
+  userContacts: UserWithCategory[];
+};
+
+type SaveProps = Props & {
+  setShowInput: (value: boolean) => void;
+  setSelectedOption: (value: Category[]) => void;
+  setUserCategories: (value: Category[]) => void;
+  setImageUrl: (value: string) => void;
+  setIsLoading: (value: boolean) => void;
+  idSelectedCategories: (value: boolean) => void;
+  result: (value: boolean) => void;
   nickname: string;
   description: string;
   imageUrl: string;
-  setSelectedOption: any;
-  setUserCategories: any;
-  setImageUrl: any;
-  setIsLoading: any;
-  userContacts: Contacts[];
-  result: any;
 };
 
 interface CategoriesOption {
@@ -77,7 +80,7 @@ async function save({
   imageUrl,
   nickname,
   description,
-}: Props) {
+}: SaveProps) {
   setShowInput(true);
   try {
     setIsLoading(true);
@@ -176,7 +179,7 @@ export default function ProfileForm(props: Props) {
     setUploadData(data);
   }
 
-  async function handleOnSubmit(event) {
+  async function handleOnSubmit(event: any) {
     event.preventDefault();
 
     const form = event.currentTarget;
