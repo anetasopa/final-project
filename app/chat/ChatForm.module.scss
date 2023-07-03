@@ -38,10 +38,9 @@
 
       @media (max-width: 480px) {
         & {
-          margin-top: -50px;
-          margin-left: 60px;
-          width: 150px;
-          height: 150px;
+          margin-left: 30px;
+          width: 50px;
+          height: 50px;
         }
       }
     }
@@ -53,6 +52,13 @@
   }
 }
 
+@media (max-width: 480px) {
+  .list {
+    padding-top: 50px;
+    padding-bottom: 20px;
+  }
+}
+
 .chat {
   justify-content: space-between;
   margin-top: 100px;
@@ -60,6 +66,12 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
+
+  @media (max-width: 480px) {
+    & {
+      margin-top: 20px;
+    }
+  }
 }
 
 .availability {
@@ -75,4 +87,18 @@
   padding-right: 50px;
   flex: 1;
   overflow-y: auto;
+}
+
+.list.mobileOpen {
+  display: none;
+}
+
+@media (max-width: 480px) {
+  .mobileButton {
+    display: block;
+  }
+}
+
+.chat.mobileOpen {
+  display: block;
 }

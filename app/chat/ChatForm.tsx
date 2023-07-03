@@ -63,9 +63,19 @@ export default function ChatForm({
     }
   }, [userId, receiverId]);
 
+  const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!isMobileMenuOpen);
+  };
+
   return (
     <>
-      <div className={styles.list}>
+      <div
+        className={`${styles.list} ${
+          isMobileMenuOpen ? styles.mobileOpen : ''
+        }`}
+      >
         {userContacts.map((user) => {
           return (
             <div key={`user-${user.id}`} className={styles.dataContainer}>
@@ -86,7 +96,14 @@ export default function ChatForm({
           );
         })}
       </div>
-      <div className={styles.chat}>
+      <button className={styles.mobileButton} onClick={toggleMobileMenu}>
+        {isMobileMenuOpen ? <p>Show List</p> : <p>Hide List</p>}
+      </button>
+      <div
+        className={`${styles.chat} ${
+          isMobileMenuOpen ? styles.mobileOpen : ''
+        }`}
+      >
         <Profile userContacts={userContacts} receiverId={receiverId} />
         <div className={styles.messages}>
           <Chat

@@ -18,6 +18,12 @@
   width: 97%;
   border-radius: var(--rad);
   padding-left: 30px;
+
+  @media (max-width: 480px) {
+    & {
+      width: 92%;
+    }
+  }
 }
 
 .messageInput[type='search'] {
