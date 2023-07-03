@@ -277,7 +277,14 @@ export default function ProfileForm(props: Props) {
             </>
           ) : (
             userCategories.map((category) => {
-              return <p className={styles.categoriesTitle}>{category.label}</p>;
+              return (
+                <p
+                  key={`category-${category.id}`}
+                  className={styles.categoriesTitle}
+                >
+                  {category.label}
+                </p>
+              );
             })
           )}
 
