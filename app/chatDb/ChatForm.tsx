@@ -55,7 +55,7 @@ export default function ChatForm({
                   className={styles.userImage}
                 />
                 <div className={styles.availability} />
-                <Link onClick={() => getReceiverID(user.userId)} href="/chatDb">
+                <Link onClick={() => getReceiverID(user.userId)} href="/chat">
                   <p className={styles.name}>{user.username}</p>
                 </Link>
               </div>

@@ -379,7 +379,7 @@ export default function ProfileForm(props: Props) {
                     data-label="Username"
                   >
                     <div className={styles.categoriesContainer}>
-                      <Link href="/chatDb">{followedUser.username}</Link>
+                      <Link href="/chat">{followedUser.username}</Link>
                     </div>
                   </div>
                   <div
