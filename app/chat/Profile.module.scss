@@ -1,17 +1,7 @@
 .profileContainer {
   padding-bottom: 20px;
   display: flex;
-
-  .profileContainer.showLine::after {
-    content: ' ';
-    display: block;
-    position: absolute;
-    height: 3px;
-    background: #f3f3f3;
-    width: 900px;
-    top: 60px;
-    border-radius: 10px;
-  }
+  border-bottom: 1px solid #f5f5f5;
 
   .receiverImageUrl {
     border-radius: 150px;

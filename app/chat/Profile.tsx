@@ -11,11 +11,7 @@ export default function Profile({ userContacts, receiverId }) {
   // const receiverUsername = receiverUser ? receiverUser.username : '';
 
   return (
-    <div
-      className={`${styles.profileContainer} ${
-        receiverId ? styles.showLine : ''
-      }`}
-    >
+    <div className={styles.profileContainer}>
       {receiverUser && (
         <Image
           alt="userImage"
