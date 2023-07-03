@@ -154,9 +154,7 @@ export default function ChatForm({
         {messages.map((m) => (
           <li>{m.message}</li>
         ))}
-
         <Profile userContacts={userContacts} receiverId={receiverId} />
-
         <div className={styles.messages}>
           <Chat
             logEntries={logs}

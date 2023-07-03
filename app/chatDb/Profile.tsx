@@ -20,8 +20,8 @@ export default function Profile({ userContacts, receiverId }) {
         <Image
           alt="userImage"
           src={receiverImageUrl}
-          width={30}
-          height={30}
+          width={50}
+          height={50}
           className={styles.receiverImageUrl}
         />
       )}
