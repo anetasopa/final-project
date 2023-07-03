@@ -1,7 +1,12 @@
 .profileContainer {
   padding-bottom: 20px;
   display: flex;
+  justify-content: space-between;
   border-bottom: 1px solid #f5f5f5;
+
+  .profileContainerInfo {
+    display: flex;
+  }
 
   .receiverImageUrl {
     border-radius: 150px;
@@ -20,6 +25,25 @@
   }
 
   .nickname {
-    margin: 5px 0 0 20px;
+    margin: 10px 0 0 20px;
+  }
+
+  .mobileButton {
+    display: none;
+
+    @media (max-width: 480px) {
+      & {
+        display: block;
+        padding-right: 30px;
+        color: var(--main-accent-color);
+        border: none;
+        background-color: transparent;
+        font-weight: bold;
+      }
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
   }
 }

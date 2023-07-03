@@ -96,15 +96,17 @@ export default function ChatForm({
           );
         })}
       </div>
-      <button className={styles.mobileButton} onClick={toggleMobileMenu}>
-        {isMobileMenuOpen ? <p>Show List</p> : <p>Hide List</p>}
-      </button>
       <div
         className={`${styles.chat} ${
           isMobileMenuOpen ? styles.mobileOpen : ''
         }`}
       >
-        <Profile userContacts={userContacts} receiverId={receiverId} />
+        <Profile
+          userContacts={userContacts}
+          receiverId={receiverId}
+          isMobileMenuOpen={isMobileMenuOpen}
+          toggleMobileMenu={toggleMobileMenu}
+        />
         <div className={styles.messages}>
           <Chat
             userContacts={userContacts}
