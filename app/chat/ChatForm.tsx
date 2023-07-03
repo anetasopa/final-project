@@ -87,10 +87,8 @@ export default function ChatForm({
         })}
       </div>
       <div className={styles.chat}>
-        <div className={styles.profile}>
-          <Profile userContacts={userContacts} receiverId={receiverId} />
-        </div>
-        <div>Profile</div>
+        <Profile userContacts={userContacts} receiverId={receiverId} />
+
         <div className={styles.messages}>
           <Chat
             userContacts={userContacts}
