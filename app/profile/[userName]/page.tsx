@@ -1,14 +1,13 @@
+import util from 'node:util';
 import { cookies } from 'next/headers';
 import { notFound } from 'next/navigation';
 import React from 'react';
-import util from 'util';
 import { getCategories } from '../../../database/categories';
 import {
   getUserBySessionToken,
   getUserCategories,
   getUserContacts,
   getUsersById,
-  User,
   UserWithCategory,
 } from '../../../database/users';
 import { Category } from '../../../migrations/1686916405-createTableCategories';
