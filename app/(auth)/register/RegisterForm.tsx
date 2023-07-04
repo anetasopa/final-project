@@ -1,9 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { FaExclamationCircle } from 'react-icons/fa';
 import { IoMdClose } from 'react-icons/io';
 import { RegisterResponseBodyPost } from '../../api/(auth)/register/route';
 import styles from './RegisterForm.module.scss';
@@ -21,13 +19,6 @@ export default function RegisterForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [linkClicked, setLinkClicked] = useState(false);
 
-  const router = useRouter();
-
-  type Props = {
-    setError: () => void;
-    setIsLoading: any;
-  };
-
   async function register() {
     setIsLoading(true);
     const response = await fetch('/api/register', {
@@ -43,7 +34,7 @@ export default function RegisterForm() {
       }
 
       if (Array.isArray(data.errors)) {
-        const pathToCollect = data?.errors;
+        const pathToCollect = data.errors;
         console.log(pathToCollect);
         const zodErrors = pathToCollect.map((entry) => {
           return { field: entry.path[0], message: entry.message };
@@ -131,7 +122,10 @@ export default function RegisterForm() {
             {errors
               .filter((error) => error.field === 'email')
               .map((error) => (
-                <div key={``} className={styles.errorMessage}>
+                <div
+                  key={`error-${error.message}`}
+                  className={styles.errorMessage}
+                >
                   <p>{error.message}</p>
                   {/* <FaExclamationCircle className={styles.icon} /> */}
                 </div>
@@ -152,7 +146,10 @@ export default function RegisterForm() {
               {errors
                 .filter((error) => error.field === 'password')
                 .map((error) => (
-                  <div className={styles.errorMessage}>
+                  <div
+                    key={`error-${error.message}`}
+                    className={styles.errorMessage}
+                  >
                     <p>{error.message}</p>
                     {/* <FaExclamationCircle className={styles.icon} /> */}
                   </div>
