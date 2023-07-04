@@ -267,7 +267,6 @@ export default function ProfileForm(props: Props) {
           <p className={styles.interestsTitle}>Interests</p>
           {!showInput ? (
             <Creatable
-              data-test-id="profile-interests"
               className={styles.select}
               closeMenuOnSelect={false}
               components={categoriesOption}

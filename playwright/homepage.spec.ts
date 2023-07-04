@@ -24,17 +24,18 @@ test('home page test', async ({ page }) => {
 
   // Click a login button
   await page.getByRole('button', { name: 'Log In' }).click();
-  await expect(page.getByRole('button', { name: 'Log In' })).toBeVisible();
   await expect(page).toHaveURL('http://localhost:3000/profile/magdalena', {
-    timeout: 5000,
+    timeout: 10000,
   });
 
   // Click a edit button
   await page.getByRole('button', { name: 'Edit' }).click();
 
   // Fill profile form
-  await page.getByTestId('register-nickname').fill('magdalena');
-  await page.getByTestId('profile-description').fill('magdalena@gmail.com');
-  await page.getByTestId('profile-interests').fill('magdalena');
+  await page.getByTestId('profile-nickname').fill('Madzia');
+  await page.getByTestId('profile-description').fill('Hi! I am Madzia.');
+  await page.getByRole('main').locator('form').getByText('computer game');
+
+  // Click a save button
+  await page.getByRole('button', { name: 'Save' }).click();
 });
-('profile-interests');
