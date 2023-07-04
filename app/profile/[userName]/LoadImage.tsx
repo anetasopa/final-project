@@ -2,9 +2,14 @@
 
 import styles from './LoadImage.module.scss';
 
-export function LoadImage({ handleOnChange, showInput }) {
+type Props = {
+  handleOnChange: () => void;
+  showInput: () => void;
+};
+
+export function LoadImage({ handleOnChange, showInput }: Props) {
   return (
-    <>
+    <div>
       {showInput ? (
         <form
           className={styles.form}
@@ -19,6 +24,6 @@ export function LoadImage({ handleOnChange, showInput }) {
       ) : (
         ''
       )}
-    </>
+    </div>
   );
 }
