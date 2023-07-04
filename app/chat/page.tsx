@@ -41,7 +41,6 @@ export default async function Chat() {
   return (
     <main className={styles.profileContainer}>
       <ChatForm
-        user={user}
         userId={userId}
         userContacts={userContacts}
         firebaseConfig={firebaseConfig}

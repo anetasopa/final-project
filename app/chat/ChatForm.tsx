@@ -1,14 +1,12 @@
 'use client';
 
 import dotenv from 'dotenv';
-import { getAnalytics } from 'firebase/analytics';
 import { initializeApp } from 'firebase/app';
-import { getDatabase, onValue, ref, set } from 'firebase/database';
+import { getDatabase, onValue, ref } from 'firebase/database';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { User } from '../../database/users';
-import firebase from '../../util/firebase';
+import { User } from '../../migrations/1686751602-createTableUsers';
 import Chat from './Chat';
 import styles from './ChatForm.module.scss';
 import Message from './Message';
@@ -17,7 +15,6 @@ import Profile from './Profile';
 dotenv.config();
 
 interface ChatFormProps {
-  user: User;
   userId: string;
   userContacts: User[];
   firebaseConfig: any;
@@ -25,7 +22,6 @@ interface ChatFormProps {
 }
 
 export default function ChatForm({
-  user,
   userId,
   userContacts,
   firebaseConfig,
