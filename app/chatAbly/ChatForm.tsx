@@ -96,10 +96,7 @@ export default function ChatForm({ userContacts }: ChatFormProps) {
                 />
 
                 <div className={styles.availability} />
-                <Link
-                  onClick={() => getReceiverID(user.userId)}
-                  href="/chatAbly"
-                >
+                <Link onClick={() => getReceiverID(user.userId)} href="/chat">
                   <p className={styles.name}>{user.username}</p>
                 </Link>
               </div>
