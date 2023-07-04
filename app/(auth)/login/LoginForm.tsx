@@ -80,6 +80,7 @@ export default function LoginForm() {
       >
         <label htmlFor="email">User name</label>
         <input
+          data-test-id="login-username"
           id="username"
           value={username}
           onChange={(event) => setUsername(event.currentTarget.value)}
@@ -94,6 +95,7 @@ export default function LoginForm() {
         <label htmlFor="password">Password</label>
         <div>
           <input
+            data-test-id="login-password"
             type="password"
             id="password"
             value={password}
