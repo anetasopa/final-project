@@ -11,7 +11,9 @@ import Search from './Search';
 import styles from './UsersList.module.scss';
 
 type Props = {
-  result: { user: User & { categories: Category[] } }[];
+  result: {
+    user: User & { categories: Category[] };
+  }[];
 };
 
 type FollowedProps = {
@@ -163,7 +165,11 @@ export default function UsersLis({ result }: Props) {
                       {user.commonCategories &&
                       user.commonCategories.length > 0 ? (
                         user.commonCategories.map((category) => {
-                          return <p>{category.name}</p>;
+                          return (
+                            <p key={`category-${category.id}`}>
+                              {category.name}
+                            </p>
+                          );
                         })
                       ) : (
                         <p>-</p>

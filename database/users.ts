@@ -203,7 +203,6 @@ export const getUserBySessionToken = cache(async (token: string) => {
 
 export const updateUserById = cache(
   async (id: number, nickname: string, description: string) => {
-    //  PostgresError: syntax error at or near "description"
     await sql`
       UPDATE users
       SET
