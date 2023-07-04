@@ -162,6 +162,31 @@
       margin-top: 80px;
       margin-left: 30px;
     }
+
+    li {
+      display: inline-block;
+      position: relative;
+    }
+
+    li::after {
+      content: '';
+      position: absolute;
+      width: 80%;
+      /* margin-top: -13px; */
+      transform: scaleX(0);
+      height: 2px;
+      bottom: 10px;
+      left: 10px;
+      margin: 0 auto;
+      background-color: var(--main-accent-color);
+      transform-origin: bottom right;
+      transition: transform 0.2s ease-out;
+    }
+
+    li:hover::after {
+      transform: scaleX(1);
+      transform-origin: bottom left;
+    }
   }
 }
 
