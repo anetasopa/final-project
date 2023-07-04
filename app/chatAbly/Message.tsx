@@ -2,19 +2,12 @@
 
 import styles from './Message.module.scss';
 
-type Props = {
-  messages: any;
-  messageText: any;
-  setMessageText: any;
-  publicFromClientHandler: any;
-};
-
 export default function Message({
   messages,
   messageText,
   setMessageText,
   publicFromClientHandler,
-}): Props {
+}) {
   // const app = initializeApp(firebaseConfig);
   // const db = getDatabase();
   return (

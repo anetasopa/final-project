@@ -6,6 +6,7 @@ import dotenv from 'dotenv';
 import Link from 'next/link';
 import { MouseEvent, MouseEventHandler, useEffect, useState } from 'react';
 import { User } from '../../database/users';
+import SaveMessagesResponseBodyPost from '../api/(auth)/messages/route';
 import Chat, { LogEntry } from './Chat';
 import styles from './ChatForm.module.scss';
 import Message from './Message';
@@ -17,7 +18,7 @@ interface ChatFormProps {
   userContacts: User[];
 }
 
-export default await function ChatForm({ userContacts }: ChatFormProps) {
+export default function ChatForm({ userContacts }: ChatFormProps) {
   const [messages, setMessages] = useState([]);
   const [receiverId, setReceiverId] = useState(null);
 
@@ -56,22 +57,21 @@ export default await function ChatForm({ userContacts }: ChatFormProps) {
   const publicFromClientHandler: MouseEventHandler = async (
     _event: MouseEvent<HTMLButtonElement>,
   ) => {
-    try {
-      if ((await response).status !== 500) {
-        const data: CreateResponseBodyPost = await (await response).json();
-
-        if ('error' in data) {
-          console.log(data.error);
-        }
-
-        if ('user' in data) {
-          console.log(data.user);
-        }
-      }
-    } catch (e) {
-      console.log({ e });
-    }
-
+    // try {
+    //   if ((await response).status !== 500) {
+    //     const data: SaveMessagesResponseBodyPost = await (
+    //       await response
+    //     ).json();
+    //     if ('error' in data) {
+    //       console.log(data.error);
+    //     }
+    //     if ('user' in data) {
+    //       console.log(data.user);
+    //     }
+    //   }
+    // } catch (e) {
+    //   console.log({ e });
+    // }
     if (channel === null) return;
     await channel.publish('update-from-client', {
       text: messageText,
@@ -86,18 +86,18 @@ export default await function ChatForm({ userContacts }: ChatFormProps) {
           return (
             <div key={`user-${user.userId}`} className={styles.dataContainer}>
               <div className={styles.data}>
-                <Image
-                  alt="userImage"
-                  src={user.imageUrl}
-                  width={50}
-                  height={50}
-                  className={styles.userImage}
-                />
+                {/* <Image
+                          alt="userImage"
+                          src={user.imageUrl}
+                          width={50}
+                          height={50}
+                          className={styles.userImage}
+                        />
 
-                <div className={styles.availability} />
+                        <div className={styles.availability} /> */}
                 {/* <Link onClick={() => getReceiverID(user.userId)} href="/chat2">
-                  <p className={styles.name}>{user.username}</p>
-                </Link> */}
+                          <p className={styles.name}>{user.username}</p>
+                        </Link> */}
               </div>
             </div>
           );
@@ -120,4 +120,4 @@ export default await function ChatForm({ userContacts }: ChatFormProps) {
       </div>
     </>
   );
-};
+}
