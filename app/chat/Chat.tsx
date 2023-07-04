@@ -1,15 +1,16 @@
 import Image from 'next/image';
-import { User } from '../../database/users';
-import { Messages } from '../../migrations/1687893283-createTableMessages';
+import { User } from '../../migrations/1686751602-createTableUsers';
+import { Contact } from '../../migrations/1687774485-createTableContacts';
+import { Message } from '../../migrations/1687893283-createTableMessages';
 import styles from './Chat.module.scss';
 
-interface ChatProps {
-  messages: Messages[];
-  userId: string;
-  receiverId: string | null;
-  userContacts: User[];
-  userData: any; // Replace 'any' with the appropriate type for userData
-}
+type Props = {
+  messages: Message[];
+  userId: number;
+  receiverId: number;
+  userContacts: Contact[];
+  userData: User;
+};
 
 const renderMessage = (message, userId, userContacts, userData, receiverId) => {
   const receiverUser = userContacts.find(
@@ -52,7 +53,7 @@ export default function Chat({
   receiverId,
   userContacts,
   userData,
-}: ChatProps) {
+}: Props) {
   return (
     <div className={styles.messages}>
       {messages.map((message) =>

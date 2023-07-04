@@ -1,7 +1,7 @@
 import { Sql } from 'postgres';
 import { Category } from './1686916405-createTableCategories';
 
-export type Contacts = {
+export type Contact = {
   id: number;
   userId: number;
   followedUserId: number;
