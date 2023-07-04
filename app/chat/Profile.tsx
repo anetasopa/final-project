@@ -1,6 +1,14 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { Contact } from '../../migrations/1687774485-createTableContacts';
 import styles from './Profile.module.scss';
+
+// type Props = {
+//   userContacts: Contact[];
+//   receiverId: number;
+//   isMobileMenuOpen: (value: boolean) => void;
+//   toggleMobileMenu: () => void;
+// };
 
 export default function Profile({
   userContacts,
