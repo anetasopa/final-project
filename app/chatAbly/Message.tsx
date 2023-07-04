@@ -1,22 +1,20 @@
 'use client';
 
-import { getAnalytics } from 'firebase/analytics';
-import { initializeApp } from 'firebase/app';
-import { getDatabase, onValue, ref, set } from 'firebase/database';
-import { BsSend } from 'react-icons/bs';
 import styles from './Message.module.scss';
+
+type Props = {
+  messages: any;
+  messageText: any;
+  setMessageText: any;
+  publicFromClientHandler: any;
+};
 
 export default function Message({
   messages,
-  // setMessages,
-  // inputMessage,
-  // setInputMessage,
-  // userId,
-  // receiverId,
   messageText,
   setMessageText,
   publicFromClientHandler,
-}) {
+}): Props {
   // const app = initializeApp(firebaseConfig);
   // const db = getDatabase();
   return (
@@ -39,34 +37,10 @@ export default function Message({
 
       <p className={styles.message}>
         {' '}
-        {messages.map((m) => (
-          <p>{m.message}</p>
+        {messages.map((m: any) => (
+          <p key={`message-${m}`}>{m.message}</p>
         ))}
       </p>
-
-      {/* <button
-        className={styles.messageButton}
-        onClick={() => {
-          if (userId && receiverId) {
-            const smallerId = Math.min(userId, receiverId);
-            const biggerId = Math.max(userId, receiverId);
-            const key = `users/${smallerId}-${biggerId}`;
-
-            const newMessages = [...messages];
-
-            newMessages.push({
-              creatorUserId: userId,
-              receiverUserId: receiverId,
-              message: inputMessage,
-              time: Date.now(),
-            });
-            set(ref(db, key), newMessages);
-          }
-        }}
-      >
-
-        <BsSend className={styles.sendIcon} />
-      </button> */}
     </form>
   );
 }

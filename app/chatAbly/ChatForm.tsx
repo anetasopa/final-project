@@ -3,19 +3,10 @@
 import { configureAbly } from '@ably-labs/react-hooks';
 import * as Ably from 'ably/promises';
 import dotenv from 'dotenv';
-import { getAnalytics } from 'firebase/analytics';
-import { initializeApp } from 'firebase/app';
-import { getDatabase, onValue, ref, set } from 'firebase/database';
-import Image from 'next/image';
 import Link from 'next/link';
 import { MouseEvent, MouseEventHandler, useEffect, useState } from 'react';
-import { FaPen } from 'react-icons/fa';
-import { getUserContacts, getUsersById, User } from '../../database/users';
-import firebase from '../../util/firebase';
-import { CreateResponseBodyPost } from '../api/(auth)/messages/route';
-// import Layout from '../components/layout';
+import { User } from '../../database/users';
 import Chat, { LogEntry } from './Chat';
-// import homeStyles from '../styles/Home.module.css';
 import styles from './ChatForm.module.scss';
 import Message from './Message';
 import Profile from './Profile';
@@ -23,52 +14,18 @@ import Profile from './Profile';
 dotenv.config();
 
 interface ChatFormProps {
-  user: User;
-  userId: string;
   userContacts: User[];
-  firebaseConfig: any;
-  userData: number;
 }
 
-export default function ChatForm({
-  user,
-  userId,
-  userContacts,
-  firebaseConfig,
-  userData,
-}: ChatFormProps) {
+export default await function ChatForm({ userContacts }: ChatFormProps) {
   const [messages, setMessages] = useState([]);
-  const [inputMessage, setInputMessage] = useState('');
   const [receiverId, setReceiverId] = useState(null);
-
-  //const firebaseConfig = firebase;
 
   const getReceiverID = (userID) => {
     // const user = userID;
     setReceiverId(userID);
     console.log('userID is clicked: ', userID);
   };
-
-  // const app = initializeApp(firebaseConfig);
-  // // const analytics = getAnalytics(app);
-  // // const database = getDatabase(app);
-
-  // const db = getDatabase();
-
-  // useEffect(() => {
-  //   if (userId !== null && receiverId !== null) {
-  //     const smallerId = Math.min(userId, receiverId);
-  //     const biggerId = Math.max(userId, receiverId);
-  //     const key = `users/${smallerId}-${biggerId}`;
-
-  //     const starCountRef = ref(db, key);
-  //     onValue(starCountRef, (snapshot) => {
-  //       const data = snapshot.val();
-
-  //       setMessages(data ? data : []);
-  //     });
-  //   }
-  // }, [userId, receiverId]);
 
   const [logs, setLogs] = useState<Array<LogEntry>>([]);
   const [channel, setChannel] =
@@ -136,6 +93,7 @@ export default function ChatForm({
                   height={50}
                   className={styles.userImage}
                 />
+
                 <div className={styles.availability} />
                 {/* <Link onClick={() => getReceiverID(user.userId)} href="/chat2">
                   <p className={styles.name}>{user.username}</p>
@@ -147,25 +105,14 @@ export default function ChatForm({
       </div>
       <div className={styles.chat}>
         {messages.map((m) => (
-          <li>{m.message}</li>
+          <li key={`message-${m}`}>{m.message}</li>
         ))}
         <Profile userContacts={userContacts} receiverId={receiverId} />
         <div className={styles.messages}>
-          <Chat
-            logEntries={logs}
-            // userContacts={userContacts}
-            // userData={userData}
-            // messages={messages}
-            // userId={userId}
-            // receiverId={receiverId}
-          />
+          <Chat logEntries={logs} />
         </div>
         <Message
           messages={messages}
-          // inputMessage={inputMessage}
-          // setInputMessage={setInputMessage}
-          // userId={userId}
-          // receiverId={receiverId}
           messageText={messageText}
           setMessageText={setMessageText}
           publicFromClientHandler={publicFromClientHandler}
@@ -173,4 +120,4 @@ export default function ChatForm({
       </div>
     </>
   );
-}
+};
