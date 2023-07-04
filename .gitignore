@@ -41,3 +41,11 @@ next-env.d.ts
 .env.dev
 .eslintcache
 /util/firebase.ts.dist
+/test-results/
+/playwright-report/
+/playwright/.cache/
+
+
+playwright/test-results/
+playwright/report/
+/playwright/.cache/
