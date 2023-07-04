@@ -92,7 +92,7 @@ export default function RegisterForm() {
       >
         <label htmlFor="userName">User name</label>
         <input
-          data-test-id="register-user-name"
+          data-test-id="register-username"
           id="userName"
           value={username}
           onChange={(event) => setUsername(event.currentTarget.value)}
