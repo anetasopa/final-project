@@ -238,6 +238,7 @@ export default function ProfileForm(props: Props) {
           <label htmlFor="nickname">Nickname</label>
           {!showInput ? (
             <input
+              data-test-id="profile-nickname"
               id="nickname"
               value={nickname}
               onChange={(event) => setNickname(event.currentTarget.value)}
@@ -250,6 +251,7 @@ export default function ProfileForm(props: Props) {
           <label htmlFor="description">Description</label>
           {!showInput ? (
             <textarea
+              data-test-id="profile-description"
               style={{ fontSize: '14px' }}
               name="description"
               id="description"
@@ -265,6 +267,7 @@ export default function ProfileForm(props: Props) {
           <p className={styles.interestsTitle}>Interests</p>
           {!showInput ? (
             <Creatable
+              data-test-id="profile-interests"
               className={styles.select}
               closeMenuOnSelect={false}
               components={categoriesOption}

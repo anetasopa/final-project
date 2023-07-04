@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 
-test('homepage test', async ({ page }) => {
+test('home page test', async ({ page }) => {
   await page.goto('http://localhost:3000');
 
   await page.getByRole('link', { name: 'Register' }).click();
@@ -28,4 +28,13 @@ test('homepage test', async ({ page }) => {
   await expect(page).toHaveURL('http://localhost:3000/profile/magdalena', {
     timeout: 5000,
   });
+
+  // Click a edit button
+  await page.getByRole('button', { name: 'Edit' }).click();
+
+  // Fill profile form
+  await page.getByTestId('register-nickname').fill('magdalena');
+  await page.getByTestId('profile-description').fill('magdalena@gmail.com');
+  await page.getByTestId('profile-interests').fill('magdalena');
 });
+('profile-interests');
