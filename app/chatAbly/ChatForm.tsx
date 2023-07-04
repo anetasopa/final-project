@@ -3,6 +3,7 @@
 import { configureAbly } from '@ably-labs/react-hooks';
 import * as Ably from 'ably/promises';
 import dotenv from 'dotenv';
+import Image from 'next/image';
 import Link from 'next/link';
 import { MouseEvent, MouseEventHandler, useEffect, useState } from 'react';
 import { User } from '../../database/users';
@@ -86,18 +87,21 @@ export default function ChatForm({ userContacts }: ChatFormProps) {
           return (
             <div key={`user-${user.userId}`} className={styles.dataContainer}>
               <div className={styles.data}>
-                {/* <Image
-                          alt="userImage"
-                          src={user.imageUrl}
-                          width={50}
-                          height={50}
-                          className={styles.userImage}
-                        />
+                <Image
+                  alt="userImage"
+                  src={user.imageUrl}
+                  width={50}
+                  height={50}
+                  className={styles.userImage}
+                />
 
-                        <div className={styles.availability} /> */}
-                {/* <Link onClick={() => getReceiverID(user.userId)} href="/chat2">
-                          <p className={styles.name}>{user.username}</p>
-                        </Link> */}
+                <div className={styles.availability} />
+                <Link
+                  onClick={() => getReceiverID(user.userId)}
+                  href="/chatAbly"
+                >
+                  <p className={styles.name}>{user.username}</p>
+                </Link>
               </div>
             </div>
           );
