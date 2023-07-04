@@ -264,17 +264,15 @@ export default function ProfileForm(props: Props) {
           )}
           <p className={styles.interestsTitle}>Interests</p>
           {!showInput ? (
-            <>
-              <Creatable
-                className={styles.select}
-                closeMenuOnSelect={false}
-                components={categoriesOption}
-                onChange={setSelectedOption}
-                defaultValue={selectedOption}
-                isMulti
-                options={categoriesOption}
-              />
-            </>
+            <Creatable
+              className={styles.select}
+              closeMenuOnSelect={false}
+              components={categoriesOption}
+              onChange={setSelectedOption}
+              defaultValue={selectedOption}
+              isMulti
+              options={categoriesOption}
+            />
           ) : (
             userCategories.map((category) => {
               return (
