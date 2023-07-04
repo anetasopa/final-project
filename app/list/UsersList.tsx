@@ -60,13 +60,6 @@ export default function UsersLis({ result }: Props) {
   return (
     <>
       <Search setSearchName={setSearchName} searchName={searchName} />
-
-      {/* <div className="toast">
-        <div className="alert alert-info">
-          <span>New message arrived.</span>
-        </div>
-      </div> */}
-
       <div className={styles.container}>
         <ul className={styles.responsiveTable}>
           <li className={styles.tableHeader}>
