@@ -1,8 +1,7 @@
+import util from 'node:util';
 import { cookies } from 'next/headers';
 import { notFound } from 'next/navigation';
 import React from 'react';
-import util from 'util';
-import { getMessages } from '../../database/messages';
 import {
   getUserBySessionToken,
   getUsers2,
