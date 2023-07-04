@@ -7,8 +7,8 @@ export default function Footer() {
     <footer className={styles.footer}>
       <div className={styles.navigation}>
         <Link href="/">Home</Link>
-        <Link href="/about">About</Link>
-        <Link href="/benefits">Benefits</Link>
+        <Link href="#about">About</Link>
+        <Link href="#benefits">Benefits</Link>
       </div>
       <div className={styles.socialMediaLinks}>
         <a

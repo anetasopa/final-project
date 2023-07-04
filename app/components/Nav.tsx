@@ -11,7 +11,7 @@ import styles from './Nav.module.scss';
 
 const links = [
   { id: 1, title: 'Home', link: '/' },
-  { id: 2, title: 'About', link: '/#about' },
+  { id: 2, title: 'About', link: '#about' },
   { id: 3, title: 'Benefits', link: '#benefits' },
 ];
 
