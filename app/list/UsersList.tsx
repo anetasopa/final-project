@@ -4,23 +4,24 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import { CgAddR } from 'react-icons/cg';
-import { User } from '../../database/users';
+import { User } from '../../migrations/1686751602-createTableUsers';
 import { CreateResponseBodyPut } from '../api/(auth)/contacts/route';
 import Search from './Search';
 import styles from './UsersList.module.scss';
 
 type Props = {
-  userId: number;
-  users: User[];
-  result: any;
-  id: number;
+  result: User[];
+};
+
+type FollowedProps = {
+  followedUserId: number;
 };
 
 export default function UsersLis({ result }: Props) {
   const [searchName, setSearchName] = useState('');
   const [isLoading, setIsLoading] = useState(null);
 
-  async function add({ followedUserId }) {
+  async function add({ followedUserId }: FollowedProps) {
     try {
       setIsLoading(followedUserId);
       const response = await fetch('/api/contacts', {
@@ -47,7 +48,7 @@ export default function UsersLis({ result }: Props) {
   }
 
   function searchAndFilterArray() {
-    return result.filter((user) => {
+    return result.filter((user: any) => {
       return user.user.username
         .toLowerCase()
         .includes(searchName.toLowerCase());
