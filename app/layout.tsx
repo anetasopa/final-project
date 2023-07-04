@@ -30,7 +30,9 @@ export default async function RootLayout({
   }
 
   const userId = user?.id;
+  console.log({ user1234567: user });
   const singleUserData = await getUsersById(userId);
+  console.log({ singleUserData1234567: singleUserData });
 
   return (
     <html lang="en">

@@ -6,8 +6,14 @@ import React, { useState } from 'react';
 import { CgClose } from 'react-icons/cg';
 import { RxHamburgerMenu } from 'react-icons/rx';
 import { logout } from '../(auth)/logout/actions';
+import { User } from '../../migrations/1686751602-createTableUsers';
 import { LogoutButton } from './LogoutButton';
 import styles from './Nav.module.scss';
+
+type Props = {
+  user: User;
+  singleUserData: User[];
+};
 
 const links = [
   { id: 1, title: 'Home', link: '/' },
@@ -15,7 +21,7 @@ const links = [
   { id: 3, title: 'Benefits', link: '#benefits' },
 ];
 
-export default function Nav({ user, singleUserData }) {
+export default function Nav({ user, singleUserData }: Props) {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleMenuToggle = () => {
