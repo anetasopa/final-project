@@ -100,11 +100,6 @@ export default function ChatForm({
     _event: MouseEvent<HTMLButtonElement>,
   ) => {
     try {
-      // const response = fetch('/api/messages', {
-      //   method: 'POST',
-      //   body: JSON.stringify({ messageText }),
-      // });
-
       if ((await response).status !== 500) {
         const data: CreateResponseBodyPost = await (await response).json();
 
@@ -121,7 +116,7 @@ export default function ChatForm({
     }
 
     if (channel === null) return;
-    channel.publish('update-from-client', {
+    await channel.publish('update-from-client', {
       text: messageText,
       // text: `${messageText} @ ${new Date().toISOString()}`,
     });
@@ -132,7 +127,7 @@ export default function ChatForm({
       <div className={styles.list}>
         {userContacts.map((user) => {
           return (
-            <div className={styles.dataContainer}>
+            <div key={`user-${user.userId}`} className={styles.dataContainer}>
               <div className={styles.data}>
                 <Image
                   alt="userImage"
