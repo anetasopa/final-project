@@ -269,7 +269,9 @@ export const getUsersWithLimitAndOffsetBySessionToken = cache(
 );
 
 export const getUserCategories = cache(async (userId: number) => {
-  const userCategories = await sql<UserCategories[]>`
+  const userCategories = await sql<
+    { id: number; value: string; label: string }[]
+  >`
     SELECT
       c.id,
       c.name AS value,

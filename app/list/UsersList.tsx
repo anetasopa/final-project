@@ -5,12 +5,13 @@ import Link from 'next/link';
 import React, { useState } from 'react';
 import { CgAddR } from 'react-icons/cg';
 import { User } from '../../migrations/1686751602-createTableUsers';
+import { Category } from '../../migrations/1687248585-createTableUserCategories';
 import { CreateResponseBodyPut } from '../api/(auth)/contacts/route';
 import Search from './Search';
 import styles from './UsersList.module.scss';
 
 type Props = {
-  result: User[];
+  result: { user: User & { categories: Category[] } }[];
 };
 
 type FollowedProps = {
@@ -48,7 +49,7 @@ export default function UsersLis({ result }: Props) {
   }
 
   function searchAndFilterArray() {
-    return result.filter((user: any) => {
+    return result.filter((user) => {
       return user.user.username
         .toLowerCase()
         .includes(searchName.toLowerCase());
@@ -88,7 +89,7 @@ export default function UsersLis({ result }: Props) {
               Add
             </div>
           </li>
-          {filteredResults.map((user: any) => {
+          {filteredResults.map((user) => {
             console.log({ user1234567: user });
             return (
               <div key={`user-${user.user.id}`}>
@@ -140,10 +141,13 @@ export default function UsersLis({ result }: Props) {
                     data-label="Interests"
                   >
                     <div className={styles.categoriesContainer}>
-                      {user.user.categories &&
-                      user.user.categories.length > 0 ? (
+                      {user.user.categories.length > 0 ? (
                         user.user.categories.map((category) => {
-                          return category ? <p>{category.name}</p> : null;
+                          return (
+                            <p key={`category-${category.id}`}>
+                              {category.name}
+                            </p>
+                          );
                         })
                       ) : (
                         <p>-</p>
