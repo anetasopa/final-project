@@ -94,9 +94,10 @@ export default function UsersLis({ result }: Props) {
               Add
             </div>
           </li>
-          {filteredResults.map((user) => {
+          {filteredResults.map((user: any) => {
+            console.log({ user1234567: user });
             return (
-              <>
+              <div key={`user-${user.user.id}`}>
                 <li className={styles.tableRow}>
                   <div
                     className={`${styles.col} ${styles.col1}`}
@@ -214,7 +215,7 @@ export default function UsersLis({ result }: Props) {
                     )}
                   </div>
                 </li>
-              </>
+              </div>
             );
           })}
         </ul>
