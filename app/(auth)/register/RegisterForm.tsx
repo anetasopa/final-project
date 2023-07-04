@@ -101,6 +101,7 @@ export default function RegisterForm() {
       >
         <label htmlFor="userName">User name</label>
         <input
+          data-test-id="register-user-name"
           id="userName"
           value={username}
           onChange={(event) => setUsername(event.currentTarget.value)}
@@ -110,7 +111,7 @@ export default function RegisterForm() {
             {errors
               .filter((error) => error.field === 'username')
               .map((error) => (
-                <div className={styles.errorMessage}>
+                <div key="errorMessage" className={styles.errorMessage}>
                   <p>{error.message}</p>
                   {/* <FaExclamationCircle className={styles.icon} /> */}
                 </div>
@@ -119,6 +120,7 @@ export default function RegisterForm() {
         )}
         <label htmlFor="email">Email Address</label>
         <input
+          data-test-id="register-email"
           id="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -129,7 +131,7 @@ export default function RegisterForm() {
             {errors
               .filter((error) => error.field === 'email')
               .map((error) => (
-                <div className={styles.errorMessage}>
+                <div key={``} className={styles.errorMessage}>
                   <p>{error.message}</p>
                   {/* <FaExclamationCircle className={styles.icon} /> */}
                 </div>
@@ -139,6 +141,7 @@ export default function RegisterForm() {
         <label htmlFor="password">Password</label>
         <div>
           <input
+            data-test-id="register-password"
             type="password"
             id="password"
             value={password}
