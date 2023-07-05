@@ -1,3 +1,14 @@
+# Final Project ***ChatSync*** 💬
+
+<img width="450" alt="Screenshot 2023-07-05 at 16 10 17" src="https://github.com/butterfly-123/final-project/assets/58802893/16de6936-5b0d-4ab5-a627-1c8471d65576">
+
+### How does the application work ❓
+
+ChatSynk is a website where you can create an account, set up your profile, and add people you want to connect with to your contact list. Once you've added someone, you can start chatting with them on a special page. It's a simple and user-friendly way to communicate and connect with people who share your interests.
+
+### Technologies ⚒️
+
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
