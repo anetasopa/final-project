@@ -183,6 +183,10 @@
       background-color: var(--main-accent-color);
       transform-origin: bottom right;
       transition: transform 0.2s ease-out;
+
+      @media screen and (max-width: 480px) {
+        display: none;
+      }
     }
 
     li:hover::after {
