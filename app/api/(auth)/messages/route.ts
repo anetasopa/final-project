@@ -1,12 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { saveMessages } from '../../../../database/messages';
-import { Message } from '../../../../migrations/1687893283-createTableMessages';
 
 type Error = {
   error: string;
 };
 
-export type SaveMessagesResponseBodyPost = { message: Message } | Error;
+export type SaveMessagesResponseBodyPost = { message: string } | Error;
 
 export async function POST(
   request: NextRequest,
