@@ -19,7 +19,7 @@ ChatSynk is a website where you can create an account, set up your profile, and 
 
 ### Design 🖊️
 
-1. [figma](https://www.figma.com/)
+1. [figma](https://www.figma.com)
 
 ### Tests 📝
 
