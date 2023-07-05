@@ -1,23 +1,22 @@
 import Image from 'next/image';
 import { User } from '../../migrations/1686751602-createTableUsers';
-import { Contact } from '../../migrations/1687774485-createTableContacts';
-import { Message } from '../../migrations/1687893283-createTableMessages';
 import styles from './Chat.module.scss';
+import { FirebaseMessage } from './ChatForm';
 
 type Props = {
-  messages: Message[];
+  messages: FirebaseMessage[];
   userId: number;
-  receiverId: number;
-  userContacts: Contact[];
+  receiverId: number | null;
+  userContacts: User[];
   userData: User;
 };
 
 type RenderMessageProps = {
-  message: Message;
+  message: FirebaseMessage;
   userId: number;
-  userContacts: Contact[];
+  userContacts: User[];
   userData: User;
-  receiverId: number;
+  receiverId: number | null;
 };
 
 const renderMessage = ({
@@ -31,24 +30,26 @@ const renderMessage = ({
     (contact) => contact.userId === receiverId,
   );
 
-  const receiverImageUrl = receiverUser ? receiverUser.imageUrl : '';
+  const receiverImageUrl = receiverUser ? receiverUser.imageUrl : null;
 
   return message.creatorUserId === userId ? (
     <div className={styles.rightContainer}>
       <div>
-        <Image
-          alt="userImage"
-          src={userData.imageUrl}
-          width={50}
-          height={50}
-          className={styles.creatorImageUrl}
-        />
+        {userData.imageUrl ? (
+          <Image
+            alt="userImage"
+            src={userData.imageUrl}
+            width={50}
+            height={50}
+            className={styles.creatorImageUrl}
+          />
+        ) : null}
       </div>
       <p className={styles.right}>{message.message}</p>
     </div>
   ) : (
     <div className={styles.leftContainer}>
-      {receiverUser && (
+      {!!receiverImageUrl && (
         <Image
           alt="userImage"
           src={receiverImageUrl}

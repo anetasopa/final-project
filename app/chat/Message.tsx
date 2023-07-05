@@ -2,7 +2,16 @@
 
 import { getDatabase, ref, set } from 'firebase/database';
 import { BsSend } from 'react-icons/bs';
+import { FirebaseMessage } from './ChatForm';
 import styles from './Message.module.scss';
+
+type RenderMessageProps = {
+  messages: FirebaseMessage[];
+  inputMessage: string;
+  setInputMessage: (value: string) => void;
+  receiverId: number | null;
+  userId: number;
+};
 
 export default function Message({
   messages,
@@ -10,12 +19,11 @@ export default function Message({
   setInputMessage,
   userId,
   receiverId,
-
-}) {
+}: RenderMessageProps) {
   // const app = initializeApp(firebaseConfig);
   const db = getDatabase();
 
-  async function saveMessages() {
+  const saveMessages = async () => {
     if (userId && receiverId) {
       const smallerId = Math.min(userId, receiverId);
       const biggerId = Math.max(userId, receiverId);
@@ -28,9 +36,10 @@ export default function Message({
         receiverUserId: receiverId,
         message: inputMessage,
       });
-      set(ref(db, key), newMessages);
+
+      await set(ref(db, key), newMessages);
     }
-  }
+  };
 
   return (
     <form

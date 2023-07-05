@@ -3,19 +3,19 @@ import Link from 'next/link';
 import { Contact } from '../../migrations/1687774485-createTableContacts';
 import styles from './Profile.module.scss';
 
-// type Props = {
-//   userContacts: Contact[];
-//   receiverId: number;
-//   isMobileMenuOpen: (value: boolean) => void;
-//   toggleMobileMenu: () => void;
-// };
+type Props = {
+  userContacts: Contact[];
+  receiverId: number;
+  isMobileMenuOpen: () => void;
+  toggleMobileMenu: () => void;
+};
 
 export default function Profile({
   userContacts,
   receiverId,
   isMobileMenuOpen,
   toggleMobileMenu,
-}) {
+}: Props) {
   const receiverUser = userContacts.find(
     (contact) => contact.userId === receiverId,
   );

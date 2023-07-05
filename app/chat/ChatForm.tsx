@@ -4,7 +4,6 @@ import dotenv from 'dotenv';
 import { initializeApp } from 'firebase/app';
 import { getDatabase, onValue, ref } from 'firebase/database';
 import Image from 'next/image';
-import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { User } from '../../migrations/1686751602-createTableUsers';
 import Chat from './Chat';
@@ -18,8 +17,14 @@ interface ChatFormProps {
   userId: number;
   userContacts: User[];
   firebaseConfig: any;
-  userData: number;
+  userData: User;
 }
+
+export type FirebaseMessage = {
+  message: string;
+  creatorUserId: number;
+  receiverUserId: number;
+};
 
 export default function ChatForm({
   userId,
@@ -27,7 +32,7 @@ export default function ChatForm({
   firebaseConfig,
   userData,
 }: ChatFormProps) {
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState<FirebaseMessage[]>([]);
   const [inputMessage, setInputMessage] = useState('');
   const [receiverId, setReceiverId] = useState<number | null>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -37,18 +42,18 @@ export default function ChatForm({
   const db = getDatabase();
 
   useEffect(() => {
-    if (userId !== null && receiverId !== null) {
-      const smallerId = Math.min(userId, receiverId);
-      const biggerId = Math.max(userId, receiverId);
-      const key = `users/${smallerId}-${biggerId}`;
+    if (receiverId === null) return;
 
-      const starCountRef = ref(db, key);
-      onValue(starCountRef, (snapshot) => {
-        const data = snapshot.val();
+    const smallerId = Math.min(userId, receiverId);
+    const biggerId = Math.max(userId, receiverId);
+    const key = `users/${smallerId}-${biggerId}`;
 
-        setMessages(data ? data : []);
-      });
-    }
+    const starCountRef = ref(db, key);
+    onValue(starCountRef, (snapshot) => {
+      const data = snapshot.val();
+
+      setMessages(data ? data : []);
+    });
   }, [userId, receiverId, db]);
 
   const toggleMobileMenu = () => {
