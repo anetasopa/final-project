@@ -75,6 +75,7 @@ async function save({
   setImageUrl,
   setShowInput,
   idSelectedCategories,
+
   setIsLoading,
   userId,
   imageUrl,
@@ -149,7 +150,7 @@ export default function ProfileForm(props: Props) {
   );
   const [uploadData, setUploadData] = useState();
 
-  async function handleOnChange(changeEvent) {
+  async function handleOnChange(changeEvent: any) {
     const reader = new FileReader();
 
     reader.onload = function (onLoadEvent) {
@@ -179,33 +180,33 @@ export default function ProfileForm(props: Props) {
     setUploadData(data);
   }
 
-  async function handleOnSubmit(event: any) {
-    event.preventDefault();
+  // async function handleOnSubmit(event: any) {
+  //   event.preventDefault();
 
-    const form = event.currentTarget;
-    const fileInput = Array.from(form.elements).find(
-      ({ name }) => name === 'file',
-    );
+  //   const form = event.currentTarget;
+  //   const fileInput = Array.from(form.elements).find(
+  //     ({ name }) => name === 'file',
+  //   );
 
-    const formData = new FormData();
+  //   const formData = new FormData();
 
-    for (const file of fileInput.files) {
-      formData.append('file', file);
-    }
+  //   for (const file of fileInput.files) {
+  //     formData.append('file', file);
+  //   }
 
-    formData.append('upload_preset', 'my-uploads');
+  //   formData.append('upload_preset', 'my-uploads');
 
-    const data = await fetch(
-      'https://api.cloudinary.com/v1_1/dkanovye3/image/upload',
-      {
-        method: 'POST',
-        body: formData,
-      },
-    ).then((r) => r.json());
+  //   const data = await fetch(
+  //     'https://api.cloudinary.com/v1_1/dkanovye3/image/upload',
+  //     {
+  //       method: 'POST',
+  //       body: formData,
+  //     },
+  //   ).then((r) => r.json());
 
-    setImageUrl(data.secure_url);
-    setUploadData(data);
-  }
+  //   setImageUrl(data.secure_url);
+  //   setUploadData(data);
+  // }
 
   useEffect(() => {
     setIsLoading(false);
@@ -226,9 +227,9 @@ export default function ProfileForm(props: Props) {
         </div>
         <LoadImage
           handleOnChange={handleOnChange}
-          handleOnSubmit={handleOnSubmit}
-          imageUrl={imageUrl}
-          uploadData={uploadData}
+          // handleOnSubmit={handleOnSubmit}
+          // imageUrl={imageUrl}
+          // uploadData={uploadData}
           showInput={showInput}
         />
         <form
