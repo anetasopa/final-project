@@ -4,11 +4,8 @@ import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { createSession } from '../../../../database/sessions';
-import {
-  createUser,
-  getUsersByUserName,
-  User,
-} from '../../../../database/users';
+import { createUser, getUsersByUserName } from '../../../../database/users';
+import { User } from '../../../../migrations/1686751602-createTableUsers';
 import { secureCookieOptions } from '../../../../util/cookies';
 
 type Error = {
@@ -36,15 +33,6 @@ export async function POST(
   const body = await request.json();
 
   const validationResult = userSchema.safeParse(body);
-
-  // validationResult: {
-  //   success: true,
-  //   data: {
-  //     username: 'dwde12',
-  //     email: 'dxdfsasdasd@asd.pl',
-  //     password: 'AA3232aaa_'
-  //   }
-  // }
 
   if (!validationResult.success) {
     return NextResponse.json(

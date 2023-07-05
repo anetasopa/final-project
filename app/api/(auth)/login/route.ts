@@ -2,12 +2,10 @@ import crypto from 'node:crypto';
 import bcrypt from 'bcrypt';
 import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
-import { string, z } from 'zod';
+import { z } from 'zod';
 import { createSession } from '../../../../database/sessions';
-import {
-  getUsersWithPasswordHashByUserName,
-  User,
-} from '../../../../database/users';
+import { getUsersWithPasswordHashByUserName } from '../../../../database/users';
+import { User } from '../../../../migrations/1686751602-createTableUsers';
 import { secureCookieOptions } from '../../../../util/cookies';
 
 type Error = {
