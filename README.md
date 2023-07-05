@@ -24,6 +24,7 @@ I created this communication app because when you're in a new place, it's tough 
 6. [SQL](https://www.geeksforgeeks.org/structured-query-language/)
 7. [VScode](https://code.visualstudio.com/)
 8. [next](https://nextjs.org/)
+9. [firebase](https://firebase.google.com/)
 
 ### Design 🖊️
 
