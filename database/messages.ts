@@ -23,7 +23,7 @@ export const getMessages = cache(
 
 export const saveMessages = cache(
   async (inputMessage: string, userId: number, receiverId: number) => {
-    await sql`
+    await sql<Message[]>`
       INSERT INTO messages
         (content, creator_user_id, receiver_user_id)
       VALUES
