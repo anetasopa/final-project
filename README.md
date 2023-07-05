@@ -15,6 +15,7 @@ ChatSynk is a website where you can create an account, set up your profile, and 
 5. [drawSQL](https://drawsql.app/)
 6. [SQL](https://www.geeksforgeeks.org/structured-query-language/)
 7. [VScode](https://code.visualstudio.com/)
+8. [next](https://nextjs.org/)
 
 ### Design 🖊️
 
