@@ -11,6 +11,11 @@ export type UserWithPasswordHash = {
   passwordHash: string;
 };
 
+type UserToken = {
+  id: number;
+  username: string;
+};
+
 export type UserWithCategory = {
   id: number;
   username: string;
@@ -174,7 +179,7 @@ export const createUser = cache(
 );
 
 export const getUserBySessionToken = cache(async (token: string) => {
-  const [user] = await sql<User[]>`
+  const [user] = await sql<UserToken[]>`
   SELECT
     users.id,
     users.username
