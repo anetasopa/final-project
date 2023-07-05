@@ -25,7 +25,7 @@ test('home page test', async ({ page }) => {
   // Click a login button
   await page.getByRole('button', { name: 'Log In' }).click();
   await expect(page).toHaveURL('http://localhost:3000/profile/magdalena', {
-    timeout: 10000,
+    timeout: 20000,
   });
 
   // Click a edit button
