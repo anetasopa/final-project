@@ -10,7 +10,7 @@ type Props = {
 export function LoadImage({ handleOnChange, showInput }: Props) {
   return (
     <div>
-      {showInput ? (
+      {!showInput ? (
         <form
           className={styles.form}
           method="post"
