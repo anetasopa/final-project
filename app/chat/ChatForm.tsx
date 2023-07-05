@@ -15,7 +15,7 @@ import Profile from './Profile';
 dotenv.config();
 
 interface ChatFormProps {
-  userId: string;
+  userId: number;
   userContacts: User[];
   firebaseConfig: any;
   userData: number;
@@ -29,18 +29,10 @@ export default function ChatForm({
 }: ChatFormProps) {
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
-  const [receiverId, setReceiverId] = useState(null);
+  const [receiverId, setReceiverId] = useState<number | null>(null);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  // const firebaseConfig = firebase;
-
-  const getReceiverID = (userID) => {
-    setReceiverId(userID);
-    console.log('userID is clicked: ', userID);
-  };
-
-  const app = initializeApp(firebaseConfig);
-  // const analytics = getAnalytics(app);
-  // const database = getDatabase(app);
+  initializeApp(firebaseConfig);
 
   const db = getDatabase();
 
@@ -57,12 +49,10 @@ export default function ChatForm({
         setMessages(data ? data : []);
       });
     }
-  }, [userId, receiverId]);
-
-  const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+  }, [userId, receiverId, db]);
 
   const toggleMobileMenu = () => {
-    setMobileMenuOpen(!isMobileMenuOpen);
+    setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
   return (
@@ -76,17 +66,19 @@ export default function ChatForm({
           return (
             <div key={`user-${user.id}`} className={styles.dataContainer}>
               <div className={styles.data}>
-                <Image
-                  alt="userImage"
-                  src={user.imageUrl}
-                  width={50}
-                  height={50}
-                  className={styles.userImage}
-                />
+                {user.imageUrl ? (
+                  <Image
+                    alt="userImage"
+                    src={user.imageUrl}
+                    width={50}
+                    height={50}
+                    className={styles.userImage}
+                  />
+                ) : null}
                 <div className={styles.availability} />
-                <Link onClick={() => getReceiverID(user.userId)} href="/chat">
+                <button onClick={() => setReceiverId(user.userId)}>
                   <p className={styles.name}>{user.username}</p>
-                </Link>
+                </button>
               </div>
             </div>
           );

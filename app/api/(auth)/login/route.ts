@@ -5,14 +5,20 @@ import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { createSession } from '../../../../database/sessions';
 import { getUsersWithPasswordHashByUserName } from '../../../../database/users';
-import { User } from '../../../../migrations/1686751602-createTableUsers';
 import { secureCookieOptions } from '../../../../util/cookies';
 
 type Error = {
   error: string;
 };
 
-export type LoginResponseBodyPost = { user: User } | Error;
+export type LoginResponseBodyPost =
+  | {
+      user: {
+        username: string;
+        id: number;
+      };
+    }
+  | Error;
 
 const userSchema = z.object({
   username: z.string().min(1),
@@ -23,8 +29,6 @@ export async function POST(
   request: NextRequest,
 ): Promise<NextResponse<LoginResponseBodyPost>> {
   const body = await request.json();
-  console.log({ body });
-
   const result = userSchema.safeParse(body);
 
   if (!result.success) {
@@ -55,15 +59,6 @@ export async function POST(
   );
 
   if (!isPasswordValid) {
-    return NextResponse.json(
-      {
-        error: 'User or password not valid!',
-      },
-      { status: 401 },
-    );
-  }
-
-  if (!userWithPasswordHash) {
     return NextResponse.json(
       {
         error: 'User or password not valid!',

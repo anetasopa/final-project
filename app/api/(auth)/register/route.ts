@@ -93,14 +93,5 @@ export async function POST(
     ...secureCookieOptions,
   });
 
-  if (!newUser) {
-    return NextResponse.json(
-      {
-        errors: 'Error creating the new user',
-      },
-      { status: 500 },
-    );
-  }
-
   return NextResponse.json({ user: newUser });
 }
