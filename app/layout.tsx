@@ -1,12 +1,13 @@
 import './globals.scss';
-import { Inter } from 'next/font/google';
+// import { Inter } from 'next/font/google';
 import { cookies } from 'next/headers';
 import { getUserBySessionToken, getUsersById } from '../database/users';
-import Footer from './components/Footer';
+// import Footer from './components/Footer';
 import Nav from './components/Nav';
-import styles from './page.module.scss';
 
-const inter = Inter({ subsets: ['latin'] });
+// import styles from './page.module.scss';
+
+// const inter = Inter({ subsets: ['latin'] });
 
 // export const metadata = {
 //   title: 'Web Application',
