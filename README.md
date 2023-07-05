@@ -25,6 +25,7 @@ I created this communication app because when you're in a new place, it's tough 
 7. [VScode](https://code.visualstudio.com/)
 8. [next](https://nextjs.org/)
 9. [firebase](https://firebase.google.com/)
+10. [cloudinary](https://cloudinary.com/)
 
 ### Design 🖊️
 
