@@ -157,10 +157,13 @@
 
     @media screen and (max-width: 480px) {
       flex-direction: column;
+      text-align: left;
       border: none;
       font-size: 1.5rem;
-      margin-top: 80px;
+      margin-top: 70px;
       margin-left: 30px;
+      background: white;
+      padding: 0 50px 50px 50px;
     }
 
     li {
