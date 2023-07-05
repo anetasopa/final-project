@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { CgClose } from 'react-icons/cg';
 import { RxHamburgerMenu } from 'react-icons/rx';
 import { logout } from '../(auth)/logout/actions';
@@ -12,7 +12,7 @@ import styles from './Nav.module.scss';
 
 type Props = {
   user: User;
-  singleUserData: User[];
+  singleUserData: User[] & { imageUrl: string };
 };
 
 const links = [
