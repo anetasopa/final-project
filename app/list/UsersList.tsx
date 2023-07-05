@@ -12,7 +12,12 @@ import styles from './UsersList.module.scss';
 
 type Props = {
   result: {
-    user: User & { categories: Category[] };
+    user: User & {
+      categories: Category[];
+      isContact: boolean;
+    };
+    commonCategories: Category[] & { category: string };
+    commonInterestsInPercentage: number;
   }[];
 };
 
@@ -22,11 +27,11 @@ type FollowedProps = {
 
 export default function UsersLis({ result }: Props) {
   const [searchName, setSearchName] = useState('');
-  const [isLoading, setIsLoading] = useState(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   async function add({ followedUserId }: FollowedProps) {
     try {
-      setIsLoading(followedUserId);
+      setIsLoading(true);
       const response = await fetch('/api/contacts', {
         method: 'POST',
         body: JSON.stringify({ followedUserId }),
@@ -43,7 +48,7 @@ export default function UsersLis({ result }: Props) {
           console.log(data.user);
         }
 
-        setIsLoading(null);
+        setIsLoading(false);
       }
     } catch (e) {
       console.log({ e });
@@ -117,7 +122,9 @@ export default function UsersLis({ result }: Props) {
                     data-label="Username"
                   >
                     <div className={styles.categoriesContainer}>
-                      <Link href="/chat">{user.user.username}</Link>
+                      {user.user.username ? (
+                        <Link href="/chat">{user.user.username}</Link>
+                      ) : null}
                     </div>
                   </div>
                   <div
@@ -164,8 +171,7 @@ export default function UsersLis({ result }: Props) {
                     data-label="Common interests"
                   >
                     <div className={styles.categoriesContainer}>
-                      {user.commonCategories &&
-                      user.commonCategories.length > 0 ? (
+                      {user.commonCategories.length > 0 ? (
                         user.commonCategories.map((category) => {
                           return (
                             <p key={`category-${category.id}`}>
@@ -209,7 +215,7 @@ export default function UsersLis({ result }: Props) {
                           }}
                           className={styles.buttonAdd}
                         >
-                          {isLoading === user.user.id ? (
+                          {isLoading ? (
                             <div className={styles.spinner}>
                               <p className={styles.loader}>Loading...</p>
                             </div>
