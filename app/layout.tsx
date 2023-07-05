@@ -1,7 +1,6 @@
 import './globals.scss';
 import { Inter } from 'next/font/google';
 import { cookies } from 'next/headers';
-import { useState } from 'react';
 import { getUserBySessionToken, getUsersById } from '../database/users';
 import Footer from './components/Footer';
 import Nav from './components/Nav';
@@ -22,7 +21,7 @@ export default async function RootLayout({
   const cookieStore = cookies();
   const sessionToken = cookieStore.get('sessionToken');
 
-  const user = !sessionToken?.value
+  const user: any = !sessionToken?.value
     ? undefined
     : await getUserBySessionToken(sessionToken.value);
 
@@ -31,9 +30,7 @@ export default async function RootLayout({
   }
 
   const userId = user?.id;
-  console.log({ user1234567: user });
-  const singleUserData = await getUsersById(userId);
-  console.log({ singleUserData1234567: singleUserData });
+  const singleUserData: any = await getUsersById(userId);
 
   return (
     <html lang="en">

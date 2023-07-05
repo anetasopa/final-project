@@ -1,16 +1,20 @@
 import { Sql } from 'postgres';
+import { Category } from './1686916405-createTableCategories';
 import { Contact } from './1687774485-createTableContacts';
 
 export type User = {
   id: number;
+  userId: number;
   username: string;
   email: string;
   password_hash: string;
   // account_id: number;
-  nickname: string;
-  imageUrl: string;
-  description: string;
+  nickname: string | null;
+  imageUrl: string | null;
+  description: string | null;
   contacts: Contact[];
+  categories: Category[];
+  interests: Category[];
 };
 
 export async function up(sql: Sql) {
