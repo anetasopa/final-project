@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { RiLogoutCircleRLine } from 'react-icons/ri';
+// import { RiLogoutCircleRLine } from 'react-icons/ri';
 import styles from './LogoutButton.module.scss';
 
 type Props = {
