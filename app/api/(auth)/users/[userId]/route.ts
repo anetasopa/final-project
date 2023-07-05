@@ -1,14 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import {
-  deleteUserById,
   getUserCategories,
   getUsersById,
   updateCategoriesOfUserById,
   updateUserById,
   updateUserImageById,
-  User,
 } from '../../../../../database/users';
+import { User } from '../../../../../migrations/1686751602-createTableUsers';
 import { Category } from '../../../../../migrations/1686916405-createTableCategories';
 
 type Error = {
@@ -17,9 +16,8 @@ type Error = {
 
 export type CreateResponseBodyGet = { user: User } | Error;
 export type CreateResponseBodyPut =
-  | { user: User; userCategories: Category[] }
+  | { user: User; userCategories: Category[]; userImage: any }
   | Error;
-export type CreateResponseBodyDelete = { user: User } | Error;
 
 const userSchema = z.object({
   nickname: z.string(),

@@ -1,19 +1,8 @@
 import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
-import { z } from 'zod';
 import { getValidSessionByToken } from '../../../../database/sessions';
 import { getUsersWithLimitAndOffsetBySessionToken } from '../../../../database/users';
-
-export type User = {
-  id: number;
-  username: string;
-  email: string;
-  password_hash: string;
-  // account_id: number;
-  nickname: string;
-  // image_url: string;
-  description: string;
-};
+import { User } from '../../../../migrations/1686751602-createTableUsers';
 
 export type Error = {
   error: string;
@@ -53,7 +42,6 @@ export async function GET(
     );
   }
 
-  // query the database to get all the users only if a valid session token is passed
   const users = await getUsersWithLimitAndOffsetBySessionToken(
     limit,
     offset,

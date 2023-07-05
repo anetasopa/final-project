@@ -87,7 +87,6 @@ export async function POST(
     );
   }
 
-  // 7. Send the new cookie in the headers
   cookies().set({
     name: 'sessionToken',
     value: session.token,
