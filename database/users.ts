@@ -1,6 +1,7 @@
 import { cache } from 'react';
 import { User } from '../migrations/1686751602-createTableUsers';
 import { Category } from '../migrations/1686916405-createTableCategories';
+import { Contact } from '../migrations/1687774485-createTableContacts';
 import { sql } from './connect';
 
 export type UserWithPasswordHash = {
@@ -20,19 +21,17 @@ export type UserWithCategory = {
   categories: Category[];
 };
 
-export const deleteUserById = cache(async (id: number) => {
-  const [user] = await sql<User[]>`
-      DELETE FROM
-        contacts
-      WHERE
-        followed_user_id = ${id}
-        RETURNING *
-    `;
-  return user;
+export const unfollowUserById = cache(async (id: number) => {
+  await sql`
+    DELETE FROM
+      contacts
+    WHERE
+      followed_user_id = ${id};
+  `;
 });
 
 export const getUsers = cache(async () => {
-  const users = await sql<User[]>`
+  const users = await sql<any[]>`
     SELECT
       u.id,
       u.description,
@@ -52,7 +51,7 @@ export const getUsers = cache(async () => {
 
 // https://stackoverflow.com/questions/24155190/postgresql-left-join-json-agg-ignore-remove-null
 export const getUsers2 = cache(async (skipUserId: number) => {
-  const users = await sql<User[]>`
+  const users = await sql<any[]>`
     SELECT
       u.id,
       u.id AS user_id,

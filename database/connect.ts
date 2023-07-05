@@ -1,6 +1,6 @@
 import 'server-only';
 import { config } from 'dotenv-safe';
-import { headers } from 'next/headers';
+// import { headers } from 'next/headers';
 import postgres, { Sql } from 'postgres';
 
 // This loads all environment variables from a .env file
@@ -39,7 +39,7 @@ function connectOneTimeToDatabase() {
   return ((
     ...sqlParameters: Parameters<typeof globalThis.postgresSqlClient>
   ) => {
-    //headers();
+    // headers();
     return globalThis.postgresSqlClient(...sqlParameters);
   }) as typeof globalThis.postgresSqlClient;
 }

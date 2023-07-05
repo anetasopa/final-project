@@ -2,11 +2,10 @@ import { Sql } from 'postgres';
 
 export type Message = {
   id: number;
-  content: string;
+  content: string | null;
   timestamp: Date;
-  creatorUserId: number;
-  receiverUserId: number;
-  message: string;
+  creatorUserId: number | null;
+  receiverUserId: number | null;
 };
 
 export async function up(sql: Sql) {

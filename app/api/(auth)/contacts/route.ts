@@ -1,28 +1,25 @@
 import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
-import { z } from 'zod';
+// import { z } from 'zod';
 import {
   getUserBySessionToken,
   getUsersById,
   updateUserContacts,
 } from '../../../../database/users';
-import { User } from '../users/route';
 
 type Error = {
   error: string;
 };
 
-export type CreateResponseBodyPut = { user: User } | Error;
-export type CreateResponseBodyDelete = { user: User } | Error;
+export type RegisterResponseBodyPost = { message: string } | Error;
 
-const userSchema = z.object({
-  userId: z.number(),
-});
+// const userSchema = z.object({
+//   userId: z.number(),
+// });
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: Record<string, string | string[]> },
-): Promise<NextResponse<CreateResponseBodyPut>> {
+): Promise<NextResponse<RegisterResponseBodyPost>> {
   // make sure the parameters are ok
   // const result = userSchema.safeParse(params);
   // console.log({ result });
@@ -56,7 +53,7 @@ export async function POST(
   // select the user you want to follow/add to contacts
   const body = await request.json();
   const followedUserId = body.followedUserId;
-  let followedUser = await getUsersById(followedUserId);
+  const followedUser = await getUsersById(followedUserId);
 
   if (!followedUser) {
     return NextResponse.json(
