@@ -1,7 +1,6 @@
 import { cache } from 'react';
 import { User } from '../migrations/1686751602-createTableUsers';
 import { Category } from '../migrations/1686916405-createTableCategories';
-import { Contact } from '../migrations/1687774485-createTableContacts';
 import { sql } from './connect';
 
 export type UserWithPasswordHash = {
@@ -54,7 +53,6 @@ export const getUsers = cache(async () => {
   return users;
 });
 
-// https://stackoverflow.com/questions/24155190/postgresql-left-join-json-agg-ignore-remove-null
 export const getUsers2 = cache(async (skipUserId: number) => {
   const users = await sql<any[]>`
     SELECT

@@ -11,7 +11,7 @@ type Error = {
   error: string;
 };
 
-export type RegisterResponseBodyPost = { message: string } | Error;
+export type CreateResponseBodyPost = { message: string } | Error;
 
 // const userSchema = z.object({
 //   userId: z.number(),
@@ -19,7 +19,7 @@ export type RegisterResponseBodyPost = { message: string } | Error;
 
 export async function POST(
   request: NextRequest,
-): Promise<NextResponse<RegisterResponseBodyPost>> {
+): Promise<NextResponse<CreateResponseBodyPost>> {
   // make sure the parameters are ok
   // const result = userSchema.safeParse(params);
   // console.log({ result });

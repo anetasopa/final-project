@@ -6,7 +6,6 @@ import React, { useEffect, useState } from 'react';
 import { CiCircleRemove } from 'react-icons/ci';
 import Creatable from 'react-select';
 import { UserWithCategory } from '../../../database/users';
-import { User } from '../../../migrations/1686751602-createTableUsers';
 import { Category } from '../../../migrations/1686916405-createTableCategories';
 import { CreateResponseBodyPut } from '../../api/(auth)/users/[userId]/route';
 import { LoadImage } from './LoadImage';
@@ -15,7 +14,12 @@ import styles from './ProfileForm.module.scss';
 type Props = {
   categories: Category[];
   userId: number;
-  singleUserData: User[];
+  singleUserData: {
+    nickname: string;
+    description: string;
+    imageUrl: string;
+    username: string;
+  };
   userCategories: any[];
   userContacts: UserWithCategory[];
 };
@@ -366,13 +370,15 @@ export default function ProfileForm(props: Props) {
                     data-label="Image"
                   >
                     <div className={styles.categoriesContainer}>
-                      <Image
-                        alt="userImage"
-                        src={followedUser.imageUrl}
-                        width={100}
-                        height={100}
-                        className={styles.profileImg}
-                      />
+                      {followedUser.imageUrl ? (
+                        <Image
+                          alt="userImage"
+                          src={followedUser.imageUrl}
+                          width={100}
+                          height={100}
+                          className={styles.profileImg}
+                        />
+                      ) : null}
                     </div>
                   </div>
                   <div
@@ -412,10 +418,13 @@ export default function ProfileForm(props: Props) {
                     data-label="Interests"
                   >
                     <div className={styles.categoriesContainer}>
-                      {followedUser.categories &&
-                      followedUser.categories.length > 0 ? (
+                      {followedUser.categories.length > 0 ? (
                         followedUser.categories.map((category) => {
-                          return category ? <p>{category.name}</p> : null;
+                          return (
+                            <p key={`category-${category.id}`}>
+                              {category.name}
+                            </p>
+                          );
                         })
                       ) : (
                         <p>-</p>

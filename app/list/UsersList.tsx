@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 import { CgAddR } from 'react-icons/cg';
 import { User } from '../../migrations/1686751602-createTableUsers';
 import { Category } from '../../migrations/1687248585-createTableUserCategories';
-import { CreateResponseBodyPut } from '../api/(auth)/contacts/route';
+import { CreateResponseBodyPost } from '../api/(auth)/contacts/route';
 import Search from './Search';
 import styles from './UsersList.module.scss';
 
@@ -33,7 +33,7 @@ export default function UsersLis({ result }: Props) {
       });
 
       if (response.status !== 500) {
-        const data: CreateResponseBodyPut = await response.json();
+        const data: CreateResponseBodyPost = await response.json();
 
         if ('error' in data) {
           console.log(data.error);
@@ -101,13 +101,15 @@ export default function UsersLis({ result }: Props) {
                     data-label="Image"
                   >
                     <div className={styles.categoriesContainer}>
-                      <Image
-                        alt="userImage"
-                        src={user.user.imageUrl}
-                        width={100}
-                        height={100}
-                        className={styles.profileImg}
-                      />
+                      {user.user.imageUrl ? (
+                        <Image
+                          alt="userImage"
+                          src={user.user.imageUrl}
+                          width={100}
+                          height={100}
+                          className={styles.profileImg}
+                        />
+                      ) : null}
                     </div>
                   </div>
                   <div
