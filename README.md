@@ -6,7 +6,7 @@
 
 ChatSynk is a website where you can create an account, set up your profile, and add people you want to connect with to your contact list. Once you've added someone, you can start chatting with them on a special page. It's a simple and user-friendly way to communicate and connect with people who share your interests.
 
-## **Goal** of creating the application 🤔
+## Goal of creating the application 🤔
 
 I created this communication app because when you're in a new place, it's tough to make friends and it can be hard to go out and meet people. But with this simple app, it becomes much easier. It helps me and others connect with new people and overcome the challenges of socializing in unfamiliar surroundings.
 
@@ -27,17 +27,17 @@ I created this communication app because when you're in a new place, it's tough 
 
 ### Design 🖊️
 
-1. [figma](https://www.figma.com)
+* [figma](https://www.figma.com)
 
 ### Tests 📝
 
-1. [jest](https://www.npmjs.com/package/jest)
-2. [playwright](https://www.npmjs.com/package/playwright)
+* [jest](https://www.npmjs.com/package/jest)
+* [playwright](https://www.npmjs.com/package/playwright)
 
 
 ### Deploy 🔥
 
-1. [vercel](https://vercel.com)
+* [vercel](https://vercel.com)
 
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
