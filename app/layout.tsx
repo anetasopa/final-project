@@ -2,6 +2,7 @@ import './globals.scss';
 // import { Inter } from 'next/font/google';
 import { cookies } from 'next/headers';
 import { getUserBySessionToken, getUsersById } from '../database/users';
+import { UserEntity } from '../migrations/1686751602-createTableUsers';
 // import Footer from './components/Footer';
 import Nav from './components/Nav';
 
@@ -22,13 +23,9 @@ export default async function RootLayout({
   const cookieStore = cookies();
   const sessionToken = cookieStore.get('sessionToken');
 
-  const user: any = !sessionToken?.value
+  const user: UserEntity | undefined = !sessionToken?.value
     ? undefined
     : await getUserBySessionToken(sessionToken.value);
-
-  if (!user) {
-    console.log('error');
-  }
 
   const userId = user?.id;
   const singleUserData: any = await getUsersById(userId);

@@ -6,16 +6,22 @@ import { useState } from 'react';
 import { CgClose } from 'react-icons/cg';
 import { RxHamburgerMenu } from 'react-icons/rx';
 import { logout } from '../(auth)/logout/actions';
-import { User } from '../../migrations/1686751602-createTableUsers';
+import { User, UserEntity } from '../../migrations/1686751602-createTableUsers';
 import { LogoutButton } from './LogoutButton';
 import styles from './Nav.module.scss';
 
 type Props = {
-  user: User;
+  user: UserEntity | undefined;
   singleUserData: User[] & { imageUrl: string };
 };
 
-const links = [
+type LinkObj = {
+  id: number;
+  title: string;
+  link: string;
+};
+
+const links: LinkObj[] = [
   { id: 1, title: 'Home', link: '/' },
   { id: 2, title: 'About', link: '#about' },
   { id: 3, title: 'Benefits', link: '#benefits' },
@@ -33,9 +39,9 @@ export default function Nav({ user, singleUserData }: Props) {
       <nav>
         <div className={`${styles.nav} ${isOpen ? styles[`navOpen`] : {}}`}>
           <ul className={styles.navLinks}>
-            {links.map(({ id, title, link }) => (
-              <Link href={link} key={`key-${id}`}>
-                <li>{title}</li>
+            {links.map((link) => (
+              <Link href={link.link} key={`key-${link.id}`}>
+                <li>{link.title}</li>
               </Link>
             ))}
           </ul>

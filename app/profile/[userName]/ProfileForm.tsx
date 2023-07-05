@@ -12,7 +12,7 @@ import { LoadImage } from './LoadImage';
 import styles from './ProfileForm.module.scss';
 
 type Props = {
-  categories: Category[];
+  // categories: Category[];
   userId: number;
   singleUserData: {
     nickname: string;
@@ -20,42 +20,42 @@ type Props = {
     imageUrl: string;
     username: string;
   };
-  userCategories: any[];
+  userCategories: Category[];
   userContacts: UserWithCategory[];
 };
 
-type SaveProps = Props & {
-  setShowInput: (value: boolean) => void;
+type SaveProps = {
   setSelectedOption: (value: Category[]) => void;
   setUserCategories: (value: Category[]) => void;
   setImageUrl: (value: string) => void;
+  setShowInput: (value: boolean) => void;
   setIsLoading: (value: boolean) => void;
-  idSelectedCategories: (value: boolean) => void;
-  result: (value: boolean) => void;
+  imageUrl: string;
+  idSelectedCategories: number[];
+  userId: number;
   nickname: string;
   description: string;
-  imageUrl: string;
 };
 
-interface CategoriesOption {
-  readonly value: string;
-  readonly label: string;
-}
+// interface CategoriesOption {
+//   readonly value: string;
+//   readonly label: string;
+// }
 
 interface RemoveParams {
-  contactId: string;
-  setIsLoadingRemove: React.Dispatch<React.SetStateAction<boolean>>;
+  contactId: number;
+  setIsLoadingRemove: React.Dispatch<React.SetStateAction<number>>;
 }
 
 async function remove({ contactId, setIsLoadingRemove }: RemoveParams) {
-  setIsLoadingRemove(true);
+  setIsLoadingRemove(0);
   try {
     const response = await fetch(`/api/contacts/${contactId}`, {
       method: 'DELETE',
       body: JSON.stringify({ contactId }),
     });
 
-    setIsLoadingRemove(false);
+    setIsLoadingRemove(contactId);
 
     if (response.status !== 500) {
       const data: CreateResponseBodyPut = await response.json();
@@ -78,11 +78,10 @@ async function save({
   setUserCategories,
   setImageUrl,
   setShowInput,
-  idSelectedCategories,
-
   setIsLoading,
-  userId,
   imageUrl,
+  idSelectedCategories,
+  userId,
   nickname,
   description,
 }: SaveProps) {
@@ -110,7 +109,9 @@ async function save({
       }
 
       if ('user' in data) {
-        setImageUrl(data.user.imageUrl);
+        if (data.user.imageUrl) {
+          setImageUrl(data.user.imageUrl);
+        }
         setUserCategories(data.userCategories);
         setSelectedOption(data.userCategories);
       }
@@ -126,10 +127,12 @@ export default function ProfileForm(props: Props) {
   const userContactsProps = props.userContacts;
 
   const [isLoading, setIsLoading] = useState(false);
-  const [isLoadingRemove, setIsLoadingRemove] = useState(false);
+  const [isLoadingRemove, setIsLoadingRemove] = useState<number>(0);
   const [selectedOption, setSelectedOption] = useState(userCategoriesProps);
 
-  const idSelectedCategories = selectedOption.map((selected) => selected.id);
+  const idSelectedCategories: number[] = selectedOption.map(
+    (selected) => selected.id,
+  );
   const [userCategories, setUserCategories] = useState(userCategoriesProps);
   const [nickname, setNickname] = useState(
     singleUserData.nickname ? singleUserData.nickname : '',
@@ -140,26 +143,30 @@ export default function ProfileForm(props: Props) {
   const [showInput, setShowInput] = useState(true);
   // const [error, setError] = useState<string>('');
 
-  const categories = props.categories;
+  // const categories = props.categories;
   const userId = props.userId;
 
-  const categoriesOption: readonly CategoriesOption[] = categories.map(
-    (category) => {
-      return { id: category.id, value: category.name, label: category.label };
-    },
-  );
+  // const categoriesOption: readonly CategoriesOption[] = categories.map(
+  //   (category) => {
+  //     return { id: category.id, value: category.name, label: category.label };
+  //   },
+  // );
 
   const [imageUrl, setImageUrl] = useState(
     singleUserData.imageUrl ? singleUserData.imageUrl : '',
   );
   const [uploadData, setUploadData] = useState();
 
+  console.log({ uploadData });
+
   async function handleOnChange(changeEvent: any) {
     const reader = new FileReader();
 
     reader.onload = function (onLoadEvent) {
-      setImageUrl(onLoadEvent.target.result);
-      setUploadData(undefined);
+      if (onLoadEvent.target) {
+        setImageUrl(String(onLoadEvent.target.result));
+        setUploadData(undefined);
+      }
     };
 
     reader.readAsDataURL(changeEvent.target.files[0]);
@@ -216,6 +223,7 @@ export default function ProfileForm(props: Props) {
     setIsLoading(false);
   }, []);
 
+  //
   return (
     <div>
       <div className={styles.profileContainer}>
@@ -271,16 +279,17 @@ export default function ProfileForm(props: Props) {
           )}
           <p className={styles.interestsTitle}>Interests</p>
           {!showInput ? (
-            <Creatable
-              className={styles.select}
-              closeMenuOnSelect={false}
-              components={categoriesOption}
-              onChange={setSelectedOption}
-              defaultValue={selectedOption}
-              isMulti
-              options={categoriesOption}
-            />
+            <Creatable />
           ) : (
+            // <Creatable
+            //   className={styles.select}
+            //   closeMenuOnSelect={false}
+            //   components={categoriesOption}
+            //   onChange={setSelectedOption}
+            //   defaultValue={selectedOption}
+            //   isMulti
+            //   options={categoriesOption}
+            // />
             userCategories.map((category) => {
               return (
                 <p
@@ -343,7 +352,7 @@ export default function ProfileForm(props: Props) {
               Username
             </div>
             <div className={`${styles.col} ${styles.col3} ${styles.bold}`}>
-              Nackname
+              Nickname
             </div>
             <div className={`${styles.col} ${styles.col4} ${styles.bold}`}>
               Description
@@ -471,7 +480,7 @@ export default function ProfileForm(props: Props) {
                       <button
                         onClick={async () => {
                           await remove({
-                            contactId: followedUser.userId,
+                            contactId: followedUser.id,
                             setIsLoadingRemove,
                           });
                         }}

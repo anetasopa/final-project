@@ -1,11 +1,11 @@
 import Image from 'next/image';
-import { Contact } from '../../migrations/1687774485-createTableContacts';
+import { User } from '../../migrations/1686751602-createTableUsers';
 import styles from './Profile.module.scss';
 
 type Props = {
-  userContacts: Contact[];
+  userContacts: User[];
   receiverId: number;
-  isMobileMenuOpen: () => void;
+  isMobileMenuOpen: boolean;
   toggleMobileMenu: () => void;
 };
 
@@ -20,12 +20,11 @@ export default function Profile({
   );
   const receiverImageUrl = receiverUser ? receiverUser.imageUrl : '';
   const receiverNickname = receiverUser ? receiverUser.nickname : '';
-  // const receiverUsername = receiverUser ? receiverUser.username : '';
 
   return (
     <div className={styles.profileContainer}>
       <div className={styles.profileContainerInfo}>
-        {receiverUser && (
+        {!!receiverImageUrl && (
           <Image
             alt="userImage"
             src={receiverImageUrl}

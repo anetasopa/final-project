@@ -3,8 +3,8 @@
 import styles from './LoadImage.module.scss';
 
 type Props = {
-  handleOnChange: () => void;
-  showInput: () => void;
+  handleOnChange: (changeEvent: any) => Promise<void>;
+  showInput: boolean;
 };
 
 export function LoadImage({ handleOnChange, showInput }: Props) {

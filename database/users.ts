@@ -1,18 +1,15 @@
 import { cache } from 'react';
-import { User } from '../migrations/1686751602-createTableUsers';
+import { UserEntity } from '../migrations/1686751602-createTableUsers';
 import { Category } from '../migrations/1686916405-createTableCategories';
 import { sql } from './connect';
+
+export type JsonAgg = [] | Category[];
 
 export type UserWithPasswordHash = {
   id: number;
   username: string;
   email: string;
   passwordHash: string;
-};
-
-type UserToken = {
-  id: number;
-  username: string;
 };
 
 export type UserWithCategory = {
@@ -22,7 +19,19 @@ export type UserWithCategory = {
   nickname: string | null;
   imageUrl: string | null;
   description: string | null;
-  categories: Category[];
+  categories: JsonAgg;
+};
+
+export type UserWithCategoryAndInterests = {
+  id: number;
+  userId: number;
+  description: string | null;
+  username: string;
+  nickname: string | null;
+  imageUrl: string | null;
+  isContact: boolean;
+  categories: JsonAgg;
+  interests: JsonAgg;
 };
 
 export const unfollowUserById = cache(async (id: number) => {
@@ -34,27 +43,39 @@ export const unfollowUserById = cache(async (id: number) => {
   `;
 });
 
-export const getUsers = cache(async () => {
-  const users = await sql<any[]>`
-    SELECT
-      u.id,
-      u.description,
-      u.username,
-      u.nickname,
-      u.image_url,
-      JSON_AGG(c.*) AS categories
-    FROM users u
-    LEFT JOIN user_categories uc ON u.id = uc.user_id
-    LEFT JOIN categories c ON c.id = uc.category_id
-    GROUP BY u.id
-    ;
- `;
+// export const getUsers = cache(async () => {
+//   const users = await sql<[]>`
+//     SELECT
+//       u.id,
+//       u.description,
+//       u.username,
+//       u.nickname,
+//       u.image_url,
+//       JSON_AGG(c.*) AS categories
+//     FROM users u
+//     LEFT JOIN user_categories uc ON u.id = uc.user_id
+//     LEFT JOIN categories c ON c.id = uc.category_id
+//     GROUP BY u.id
+//     ;
+//  `;
 
-  return users;
-});
+//   return users;
+// });
 
 export const getUsers2 = cache(async (skipUserId: number) => {
-  const users = await sql<any[]>`
+  const users = await sql<
+    {
+      id: number;
+      userId: number;
+      description: string | null;
+      username: string;
+      nickname: string | null;
+      imageUrl: string | null;
+      isContact: boolean;
+      categories: JsonAgg;
+      interests: JsonAgg;
+    }[]
+  >`
     SELECT
       u.id,
       u.id AS user_id,
@@ -63,7 +84,7 @@ export const getUsers2 = cache(async (skipUserId: number) => {
       u.nickname,
       u.image_url,
       CASE WHEN con.id IS NULL THEN false ELSE true END is_contact,
-      COALESCE(JSON_AGG(c.*)  FILTER (WHERE c.id IS NOT NULL), '[]') AS categories,
+      COALESCE(JSON_AGG(c.*) FILTER (WHERE c.id IS NOT NULL), '[]') AS categories,
       COALESCE(JSON_AGG(c.id)  FILTER (WHERE c.id IS NOT NULL), '[]') AS interests
     FROM users u
     LEFT JOIN user_categories uc ON u.id = uc.user_id
@@ -82,16 +103,27 @@ export const getUsers2 = cache(async (skipUserId: number) => {
 
 export const getUsersWithPasswordHashByUserName = cache(
   async (username: string) => {
-    const [user] = await sql<UserWithPasswordHash[]>`
+    const [user] = await sql<UserEntity[]>`
     SELECT * FROM users WHERE users.username = ${username}
  `;
     return user;
   },
 );
 
-//  column "u.id" must appear in the GROUP BY clause or be used in an aggregate function
 export const getUsersById = cache(async (id: number) => {
-  const [user] = await sql<User[]>`
+  const [user] = await sql<
+    {
+      id: number;
+      userId: number;
+      username: string;
+      email: string;
+      nickname: string | null;
+      imageUrl: string | null;
+      description: string | null;
+      categories: JsonAgg;
+      interests: JsonAgg;
+    }[]
+  >`
     SELECT
       u.id,
       u.id AS user_id,
@@ -114,7 +146,17 @@ export const getUsersById = cache(async (id: number) => {
 });
 
 export const getUserContacts = cache(async (id: number) => {
-  const users = await sql<User[]>`
+  const users = await sql<
+    {
+      userId: number | null;
+      username: string | null;
+      email: string | null;
+      nickname: string | null;
+      imageUrl: string | null;
+      description: string | null;
+      categories: JsonAgg;
+    }[]
+  >`
     SELECT
       u.id AS user_id,
       u.username,
@@ -147,8 +189,8 @@ export const updateUserContacts = cache(
 );
 
 export const getUsersByUserName = cache(async (username: string) => {
-  const [user] = await sql<User[]>`
-    SELECT id, username FROM users WHERE users.username = ${username}
+  const [user] = await sql<UserEntity[]>`
+    SELECT * FROM users WHERE users.username = ${username}
  `;
   return user;
 });
@@ -169,26 +211,26 @@ export const createUser = cache(
     passwordHash: string,
     imageUrl: string,
   ) => {
-    const [user] = await sql<User[]>`
-    INSERT INTO users (username, email, password_hash, image_url) VALUES(${username}, ${email}, ${passwordHash}, ${imageUrl}) RETURNING id, username
+    const [user] = await sql<UserEntity[]>`
+    INSERT INTO users (username, email, password_hash, image_url) VALUES(${username}, ${email}, ${passwordHash}, ${imageUrl}) RETURNING *
  `;
     return user;
   },
 );
 
 export const getUserBySessionToken = cache(async (token: string) => {
-  const [user] = await sql<UserToken[]>`
+  const [user] = await sql<UserEntity[]>`
   SELECT
-    users.id,
-    users.username
+    u.*
   FROM
-    users
+    users u
   INNER JOIN
-    sessions ON (
-      sessions.token = ${token} AND
-      sessions.user_id = users.id AND
-      sessions.expiry_timestamp > now()
+    sessions s ON (
+      s.token = ${token} AND
+      s.user_id = u.id AND
+      s.expiry_timestamp > now()
     )
+  LIMIT 1
   `;
 
   return user;
@@ -229,13 +271,13 @@ export const updateUserImageById = cache(
 );
 
 export const updateCategoriesOfUserById = cache(
-  async (userId: number, idSelectedCategories: any[]) => {
+  async (userId: number, idSelectedCategories: number[]) => {
     await sql`
       DELETE FROM user_categories WHERE user_id = ${userId}
     `;
 
     for (const userCategory of idSelectedCategories) {
-      await sql`
+      await sql<{ id: number; userId: number; categoryId: number }[]>`
       INSERT INTO user_categories
         (user_id, category_id)
       VALUES
@@ -251,7 +293,17 @@ export const updateCategoriesOfUserById = cache(
 
 export const getUsersWithLimitAndOffsetBySessionToken = cache(
   async (limit: number, offset: number, token: string) => {
-    const users = await sql<User[]>`
+    const users = await sql<
+      {
+        id: number;
+        username: string;
+        email: string;
+        passwordHash: string;
+        nickname: string | null;
+        imageUrl: string | null;
+        description: string | null;
+      }[]
+    >`
       SELECT
         users.*
       FROM

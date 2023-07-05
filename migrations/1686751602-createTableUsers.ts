@@ -17,6 +17,16 @@ export type User = {
   interests: Category[];
 };
 
+export type UserEntity = {
+  id: number;
+  username: string;
+  email: string;
+  passwordHash: string;
+  nickname: string | null;
+  imageUrl: string | null;
+  description: string | null;
+};
+
 export async function up(sql: Sql) {
   await sql`
     CREATE TABLE users (

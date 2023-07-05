@@ -31,10 +31,6 @@ export default async function Profile() {
   const singleUserData = await getUsersById(userId);
   const userCategories = await getUserCategories(userId);
 
-  if (!user) {
-    notFound();
-  }
-
   if (!singleUserData) {
     notFound();
   }
