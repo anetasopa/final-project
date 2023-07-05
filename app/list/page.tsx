@@ -22,7 +22,7 @@ const usersWithSimilarInterests = ({ users, myUser }: Props) =>
     );
 
     const commonCategories = user.categories.filter((category) => {
-      const categoryIds = myUser?.categories.map((category) => category.id);
+      const categoryIds = myUser?.categories.map((cat) => cat.id);
 
       return categoryIds?.includes(category.id);
     });
