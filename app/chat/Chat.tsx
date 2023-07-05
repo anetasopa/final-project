@@ -12,10 +12,25 @@ type Props = {
   userData: User;
 };
 
-const renderMessage = (message, userId, userContacts, userData, receiverId) => {
+type RenderMessageProps = {
+  message: Message;
+  userId: number;
+  userContacts: Contact[];
+  userData: User;
+  receiverId: number;
+};
+
+const renderMessage = ({
+  message,
+  userId,
+  userContacts,
+  userData,
+  receiverId,
+}: RenderMessageProps) => {
   const receiverUser = userContacts.find(
     (contact) => contact.userId === receiverId,
   );
+
   const receiverImageUrl = receiverUser ? receiverUser.imageUrl : '';
 
   return message.creatorUserId === userId ? (
@@ -57,7 +72,7 @@ export default function Chat({
   return (
     <div className={styles.messages}>
       {messages.map((message) =>
-        renderMessage(message, userId, userContacts, userData, receiverId),
+        renderMessage({ message, userId, userContacts, userData, receiverId }),
       )}
     </div>
   );

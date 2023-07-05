@@ -6,6 +6,7 @@ export type Message = {
   timestamp: Date;
   creatorUserId: number;
   receiverUserId: number;
+  message: string;
 };
 
 export async function up(sql: Sql) {
