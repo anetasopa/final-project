@@ -9,16 +9,14 @@ export const getCategories = cache(async () => {
   return categories;
 });
 
-export const createCategory = cache(
-  async (id: number, name: string, label: string) => {
-    const [category] = await sql<Category[]>`
+export const createCategory = cache(async (name: string, label: string) => {
+  const [category] = await sql<Category[]>`
       INSERT INTO categories
-        (id, name, label)
+        (name, label)
       VALUES
-        (${id}, ${name}, ${label})
+        (${name}, ${label})
       RETURNING *
     `;
 
-    return category;
-  },
-);
+  return category;
+});
