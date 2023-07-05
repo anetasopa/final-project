@@ -20,7 +20,6 @@ export default function Message({
   userId,
   receiverId,
 }: RenderMessageProps) {
-  // const app = initializeApp(firebaseConfig);
   const db = getDatabase();
 
   const saveMessages = async () => {

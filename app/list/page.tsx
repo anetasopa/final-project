@@ -12,19 +12,19 @@ import UsersList from './UsersList';
 
 type Props = {
   users: User[];
-  myUser: User;
+  myUser: User | undefined;
 };
 
 const usersWithSimilarInterests = ({ users, myUser }: Props) =>
   users.map((user) => {
     const commonInterests = user.interests.filter((interest) =>
-      myUser.interests.includes(interest),
+      myUser?.interests.includes(interest),
     );
 
     const commonCategories = user.categories.filter((category) => {
-      const categoryIds = myUser.categories.map((category) => category.id);
+      const categoryIds = myUser?.categories.map((category) => category.id);
 
-      return categoryIds.includes(category.id);
+      return categoryIds?.includes(category.id);
     });
 
     const commonInterestsInPercentage = commonInterests.length

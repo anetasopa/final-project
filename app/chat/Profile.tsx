@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import Link from 'next/link';
 import { Contact } from '../../migrations/1687774485-createTableContacts';
 import styles from './Profile.module.scss';
 
@@ -39,7 +38,7 @@ export default function Profile({
       </div>
 
       <button className={styles.mobileButton} onClick={toggleMobileMenu}>
-        {isMobileMenuOpen ? <p>Show List</p> : <p>Hide List</p>}
+        {!isMobileMenuOpen ? <p>Show List</p> : <p>Hide List</p>}
       </button>
     </div>
   );
