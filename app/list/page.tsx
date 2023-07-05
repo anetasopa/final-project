@@ -1,16 +1,21 @@
 import util from 'node:util';
 import { cookies } from 'next/headers';
 import { notFound } from 'next/navigation';
-import React from 'react';
 import {
   getUserBySessionToken,
   getUsers2,
   getUsersById,
 } from '../../database/users';
+import { User } from '../../migrations/1686751602-createTableUsers';
 import styles from './page.module.scss';
 import UsersList from './UsersList';
 
-const usersWithSimilarInterests = (users: string, myUser: string) =>
+type Props = {
+  users: User[];
+  myUser: User;
+};
+
+const usersWithSimilarInterests = ({ users, myUser }: Props) =>
   users.map((user) => {
     const commonInterests = user.interests.filter((interest) =>
       myUser.interests.includes(interest),
@@ -51,7 +56,7 @@ export default async function List() {
   const users = await getUsers2(userId);
   const myUser = await getUsersById(userId);
 
-  const result = usersWithSimilarInterests(users, myUser);
+  const result = usersWithSimilarInterests({ users, myUser });
 
   console.log(
     util.inspect(
