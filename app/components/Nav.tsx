@@ -74,8 +74,8 @@ export default function Nav({ user, singleUserData }: Props) {
             <LogoutButton logout={logout} />
           </>
         ) : (
-          <Link className={styles.buttonSignup} href="/register">
-            Register
+          <Link className={styles.buttonRegister} href="/register">
+            Register/Login
           </Link>
         )}
       </nav>
