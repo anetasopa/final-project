@@ -81,7 +81,10 @@ export default function ChatForm({
                   />
                 ) : null}
                 <div className={styles.availability} />
-                <button onClick={() => setReceiverId(user.userId)}>
+                <button
+                  className={styles.buttonName}
+                  onClick={() => setReceiverId(user.userId)}
+                >
                   <p className={styles.name}>{user.username}</p>
                 </button>
               </div>

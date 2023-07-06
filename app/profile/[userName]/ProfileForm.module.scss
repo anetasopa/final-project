@@ -9,18 +9,6 @@
     }
   }
 
-  .name {
-    text-align: center;
-    font-size: 1.125rem;
-    font-weight: bold;
-
-    @media (max-width: 480px) {
-      & {
-        margin-top: 20px;
-      }
-    }
-  }
-
   .userImage {
     border-radius: 150px;
     text-align: center;

@@ -5,10 +5,22 @@
     }
   }
 
-  .upload {
-    position: absolute;
-    margin-top: 150px;
-    margin-left: -350px;
+  .uploadContainer {
+    margin-top: 290px;
+    margin-left: -145px;
+
+    label {
+      padding: 5px 30px;
+      color: var(--primary-accent-color);
+      border-radius: 50px;
+      border: 1px solid var(--primary-accent-color);
+      text-align: center;
+      font-size: 0.8rem;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
 
     @media (max-width: 480px) {
       & {
@@ -16,6 +28,10 @@
         margin-left: -90px;
       }
     }
+  }
+
+  .upload {
+    display: none;
   }
 }
 

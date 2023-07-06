@@ -243,7 +243,6 @@ export default function ProfileForm(props: Props) {
             height={300}
             className={styles.userImage}
           />
-          <p className={styles.name}>{singleUserData.username}</p>
         </div>
         <LoadImage
           handleOnChange={handleOnChange}

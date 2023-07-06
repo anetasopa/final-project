@@ -17,9 +17,17 @@ export function LoadImage({ handleOnChange, showInput }: Props) {
           onChange={handleOnChange}
           // onSubmit={handleOnSubmit}
         >
-          <p>
-            <input className={styles.upload} type="file" name="file" />
-          </p>
+          <div className={styles.uploadContainer}>
+            <label className={styles.uploadContainer} htmlFor="image">
+              Upload
+            </label>
+            <input
+              className={styles.upload}
+              id="image"
+              type="file"
+              name="file"
+            />
+          </div>
         </form>
       ) : (
         ''
