@@ -69,7 +69,7 @@ export default function LoginForm() {
             className={`${styles.link} ${styles.buttonRight}`}
             href="/register"
           >
-            Signup
+            Register
           </Link>
         </div>
       </div>

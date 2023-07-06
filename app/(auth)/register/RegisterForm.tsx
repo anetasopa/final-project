@@ -80,7 +80,7 @@ export default function RegisterForm() {
             className={`${styles.link} ${styles.buttonRight}`}
             href="/register"
           >
-            Signup
+            Register
           </Link>
         </div>
       </div>
@@ -158,7 +158,7 @@ export default function RegisterForm() {
           )}
         </div>
         <button
-          className={styles.buttonSignUp}
+          className={styles.buttonRegister}
           onClick={async () => {
             await register();
           }}
@@ -168,7 +168,7 @@ export default function RegisterForm() {
               <p className={styles.loader}>Loading...</p>
             </div>
           ) : (
-            <p>Sign Up</p>
+            <p>Register</p>
           )}
         </button>
       </form>
