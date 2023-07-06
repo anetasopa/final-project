@@ -1,7 +1,7 @@
 .containerSignUp {
   display: flex;
-  flex-direction: column;
   justify-content: center;
+  flex-direction: column;
   align-items: center;
   background-color: white;
   padding: 70px;
@@ -72,7 +72,7 @@
       padding: 10px 30px;
       font-size: 1.125rem;
       border: 1px solid var(--primary-text-color);
-      width: 350px;
+      width: 250px;
 
       @media screen and (max-width: 480px) {
         width: 250px;
