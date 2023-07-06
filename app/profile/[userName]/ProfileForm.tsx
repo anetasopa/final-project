@@ -7,6 +7,7 @@ import { CiCircleRemove } from 'react-icons/ci';
 import Creatable from 'react-select';
 import { UserWithCategory } from '../../../database/users';
 import { Category } from '../../../migrations/1686916405-createTableCategories';
+import { CreateResponseBodyDelete } from '../../api/(auth)/contacts/[contactId]/route';
 import { CreateResponseBodyPut } from '../../api/(auth)/users/[userId]/route';
 import { LoadImage } from './LoadImage';
 import styles from './ProfileForm.module.scss';
@@ -58,7 +59,7 @@ async function remove({ contactId, setIsLoadingRemove }: RemoveParams) {
     setIsLoadingRemove(contactId);
 
     if (response.status !== 500) {
-      const data: CreateResponseBodyPut = await response.json();
+      const data: CreateResponseBodyDelete = await response.json();
 
       if ('error' in data) {
         console.log(data.error);
@@ -480,7 +481,7 @@ export default function ProfileForm(props: Props) {
                       <button
                         onClick={async () => {
                           await remove({
-                            contactId: followedUser.id,
+                            contactId: followedUser.userId,
                             setIsLoadingRemove,
                           });
                         }}

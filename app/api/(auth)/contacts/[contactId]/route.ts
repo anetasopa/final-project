@@ -12,6 +12,7 @@ export async function DELETE(
   { params }: { params: Record<string, string | string[]> },
 ): Promise<NextResponse<CreateResponseBodyDelete>> {
   const contactId = Number(params.contactId);
+  console.log({ contactId123245678: contactId });
 
   if (!contactId) {
     return NextResponse.json(
