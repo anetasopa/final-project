@@ -23,7 +23,7 @@ export default function Home() {
           </p>
           <div>
             <Link className={styles.heroButton} href="/register">
-              Get started
+              Register
             </Link>
           </div>
         </div>
