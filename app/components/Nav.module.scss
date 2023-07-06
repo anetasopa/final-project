@@ -98,10 +98,13 @@
   border: none;
   background-color: transparent;
   z-index: 10;
-}
+  transition: transform 0.3s ease, font-weight 0.3s ease, box-shadow 0.3s ease;
 
-.buttonRegister:hover {
-  cursor: pointer;
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.05);
+    box-shadow: none;
+  }
 }
 
 .profileImage {
