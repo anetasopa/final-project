@@ -39,6 +39,7 @@ type SaveProps = {
 };
 
 interface CategoriesOption {
+  readonly id: number;
   readonly value: string;
   readonly label: string;
 }
@@ -129,7 +130,13 @@ export default function ProfileForm(props: Props) {
 
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingRemove, setIsLoadingRemove] = useState<number>(0);
-  const [selectedOption, setSelectedOption] = useState(userCategoriesProps);
+  const [selectedOption, setSelectedOption] = useState<
+    readonly CategoriesOption[]
+  >(
+    userCategoriesProps.map((category) => {
+      return { id: category.id, value: category.name, label: category.label };
+    }),
+  );
 
   const idSelectedCategories: number[] = selectedOption.map(
     (selected) => selected.id,
@@ -283,7 +290,6 @@ export default function ProfileForm(props: Props) {
             <Creatable
               className={styles.select}
               closeMenuOnSelect={false}
-              components={categoriesOption}
               onChange={setSelectedOption}
               defaultValue={selectedOption}
               isMulti
