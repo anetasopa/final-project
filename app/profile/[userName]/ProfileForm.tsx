@@ -13,7 +13,7 @@ import { LoadImage } from './LoadImage';
 import styles from './ProfileForm.module.scss';
 
 type Props = {
-  // categories: Category[];
+  categories: Category[];
   userId: number;
   singleUserData: {
     nickname: string;
@@ -38,10 +38,10 @@ type SaveProps = {
   description: string;
 };
 
-// interface CategoriesOption {
-//   readonly value: string;
-//   readonly label: string;
-// }
+interface CategoriesOption {
+  readonly value: string;
+  readonly label: string;
+}
 
 interface RemoveParams {
   contactId: number;
@@ -144,14 +144,14 @@ export default function ProfileForm(props: Props) {
   const [showInput, setShowInput] = useState(true);
   // const [error, setError] = useState<string>('');
 
-  // const categories = props.categories;
+  const categories = props.categories;
   const userId = props.userId;
 
-  // const categoriesOption: readonly CategoriesOption[] = categories.map(
-  //   (category) => {
-  //     return { id: category.id, value: category.name, label: category.label };
-  //   },
-  // );
+  const categoriesOption: readonly CategoriesOption[] = categories.map(
+    (category) => {
+      return { id: category.id, value: category.name, label: category.label };
+    },
+  );
 
   const [imageUrl, setImageUrl] = useState(
     singleUserData.imageUrl ? singleUserData.imageUrl : '',
@@ -280,17 +280,16 @@ export default function ProfileForm(props: Props) {
           )}
           <p className={styles.interestsTitle}>Interests</p>
           {!showInput ? (
-            <Creatable />
+            <Creatable
+              className={styles.select}
+              closeMenuOnSelect={false}
+              components={categoriesOption}
+              onChange={setSelectedOption}
+              defaultValue={selectedOption}
+              isMulti
+              options={categoriesOption}
+            />
           ) : (
-            // <Creatable
-            //   className={styles.select}
-            //   closeMenuOnSelect={false}
-            //   components={categoriesOption}
-            //   onChange={setSelectedOption}
-            //   defaultValue={selectedOption}
-            //   isMulti
-            //   options={categoriesOption}
-            // />
             userCategories.map((category) => {
               return (
                 <p
@@ -481,7 +480,7 @@ export default function ProfileForm(props: Props) {
                       <button
                         onClick={async () => {
                           await remove({
-                            contactId: followedUser.userId,
+                            contactId: followedUser.id,
                             setIsLoadingRemove,
                           });
                         }}
