@@ -1,9 +1,19 @@
+import { cookies } from 'next/headers';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
+import { getUserBySessionToken } from '../database/users';
+import { UserEntity } from '../migrations/1686751602-createTableUsers';
 import styles from './page.module.scss';
 
-export default function Home() {
+export default async function Home() {
+  const cookieStore = cookies();
+  const sessionToken = cookieStore.get('sessionToken');
+
+  const user: UserEntity | undefined = !sessionToken?.value
+    ? undefined
+    : await getUserBySessionToken(sessionToken.value);
+
   return (
     <main>
       <section id="#" className={styles.heroContainer}>
@@ -22,9 +32,15 @@ export default function Home() {
             Unleash the power of shared interests and let your true self shine.
           </p>
           <div>
-            <Link className={styles.heroButton} href="/register">
-              Register
-            </Link>
+            {!user ? (
+              <Link className={styles.heroButton} href="/register">
+                Register
+              </Link>
+            ) : (
+              <Link className={styles.heroButton} href="/chat">
+                Go to chat
+              </Link>
+            )}
           </div>
         </div>
       </section>
