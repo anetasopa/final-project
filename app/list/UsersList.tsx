@@ -27,11 +27,12 @@ type FollowedProps = {
 
 export default function UsersLis({ result }: Props) {
   const [searchName, setSearchName] = useState('');
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [resultDynamic, setResultDynamic] = useState(result);
+  const [isLoading, setIsLoading] = useState<number>(0);
 
-  async function add({ followedUserId }: FollowedProps) {
+  async function add({ followedUserId, resultDynamic }: FollowedProps) {
     try {
-      setIsLoading(true);
+      setIsLoading(followedUserId);
       const response = await fetch('/api/contacts', {
         method: 'POST',
         body: JSON.stringify({ followedUserId }),
@@ -48,7 +49,20 @@ export default function UsersLis({ result }: Props) {
           console.log(data.user);
         }
 
-        setIsLoading(false);
+        const resultDynamicNew = resultDynamic.map((user) => {
+          return user.user.userId === followedUserId
+            ? {
+                ...user,
+                user: {
+                  ...user.user,
+                  isContact: true,
+                },
+              }
+            : user;
+        });
+
+        setResultDynamic(resultDynamicNew);
+        setIsLoading(0);
       }
     } catch (e) {
       console.log({ e });
@@ -56,7 +70,7 @@ export default function UsersLis({ result }: Props) {
   }
 
   function searchAndFilterArray() {
-    return result.filter((user) => {
+    return resultDynamic.filter((user) => {
       return user.user.username
         .toLowerCase()
         .includes(searchName.toLowerCase());
@@ -211,11 +225,14 @@ export default function UsersLis({ result }: Props) {
                       <div>
                         <button
                           onClick={async () => {
-                            await add({ followedUserId: user.user.id });
+                            await add({
+                              followedUserId: user.user.id,
+                              resultDynamic,
+                            });
                           }}
                           className={styles.buttonAdd}
                         >
-                          {isLoading ? (
+                          {isLoading === user.user.id ? (
                             <div className={styles.spinner}>
                               <p className={styles.loader}>Loading...</p>
                             </div>

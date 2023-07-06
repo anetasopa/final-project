@@ -50,14 +50,14 @@ interface RemoveParams {
 }
 
 async function remove({ contactId, setIsLoadingRemove }: RemoveParams) {
-  setIsLoadingRemove(0);
+  setIsLoadingRemove(contactId);
   try {
     const response = await fetch(`/api/contacts/${contactId}`, {
       method: 'DELETE',
       body: JSON.stringify({ contactId }),
     });
 
-    setIsLoadingRemove(contactId);
+    setIsLoadingRemove(0);
 
     if (response.status !== 500) {
       const data: CreateResponseBodyDelete = await response.json();
@@ -376,6 +376,7 @@ export default function ProfileForm(props: Props) {
             </div>
           </li>
           {userContactsProps.map((followedUser) => {
+            console.log({ followedUser });
             return (
               <div key={`user-${followedUser.id}`}>
                 <li className={styles.tableRow}>
@@ -400,7 +401,9 @@ export default function ProfileForm(props: Props) {
                     data-label="Username"
                   >
                     <div className={styles.categoriesContainer}>
-                      <Link href="/chat">{followedUser.username}</Link>
+                      <Link href="/chat">
+                        {followedUser.username} + Id: {followedUser.userId}
+                      </Link>
                     </div>
                   </div>
                   <div
@@ -485,13 +488,13 @@ export default function ProfileForm(props: Props) {
                       <button
                         onClick={async () => {
                           await remove({
-                            contactId: followedUser.id,
+                            contactId: followedUser.userId,
                             setIsLoadingRemove,
                           });
                         }}
                         className={styles.buttonDelete}
                       >
-                        {isLoadingRemove === followedUser.id ? (
+                        {isLoadingRemove === followedUser.userId ? (
                           <div className={styles.spinner2}>
                             <p className={styles.loader2}>Loading...</p>
                           </div>
