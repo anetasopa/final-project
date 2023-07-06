@@ -12,7 +12,11 @@ export type UserWithPasswordHash = {
   passwordHash: string;
 };
 
-export type UserWithCategory = {
+type Props = {
+  userId: number;
+};
+
+export type UserWithCategory = Props & {
   id: number;
   username: string;
   email: string;

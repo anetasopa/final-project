@@ -26,7 +26,7 @@ type Props = {
 };
 
 type SaveProps = {
-  setSelectedOption: (value: Category[]) => void;
+  setSelectedOption: () => void;
   setUserCategories: (value: Category[]) => void;
   setImageUrl: (value: string) => void;
   setShowInput: (value: boolean) => void;
@@ -401,9 +401,7 @@ export default function ProfileForm(props: Props) {
                     data-label="Username"
                   >
                     <div className={styles.categoriesContainer}>
-                      <Link href="/chat">
-                        {followedUser.username} + Id: {followedUser.userId}
-                      </Link>
+                      <Link href="/chat">{followedUser.username}</Link>
                     </div>
                   </div>
                   <div
