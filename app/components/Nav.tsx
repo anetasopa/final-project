@@ -40,14 +40,16 @@ export default function Nav({ user, singleUserData }: Props) {
         <div className={`${styles.nav} ${isOpen ? styles[`navOpen`] : {}}`}>
           <ul className={styles.navLinks}>
             {links.map((link) => (
-              <Link href={link.link} key={`key-${link.id}`}>
-                <li>{link.title}</li>
-              </Link>
+              <li key={`link-${link.id}`}>
+                <Link href={link.link} key={`key-${link.id}`}>
+                  {link.title}
+                </Link>
+              </li>
             ))}
           </ul>
         </div>
         <button onClick={handleMenuToggle} className={styles.hamburgerIcon}>
-          {isOpen ? <RxHamburgerMenu /> : <CgClose />}
+          {!isOpen ? <RxHamburgerMenu /> : <CgClose />}
         </button>
 
         <div>

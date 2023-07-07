@@ -84,10 +84,6 @@
   }
 }
 
-// .index {
-//   z-index: 10;
-// }
-
 .buttonRegister {
   align-items: center;
   margin-left: 5px;
@@ -139,12 +135,12 @@
     left: -100%;
     top: 0%;
     height: 100vh;
-    width: 100vh;
+    // width: 100vh;
+    padding: 60px;
     z-index: 3;
     display: flex;
     align-items: flex-start;
     justify-content: flex-start;
-    // padding: 80px 0px 0px 50px;
 
     &Open {
       transition: 0.5s ease-in-in;
@@ -153,26 +149,31 @@
   }
 
   .navLinks {
-    display: flex;
+    // display: flex;
     font-weight: 200;
     justify-content: center;
-    gap: 20px;
 
     @media screen and (max-width: 480px) {
+      gap: 50px;
+      height: 100vh;
       flex-direction: column;
       text-align: left;
       border: none;
       font-size: 1.5rem;
-      margin-top: 70px;
-      margin-left: 50px;
+      margin-left: 100px;
       background: white;
-      padding: 0 50px 50px 30px;
+      width: 100vw;
+      padding-top: 100px;
+      display: inline-grid;
+      grid-template-rows: 10px 10px 10px 100%;
+      position: absolute;
     }
 
     li {
       display: inline-block;
       position: relative;
       transition: color 0.3s ease;
+      font-size: 1rem;
 
       &:hover {
         color: var(--main-accent-color);
