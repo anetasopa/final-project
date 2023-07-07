@@ -343,10 +343,14 @@ export default function ProfileForm(props: Props) {
           )}
         </form>
       </div>
-      <Link className={styles.link} href="/list">
+      {/* <Link className={styles.link} href="/list">
         Go to list...
-      </Link>
+      </Link> */}
 
+      <Link className={styles.link} href="/list">
+        Find additional contact...
+      </Link>
+      <h3 className={styles.contactList}>Your contact list</h3>
       <div className={styles.container}>
         <ul className={styles.responsiveTable}>
           <li className={styles.tableHeader}>
