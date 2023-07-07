@@ -75,12 +75,12 @@
     .categoriesContainer {
       display: block;
       text-align: center;
+    }
 
-      @media (max-width: 480px) {
-        .categoriesContainer {
-          text-align: left;
-          width: 140px;
-        }
+    @media (max-width: 480px) {
+      .categoriesContainer {
+        text-align: left;
+        width: 140px;
       }
     }
 
