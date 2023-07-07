@@ -37,7 +37,7 @@ export default function Profile({
       </div>
 
       <button className={styles.mobileButton} onClick={toggleMobileMenu}>
-        {!isMobileMenuOpen ? <p>Show List</p> : <p>Hide List</p>}
+        {isMobileMenuOpen ? <p>Show List</p> : <p>Hide List</p>}
       </button>
     </div>
   );
