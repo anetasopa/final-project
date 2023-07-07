@@ -30,6 +30,13 @@
     }
   }
 
+  @media (max-width: 480px) {
+    .uploadContainer {
+      margin-top: 0;
+      margin-left: -3px;
+    }
+  }
+
   .upload {
     display: none;
   }
