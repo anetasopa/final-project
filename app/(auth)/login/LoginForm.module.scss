@@ -76,7 +76,7 @@
       padding: 10px 30px;
       font-size: 1.125rem;
       border: 1px solid var(--primary-text-color);
-      width: 100%;
+      width: auto;
     }
 
     input:focus {
@@ -116,13 +116,13 @@
 
 .spinner {
   padding: 5px 10px;
+  position: relative;
 
   .loader {
-    color: var(--primary-accent-color);
+    margin: auto;
     font-size: 3px;
     width: 5px;
     height: 5px;
-    margin-left: 120px;
     border-radius: 50%;
     position: relative;
     text-indent: -9999em;

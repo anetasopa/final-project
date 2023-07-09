@@ -51,84 +51,92 @@ export default function LoginForm() {
 
   return (
     <div className={styles.containerLogIn}>
-      <Link href="/">
-        <div className={styles.closeIcon}>
-          <IoMdClose />
-        </div>
-      </Link>
-      <div>
-        <p className={styles.textAccount}>Account</p>
-        <div className={styles.buttons}>
-          <Link
-            onClick={handleClick}
-            style={{ color: linkClicked ? '#6bd9ec' : 'inherit' }}
-            className={styles.link}
-            href="/login"
-          >
-            Login
-          </Link>
-          <Link
-            className={`${styles.link} ${styles.buttonRight}`}
-            href="/register"
-          >
-            Register
-          </Link>
-        </div>
-      </div>
-      <form
-        className={styles.form}
-        onSubmit={(event) => event.preventDefault()}
-        id="login"
-      >
-        <label htmlFor="email">User name</label>
-        <input
-          data-test-id="login-username"
-          id="username"
-          value={username}
-          onChange={(event) => setUsername(event.currentTarget.value)}
-          required
-        />
-        {error !== '' && (
-          <div className={styles.errorContainer}>
-            <p className={styles.errorMessage}>{error}</p>{' '}
-            <FaExclamationCircle className={styles.icon} />
-          </div>
-        )}
-        <label htmlFor="password">Password</label>
+      {isLoggedIn ? (
         <div>
-          <input
-            data-test-id="login-password"
-            type="password"
-            id="password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-            required
-          />
-          {error !== '' && (
-            <div className={styles.errorContainer}>
-              <p className={styles.errorMessage}>{error}</p>{' '}
-              <FaExclamationCircle className={styles.icon} />
-            </div>
-          )}
+          <p>
+            You logged in successfully! You will be redirected to your profile
+            page in few seconds.
+          </p>
         </div>
-        {isLoggedIn ? <div className={styles.isRegisteredContainer}>
-          <p>You logged in successfully! You will be redirected to your profile page in few seconds.</p>
-        </div> : null}
-        <button
-          className={styles.buttonLogIn}
-          onClick={async () => {
-            await login();
-          }}
-        >
-          {isLoading ? (
-            <div className={styles.spinner}>
-              <p className={styles.loader}>Loading...</p>
+      ) : (
+        <>
+          <Link href="/">
+            <div className={styles.closeIcon}>
+              <IoMdClose />
             </div>
-          ) : (
-            <p>Log In</p>
-          )}
-        </button>
-      </form>
+          </Link>
+          <div>
+            <p className={styles.textAccount}>Account</p>
+            <div className={styles.buttons}>
+              <Link
+                onClick={handleClick}
+                style={{ color: linkClicked ? '#6bd9ec' : 'inherit' }}
+                className={styles.link}
+                href="/login"
+              >
+                Login
+              </Link>
+              <Link
+                className={`${styles.link} ${styles.buttonRight}`}
+                href="/register"
+              >
+                Register
+              </Link>
+            </div>
+          </div>
+          <form
+            className={styles.form}
+            onSubmit={(event) => event.preventDefault()}
+            id="login"
+          >
+            <label htmlFor="email">User name</label>
+            <input
+              data-test-id="login-username"
+              id="username"
+              value={username}
+              onChange={(event) => setUsername(event.currentTarget.value)}
+              required
+            />
+            {error !== '' && (
+              <div className={styles.errorContainer}>
+                <p className={styles.errorMessage}>{error}</p>{' '}
+                <FaExclamationCircle className={styles.icon} />
+              </div>
+            )}
+            <label htmlFor="password">Password</label>
+            <div>
+              <input
+                data-test-id="login-password"
+                type="password"
+                id="password"
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+                required
+              />
+              {error !== '' && (
+                <div className={styles.errorContainer}>
+                  <p className={styles.errorMessage}>{error}</p>{' '}
+                  <FaExclamationCircle className={styles.icon} />
+                </div>
+              )}
+            </div>
+            <button
+              className={styles.buttonLogIn}
+              onClick={async () => {
+                await login();
+              }}
+            >
+              {isLoading ? (
+                <div className={styles.spinner}>
+                  <div className={styles.loader} />
+                </div>
+              ) : (
+                <p>Log In</p>
+              )}
+            </button>
+          </form>
+        </>
+      )}
     </div>
   );
 }

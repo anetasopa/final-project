@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { CgClose } from 'react-icons/cg';
 import { RxHamburgerMenu } from 'react-icons/rx';
@@ -29,6 +30,7 @@ const links: LinkObj[] = [
 
 export default function Nav({ user, singleUserData }: Props) {
   const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
 
   const handleMenuToggle = () => {
     setIsOpen(!isOpen);
@@ -73,7 +75,12 @@ export default function Nav({ user, singleUserData }: Props) {
                 className={styles.profileImage}
               />
             </Link>
-            <LogoutButton logout={logout} />
+            <LogoutButton
+              logout={async () => {
+                await logout();
+                await router.push('/');
+              }}
+            />
           </>
         ) : (
           <Link className={styles.buttonRegister} href="/register">
