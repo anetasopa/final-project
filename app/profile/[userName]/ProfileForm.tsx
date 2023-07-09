@@ -51,13 +51,20 @@ interface RemoveParams {
   setIsLoadingRemove: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const findNewContactsLink = () => <div className={styles.newContactLinkContainer}>
-  <Link className={styles.link} href="/list">
-    Find new contacts...
-  </Link>
-</div>
+const findNewContactsLink = () => (
+  <div className={styles.newContactLinkContainer}>
+    <Link className={styles.link} href="/list">
+      Find new contacts...
+    </Link>
+  </div>
+);
 
-async function remove({ setUserContacts, userContacts, contactId, setIsLoadingRemove }: RemoveParams) {
+async function remove({
+  setUserContacts,
+  userContacts,
+  contactId,
+  setIsLoadingRemove,
+}: RemoveParams) {
   setIsLoadingRemove(contactId);
   try {
     const response = await fetch(`/api/contacts/${contactId}`, {
@@ -74,7 +81,7 @@ async function remove({ setUserContacts, userContacts, contactId, setIsLoadingRe
       }
 
       const userContactsNew = userContacts.filter((user) => {
-        return user.userId !== contactId
+        return user.userId !== contactId;
       });
 
       setUserContacts(userContactsNew);
@@ -85,7 +92,7 @@ async function remove({ setUserContacts, userContacts, contactId, setIsLoadingRe
 }
 
 async function save({
-    uploadImageOnly,
+  uploadImageOnly,
   setSelectedOption,
   setUserCategories,
   setImageUrl,
@@ -213,10 +220,10 @@ export default function ProfileForm(props: Props) {
         body: formData,
       },
     )
-        .then((r) => r.json())
-        .catch((error) => {console.log({error})})
-    ;
-
+      .then((r) => r.json())
+      .catch((error) => {
+        console.log({ error });
+      });
     setImageUrl(data.secure_url);
     setUploadData(data);
   }
@@ -236,21 +243,7 @@ export default function ProfileForm(props: Props) {
         <LoadImage
           handleOnChange={async (changeEvent) => {
             setIsImageUploaded(true);
-
             await handleOnChange(changeEvent);
-            await save({
-              uploadImageOnly: true,
-              setSelectedOption,
-              setUserCategories,
-              setImageUrl,
-              setShowInput,
-              setIsLoading,
-              imageUrl,
-              idSelectedCategories,
-              userId,
-              nickname,
-              description,
-            });
             setIsImageUploaded(false);
           }}
           showInput={showInput}
@@ -382,10 +375,12 @@ export default function ProfileForm(props: Props) {
               Delete
             </div>
           </li>
-          {userContacts.length === 0 ? <div>
-            <p>No contacts yet</p>
-            {findNewContactsLink()}
-          </div> : null}
+          {userContacts.length === 0 ? (
+            <div>
+              <p>No contacts yet</p>
+              {findNewContactsLink()}
+            </div>
+          ) : null}
           {userContacts.map((followedUser) => {
             return (
               <div key={`user-${followedUser.id}`}>
@@ -522,10 +517,7 @@ export default function ProfileForm(props: Props) {
           })}
         </ul>
       </div>
-      {userContacts.length > 0 ? <div>
-        {findNewContactsLink()}
-      </div> : null}
+      {userContacts.length > 0 ? <div>{findNewContactsLink()}</div> : null}
     </div>
   );
 }
-
