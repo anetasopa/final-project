@@ -79,6 +79,7 @@ export default function Nav({ user, singleUserData }: Props) {
               logout={async () => {
                 await logout();
                 await router.push('/');
+                await router.refresh();
               }}
             />
           </>
