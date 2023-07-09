@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { IoMdClose } from 'react-icons/io';
 import { RegisterResponseBodyPost } from '../../api/(auth)/register/route';
 import styles from './RegisterForm.module.scss';
+import {useRouter} from "next/navigation";
 
 type ZodError = {
   field?: string | number;
@@ -17,7 +18,9 @@ export default function RegisterForm() {
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState<string | ZodError[]>('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isRegistered, setIsRegistered] = useState(false);
   const [linkClicked, setLinkClicked] = useState(false);
+  const router = useRouter();
 
   async function register() {
     setIsLoading(true);
@@ -35,26 +38,26 @@ export default function RegisterForm() {
 
       if (Array.isArray(data.errors)) {
         const pathToCollect = data.errors;
-        console.log(pathToCollect);
         const zodErrors = pathToCollect.map((entry) => {
           return { field: entry.path[0], message: entry.message };
         });
-        console.log(zodErrors[0]?.message);
 
         setErrors(zodErrors);
       }
+      setIsLoading(false);
+
       return;
     }
 
     if ('user' in data) {
       setErrors('');
+      setIsRegistered(true);
     }
 
     setIsLoading(false);
-    // router.refresh();
-    // setUsername('');
-    // setEmail('');
-    // setPassword('');
+    setUsername('');
+    setEmail('');
+    setPassword('');
   }
 
   const handleClick = () => {
@@ -133,30 +136,34 @@ export default function RegisterForm() {
           </div>
         )}
         <label htmlFor="password">Password</label>
-        <div>
-          <input
-            data-test-id="register-password"
-            type="password"
-            id="password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-          />
-          {typeof errors !== 'string' && (
-            <div className={styles.errorContainer}>
-              {errors
-                .filter((error) => error.field === 'password')
-                .map((error) => (
-                  <div
-                    key={`error-${error.message}`}
-                    className={styles.errorMessage}
-                  >
-                    <p>{error.message}</p>
-                    {/* <FaExclamationCircle className={styles.icon} /> */}
-                  </div>
-                ))}
-            </div>
-          )}
-        </div>
+        <input
+          data-test-id="register-password"
+          type="password"
+          id="password"
+          value={password}
+          onChange={(event) => setPassword(event.target.value)}
+        />
+        {typeof errors !== 'string' && (
+          <div className={styles.errorContainer}>
+            {errors
+              .filter((error) => error.field === 'password')
+              .map((error) => (
+                <div
+                  key={`error-${error.message}`}
+                  className={styles.errorMessage}
+                >
+                  <p>{error.message}</p>
+                  {/* <FaExclamationCircle className={styles.icon} /> */}
+                </div>
+              ))}
+          </div>
+        )}
+        {isRegistered ? <div className={styles.isRegisteredContainer}>
+          <p>You registered successfully! Got to login page</p>
+          <Link className={styles.loginPageLink} href="/login">
+            Login
+          </Link>
+        </div> : null}
         <button
           className={styles.buttonRegister}
           onClick={async () => {
@@ -165,11 +172,13 @@ export default function RegisterForm() {
         >
           {isLoading ? (
             <div className={styles.spinner}>
-              <p className={styles.loader}>Loading...</p>
+              <div className={styles.loader} />
             </div>
           ) : (
             <p>Register</p>
           )}
+
+
         </button>
       </form>
     </div>

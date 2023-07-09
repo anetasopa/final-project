@@ -15,7 +15,7 @@ export default async function Home() {
     : await getUserBySessionToken(sessionToken.value);
 
   return (
-    <main>
+    <main className={styles.mainContainer}>
       <section id="#" className={styles.heroContainer}>
         <Image
           className={styles.image}

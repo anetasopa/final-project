@@ -1,13 +1,15 @@
 'use client';
 
 import styles from './LoadImage.module.scss';
+import React from "react";
+import Spinner from "../../spinner";
 
 type Props = {
   handleOnChange: (changeEvent: any) => Promise<void>;
   showInput: boolean;
 };
 
-export function LoadImage({ handleOnChange, showInput }: Props) {
+export function LoadImage({ handleOnChange, showInput, isImageUploaded }: Props) {
   return (
     <div>
       {!showInput ? (
@@ -15,11 +17,10 @@ export function LoadImage({ handleOnChange, showInput }: Props) {
           className={styles.form}
           method="post"
           onChange={handleOnChange}
-          // onSubmit={handleOnSubmit}
         >
           <div className={styles.uploadContainer}>
             <label className={styles.uploadContainer} htmlFor="image">
-              Upload
+              {isImageUploaded ? 'Uploading...': 'Upload'}
             </label>
             <input
               className={styles.upload}

@@ -89,7 +89,8 @@
 .messages {
   padding-right: 30px;
   flex: 1;
-  overflow-y: auto;
+  height: 630px;
+  overflow-y: scroll;
 }
 
 .list.mobileOpen {

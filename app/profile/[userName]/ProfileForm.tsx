@@ -45,11 +45,19 @@ interface CategoriesOption {
 }
 
 interface RemoveParams {
+  setUserContacts: () => void;
+  userContacts: UserWithCategory[];
   contactId: number;
   setIsLoadingRemove: React.Dispatch<React.SetStateAction<number>>;
 }
 
-async function remove({ contactId, setIsLoadingRemove }: RemoveParams) {
+const findNewContactsLink = () => <div className={styles.newContactLinkContainer}>
+  <Link className={styles.link} href="/list">
+    Find new contacts...
+  </Link>
+</div>
+
+async function remove({ setUserContacts, userContacts, contactId, setIsLoadingRemove }: RemoveParams) {
   setIsLoadingRemove(contactId);
   try {
     const response = await fetch(`/api/contacts/${contactId}`, {
@@ -61,14 +69,15 @@ async function remove({ contactId, setIsLoadingRemove }: RemoveParams) {
 
     if (response.status !== 500) {
       const data: CreateResponseBodyDelete = await response.json();
-
       if ('error' in data) {
-        console.log(data.error);
+        return alert('Could not remove user from the contact list');
       }
 
-      if ('user' in data) {
-        console.log(data.user);
-      }
+      const userContactsNew = userContacts.filter((user) => {
+        return user.userId !== contactId
+      });
+
+      setUserContacts(userContactsNew);
     }
   } catch (e) {
     console.log({ e });
@@ -76,6 +85,7 @@ async function remove({ contactId, setIsLoadingRemove }: RemoveParams) {
 }
 
 async function save({
+    uploadImageOnly,
   setSelectedOption,
   setUserCategories,
   setImageUrl,
@@ -87,9 +97,11 @@ async function save({
   nickname,
   description,
 }: SaveProps) {
-  setShowInput(true);
+  setShowInput(false);
   try {
-    setIsLoading(true);
+    if (!uploadImageOnly) {
+      setIsLoading(true);
+    }
     const response = await fetch(`/api/users/${userId}`, {
       method: 'PUT',
       body: JSON.stringify({
@@ -101,7 +113,12 @@ async function save({
       }),
     });
 
-    setIsLoading(false);
+    setTimeout(() => {
+      if (!uploadImageOnly) {
+        setIsLoading(false);
+        setShowInput(true);
+      }
+    }, 500);
 
     if (response.status !== 500) {
       const data: CreateResponseBodyPut = await response.json();
@@ -128,6 +145,7 @@ export default function ProfileForm(props: Props) {
   const userCategoriesProps = props.userCategories;
   const userContactsProps = props.userContacts;
 
+  const [userContacts, setUserContacts] = useState(userContactsProps);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingRemove, setIsLoadingRemove] = useState<number>(0);
   const [selectedOption, setSelectedOption] = useState<
@@ -164,6 +182,7 @@ export default function ProfileForm(props: Props) {
     singleUserData.imageUrl ? singleUserData.imageUrl : '',
   );
   const [uploadData, setUploadData] = useState();
+  const [isImageUploaded, setIsImageUploaded] = useState(false);
 
   console.log({ uploadData });
 
@@ -193,45 +212,15 @@ export default function ProfileForm(props: Props) {
         method: 'POST',
         body: formData,
       },
-    ).then((r) => r.json());
+    )
+        .then((r) => r.json())
+        .catch((error) => {console.log({error})})
+    ;
 
     setImageUrl(data.secure_url);
     setUploadData(data);
   }
 
-  // async function handleOnSubmit(event: any) {
-  //   event.preventDefault();
-
-  //   const form = event.currentTarget;
-  //   const fileInput = Array.from(form.elements).find(
-  //     ({ name }) => name === 'file',
-  //   );
-
-  //   const formData = new FormData();
-
-  //   for (const file of fileInput.files) {
-  //     formData.append('file', file);
-  //   }
-
-  //   formData.append('upload_preset', 'my-uploads');
-
-  //   const data = await fetch(
-  //     'https://api.cloudinary.com/v1_1/dkanovye3/image/upload',
-  //     {
-  //       method: 'POST',
-  //       body: formData,
-  //     },
-  //   ).then((r) => r.json());
-
-  //   setImageUrl(data.secure_url);
-  //   setUploadData(data);
-  // }
-
-  useEffect(() => {
-    setIsLoading(false);
-  }, []);
-
-  //
   return (
     <div>
       <div className={styles.profileContainer}>
@@ -245,11 +234,27 @@ export default function ProfileForm(props: Props) {
           />
         </div>
         <LoadImage
-          handleOnChange={handleOnChange}
-          // handleOnSubmit={handleOnSubmit}
-          // imageUrl={imageUrl}
-          // uploadData={uploadData}
+          handleOnChange={async (changeEvent) => {
+            setIsImageUploaded(true);
+
+            await handleOnChange(changeEvent);
+            await save({
+              uploadImageOnly: true,
+              setSelectedOption,
+              setUserCategories,
+              setImageUrl,
+              setShowInput,
+              setIsLoading,
+              imageUrl,
+              idSelectedCategories,
+              userId,
+              nickname,
+              description,
+            });
+            setIsImageUploaded(false);
+          }}
           showInput={showInput}
+          isImageUploaded={isImageUploaded}
         />
         <form
           className={styles.form}
@@ -312,6 +317,7 @@ export default function ProfileForm(props: Props) {
               className={styles.buttonCreate}
               onClick={async () => {
                 await save({
+                  uploadImageOnly: false,
                   setSelectedOption,
                   setUserCategories,
                   setImageUrl,
@@ -327,7 +333,7 @@ export default function ProfileForm(props: Props) {
             >
               {isLoading ? (
                 <div className={styles.spinner}>
-                  <p className={styles.loader}>Loading...</p>
+                  <div className={styles.loader} />
                 </div>
               ) : (
                 <p>Save</p>
@@ -347,9 +353,6 @@ export default function ProfileForm(props: Props) {
         Go to list...
       </Link> */}
 
-      <Link className={styles.link} href="/list">
-        Find additional contact...
-      </Link>
       <h3 className={styles.contactList}>Your contact list</h3>
       <div className={styles.container}>
         <ul className={styles.responsiveTable}>
@@ -379,8 +382,11 @@ export default function ProfileForm(props: Props) {
               Delete
             </div>
           </li>
-          {userContactsProps.map((followedUser) => {
-            console.log({ followedUser });
+          {userContacts.length === 0 ? <div>
+            <p>No contacts yet</p>
+            {findNewContactsLink()}
+          </div> : null}
+          {userContacts.map((followedUser) => {
             return (
               <div key={`user-${followedUser.id}`}>
                 <li className={styles.tableRow}>
@@ -490,6 +496,8 @@ export default function ProfileForm(props: Props) {
                       <button
                         onClick={async () => {
                           await remove({
+                            setUserContacts,
+                            userContacts,
                             contactId: followedUser.userId,
                             setIsLoadingRemove,
                           });
@@ -514,6 +522,10 @@ export default function ProfileForm(props: Props) {
           })}
         </ul>
       </div>
+      {userContacts.length > 0 ? <div>
+        {findNewContactsLink()}
+      </div> : null}
     </div>
   );
 }
+

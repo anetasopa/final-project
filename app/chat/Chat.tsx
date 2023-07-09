@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { User } from '../../migrations/1686751602-createTableUsers';
 import styles from './Chat.module.scss';
 import { FirebaseMessage } from './ChatForm';
+import {useEffect, useState} from "react";
 
 type Props = {
   messages: FirebaseMessage[];
@@ -70,11 +71,24 @@ export default function Chat({
   userContacts,
   userData,
 }: Props) {
+  const [messagesEnd, setMessagesEnd] = useState();
+  const scrollToBottom = () => {
+    messagesEnd?.scrollIntoView({ behavior: "smooth" });
+  }
+
+  useEffect(() => {
+    console.log({messagesEnd})
+    scrollToBottom();
+  }, [messagesEnd, messages]);
+
   return (
     <div className={styles.messages}>
       {messages.map((message) =>
         renderMessage({ message, userId, userContacts, userData, receiverId }),
       )}
+      <div style={{ float:"left", clear: "both" }}
+           ref={(el) => { setMessagesEnd(el) }}>
+      </div>
     </div>
   );
 }

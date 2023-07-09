@@ -13,6 +13,7 @@ export default function LoginForm() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string>('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [linkClicked, setLinkClicked] = useState(false);
   const router = useRouter();
 
@@ -33,14 +34,15 @@ export default function LoginForm() {
     }
 
     if ('user' in data) {
+      setIsLoggedIn(true);
       router.push(`profile/${data.user.username}`);
       router.refresh();
     }
 
     setIsLoading(false);
 
-    // setUsername('');
-    // setPassword('');
+    setUsername('');
+    setPassword('');
   }
 
   const handleClick = () => {
@@ -109,6 +111,9 @@ export default function LoginForm() {
             </div>
           )}
         </div>
+        {isLoggedIn ? <div className={styles.isRegisteredContainer}>
+          <p>You logged in successfully! You will be redirected to your profile page in few seconds.</p>
+        </div> : null}
         <button
           className={styles.buttonLogIn}
           onClick={async () => {
