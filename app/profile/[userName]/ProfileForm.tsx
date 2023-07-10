@@ -52,11 +52,9 @@ interface RemoveParams {
 }
 
 const findNewContactsLink = () => (
-  <div className={styles.newContactLinkContainer}>
-    <Link className={styles.link} href="/list">
-      Find new contacts...
-    </Link>
-  </div>
+  <Link className={styles.link} href="/list">
+    Find new contacts...
+  </Link>
 );
 
 async function remove({
