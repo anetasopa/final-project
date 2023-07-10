@@ -169,21 +169,6 @@
       position: absolute;
     }
 
-    li {
-      display: inline-block;
-      position: relative;
-      transition: color 0.3s ease;
-      font-size: 1rem;
-
-      &:hover {
-        color: var(--main-accent-color);
-      }
-
-      &:hover::before {
-        transform: scaleX(1);
-      }
-    }
-
     // li::after {
     //   content: '';
     //   position: absolute;
@@ -206,6 +191,21 @@
     //   transform: scaleX(1);
     //   transform-origin: bottom left;
     // }
+  }
+
+  .li {
+    display: inline-block;
+    position: relative;
+    transition: color 0.3s ease;
+    font-size: 1rem;
+
+    &:hover {
+      color: var(--main-accent-color);
+    }
+
+    &:hover::before {
+      transform: scaleX(1);
+    }
   }
 }
 

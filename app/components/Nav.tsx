@@ -42,11 +42,13 @@ export default function Nav({ user, singleUserData }: Props) {
         <div className={`${styles.nav} ${isOpen ? styles[`navOpen`] : {}}`}>
           <ul className={styles.navLinks}>
             {links.map((link) => (
-              <li key={`link-${link.id}`}>
-                <Link href={link.link} key={`key-${link.id}`}>
-                  {link.title}
-                </Link>
-              </li>
+              <Link
+                className={styles.li}
+                href={link.link}
+                key={`key-${link.id}`}
+              >
+                <li key={`link-${link.id}`}>{link.title}</li>
+              </Link>
             ))}
           </ul>
         </div>
