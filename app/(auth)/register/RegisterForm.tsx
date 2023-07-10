@@ -1,11 +1,11 @@
 'use client';
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { IoMdClose } from 'react-icons/io';
 import { RegisterResponseBodyPost } from '../../api/(auth)/register/route';
 import styles from './RegisterForm.module.scss';
-import {useRouter} from "next/navigation";
 
 type ZodError = {
   field?: string | number;
@@ -158,12 +158,17 @@ export default function RegisterForm() {
               ))}
           </div>
         )}
-        {isRegistered ? <div className={styles.isRegisteredContainer}>
-          <p>You registered successfully! Got to login page</p>
-          <Link className={styles.loginPageLink} href="/login">
-            Login
-          </Link>
-        </div> : null}
+        {isRegistered ? (
+          <div className={styles.isRegisteredContainer}>
+            <div>
+              <p>You registered successfully!</p>
+              <p>Got to login page...</p> <br />
+            </div>
+            <Link className={styles.loginPageLink} href="/login">
+              Login
+            </Link>
+          </div>
+        ) : null}
         <button
           className={styles.buttonRegister}
           onClick={async () => {
@@ -177,8 +182,6 @@ export default function RegisterForm() {
           ) : (
             <p>Register</p>
           )}
-
-
         </button>
       </form>
     </div>

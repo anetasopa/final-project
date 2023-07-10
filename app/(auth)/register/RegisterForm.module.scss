@@ -1,11 +1,15 @@
 .isRegisteredContainer {
   text-align: center;
+  color: #42ba96;
 
-  .loginPageLink{
-    color: blue;
+  div {
+    font-weight: bold;
+  }
+
+  .loginPageLink {
+    color: var(--main-accent-color);
   }
 }
-
 
 .containerSignUp {
   display: flex;
@@ -143,10 +147,10 @@
 
 .spinner {
   padding: 5px 10px;
-  position : relative;
+  position: relative;
 
   .loader {
-    margin : auto;
+    margin: auto;
     font-size: 3px;
     width: 5px;
     height: 5px;
