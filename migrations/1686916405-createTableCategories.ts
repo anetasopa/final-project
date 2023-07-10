@@ -21,3 +21,5 @@ export async function down(sql: Sql) {
     DROP TABLE categories
   `;
 }
+
+DELETE FROM categories;
