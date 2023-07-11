@@ -95,6 +95,7 @@ export default function RegisterForm() {
       >
         <label htmlFor="userName">User name</label>
         <input
+          autoComplete="off"
           data-test-id="register-username"
           id="userName"
           value={username}
@@ -114,6 +115,7 @@ export default function RegisterForm() {
         )}
         <label htmlFor="email">Email Address</label>
         <input
+          autoComplete="off"
           data-test-id="register-email"
           id="email"
           value={email}
@@ -137,6 +139,7 @@ export default function RegisterForm() {
         )}
         <label htmlFor="password">Password</label>
         <input
+          autoComplete="off"
           data-test-id="register-password"
           type="password"
           id="password"

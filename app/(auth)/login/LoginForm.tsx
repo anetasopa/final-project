@@ -91,6 +91,7 @@ export default function LoginForm() {
           >
             <label htmlFor="email">User name</label>
             <input
+              autoComplete="off"
               data-test-id="login-username"
               id="username"
               value={username}
@@ -106,6 +107,7 @@ export default function LoginForm() {
             <label htmlFor="password">Password</label>
             <div>
               <input
+                autoComplete="off"
                 data-test-id="login-password"
                 type="password"
                 id="password"
