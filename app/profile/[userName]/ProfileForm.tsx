@@ -26,7 +26,7 @@ type Props = {
 };
 
 type SaveProps = {
-  setSelectedOption: () => void;
+  setSelectedOption: (value: CategoriesOption[]) => void;
   setUserCategories: (value: Category[]) => void;
   setImageUrl: (value: string) => void;
   setShowInput: (value: boolean) => void;
@@ -45,7 +45,7 @@ interface CategoriesOption {
 }
 
 interface RemoveParams {
-  setUserContacts: () => void;
+  setUserContacts: (value: UserWithCategory[]) => void;
   userContacts: UserWithCategory[];
   contactId: number;
   setIsLoadingRemove: React.Dispatch<React.SetStateAction<number>>;
