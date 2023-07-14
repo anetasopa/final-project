@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { IoMdClose } from 'react-icons/io';
 import { RegisterResponseBodyPost } from '../../api/(auth)/register/route';
@@ -20,7 +19,6 @@ export default function RegisterForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [isRegistered, setIsRegistered] = useState(false);
   const [linkClicked, setLinkClicked] = useState(false);
-  const router = useRouter();
 
   async function register() {
     setIsLoading(true);
