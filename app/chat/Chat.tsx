@@ -1,8 +1,8 @@
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
 import { User } from '../../migrations/1686751602-createTableUsers';
 import styles from './Chat.module.scss';
 import { FirebaseMessage } from './ChatForm';
-import {useEffect, useState} from "react";
 
 type Props = {
   messages: FirebaseMessage[];
@@ -73,11 +73,11 @@ export default function Chat({
 }: Props) {
   const [messagesEnd, setMessagesEnd] = useState();
   const scrollToBottom = () => {
-    messagesEnd?.scrollIntoView({ behavior: "smooth" });
-  }
+    messagesEnd?.scrollIntoView({ behavior: 'smooth' });
+  };
 
   useEffect(() => {
-    console.log({messagesEnd})
+    console.log({ messagesEnd });
     scrollToBottom();
   }, [messagesEnd, messages]);
 
@@ -86,9 +86,12 @@ export default function Chat({
       {messages.map((message) =>
         renderMessage({ message, userId, userContacts, userData, receiverId }),
       )}
-      <div style={{ float:"left", clear: "both" }}
-           ref={(el) => { setMessagesEnd(el) }}>
-      </div>
+      <div
+        style={{ float: 'left', clear: 'both' }}
+        ref={(el) => {
+          setMessagesEnd(el);
+        }}
+      />
     </div>
   );
 }
