@@ -22,4 +22,4 @@ export async function down(sql: Sql) {
   `;
 }
 
-DELETE FROM categories;
+// DELETE FROM categories;
