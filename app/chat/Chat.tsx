@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { User } from '../../migrations/1686751602-createTableUsers';
 import styles from './Chat.module.scss';
 import { FirebaseMessage } from './ChatForm';
@@ -73,14 +73,18 @@ export default function Chat({
 }: Props) {
   const [messagesEnd, setMessagesEnd] = useState<HTMLDivElement | null>(null);
 
-  const scrollToBottom = () => {
+  // const scrollToBottom = () => {
+  //   messagesEnd?.scrollIntoView({ behavior: 'smooth' });
+  // };
+
+  const scrollToBottom = useCallback(() => {
     messagesEnd?.scrollIntoView({ behavior: 'smooth' });
-  };
+  }, [messagesEnd]);
 
   useEffect(() => {
     console.log({ messagesEnd });
     scrollToBottom();
-  }, [messagesEnd, messages]);
+  }, [messagesEnd, messages, scrollToBottom]);
 
   return (
     <div className={styles.messages}>
