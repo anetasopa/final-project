@@ -29,11 +29,33 @@ export default async function Profile() {
   const userId = user.id;
 
   const singleUserData = await getUsersById(userId);
-  const userCategories = await getUserCategories(userId);
+  // const userCategories = await getUserCategories(userId);
 
   if (!singleUserData) {
     notFound();
   }
+
+  const { nickname, description, imageUrl, username } = singleUserData;
+  const sanitizedUserData = {
+    nickname: nickname ?? '',
+    description: description ?? '',
+    imageUrl: imageUrl ?? '',
+    username: username,
+  };
+
+  type CategoryData = {
+    id: number;
+    value: string;
+    label: string;
+  };
+
+  const userCategoriesRaw: CategoryData[] = await getUserCategories(userId);
+
+  const userCategories: Category[] = userCategoriesRaw.map((categoryData) => ({
+    id: categoryData.id,
+    name: categoryData.value,
+    label: categoryData.label,
+  }));
 
   const userContacts: UserWithCategory[] = await getUserContacts(userId);
   const categories: Category[] = await getCategories();
@@ -54,7 +76,7 @@ export default async function Profile() {
       <div className={styles.info}>
         <div className={styles.dataUsernameContainer}>
           <ProfileForm
-            singleUserData={singleUserData}
+            singleUserData={sanitizedUserData}
             userId={userId}
             categories={categories}
             userCategories={userCategories}

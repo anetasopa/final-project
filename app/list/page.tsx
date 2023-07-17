@@ -6,12 +6,15 @@ import {
   getUsers2,
   getUsersById,
 } from '../../database/users';
-import { User } from '../../migrations/1686751602-createTableUsers';
+import {
+  RawUserData,
+  User,
+} from '../../migrations/1686751602-createTableUsers';
 import styles from './page.module.scss';
 import UsersList from './UsersList';
 
 type Props = {
-  users: User[];
+  users: RawUserData[];
   myUser: User | undefined;
 };
 

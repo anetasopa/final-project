@@ -17,6 +17,18 @@ export type User = {
   interests: Category[];
 };
 
+export type RawUserData = {
+  id: number;
+  userId: number;
+  description: string | null;
+  username: string;
+  nickname: string | null;
+  imageUrl: string | null;
+  isContact: boolean;
+  categories: Category[];
+  interests: Category[];
+};
+
 export type UserEntity = {
   id: number;
   username: string;
