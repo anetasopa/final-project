@@ -9,6 +9,7 @@ import { UserWithCategory } from '../../../database/users';
 import { Category } from '../../../migrations/1686916405-createTableCategories';
 import { CreateResponseBodyDelete } from '../../api/(auth)/contacts/[contactId]/route';
 import { CreateResponseBodyPut } from '../../api/(auth)/users/[userId]/route';
+import { selectedCategoriesId } from './idSelectedCategories';
 import { LoadImage } from './LoadImage';
 import styles from './ProfileForm.module.scss';
 
@@ -162,9 +163,12 @@ export default function ProfileForm(props: Props) {
     }),
   );
 
-  const idSelectedCategories: number[] = selectedOption.map(
-    (selected) => selected.id,
-  );
+  // export const idSelectedCategories: number[] = selectedOption.map(
+  //   (selected) => selected.id
+  // );
+
+  const idSelectedCategories = selectedCategoriesId(selectedOption);
+
   const [userCategories, setUserCategories] = useState(userCategoriesProps);
   const [nickname, setNickname] = useState(
     singleUserData.nickname ? singleUserData.nickname : '',

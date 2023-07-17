@@ -15,7 +15,7 @@ type Props = {
   myUser: User | undefined;
 };
 
-const usersWithSimilarInterests = ({ users, myUser }: Props) =>
+export const usersWithSimilarInterests = ({ users, myUser }: Props) =>
   users.map((user) => {
     const commonInterests = user.interests.filter((interest) =>
       myUser?.interests.includes(interest),
