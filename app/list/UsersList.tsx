@@ -31,7 +31,10 @@ export default function UsersLis({ result }: Props) {
   const [resultDynamic, setResultDynamic] = useState(result);
   const [isLoading, setIsLoading] = useState<number>(0);
 
-  async function add({ followedUserId, resultDynamic }: FollowedProps) {
+  async function add({
+    followedUserId,
+    resultDynamic: dynamicResult,
+  }: FollowedProps) {
     try {
       setIsLoading(followedUserId);
       const response = await fetch('/api/contacts', {
@@ -50,7 +53,7 @@ export default function UsersLis({ result }: Props) {
           console.log(data.user);
         }
 
-        const resultDynamicNew = resultDynamic.map((user: any) => {
+        const resultDynamicNew = dynamicResult.map((user: any) => {
           return user.user.userId === followedUserId
             ? {
                 ...user,
