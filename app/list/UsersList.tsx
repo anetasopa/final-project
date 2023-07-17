@@ -23,6 +23,7 @@ type Props = {
 
 type FollowedProps = {
   followedUserId: number;
+  resultDynamic: any;
 };
 
 export default function UsersLis({ result }: Props) {
@@ -49,7 +50,7 @@ export default function UsersLis({ result }: Props) {
           console.log(data.user);
         }
 
-        const resultDynamicNew = resultDynamic.map((user) => {
+        const resultDynamicNew = resultDynamic.map((user: any) => {
           return user.user.userId === followedUserId
             ? {
                 ...user,

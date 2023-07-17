@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { CiCircleRemove } from 'react-icons/ci';
 import Creatable from 'react-select';
 import { UserWithCategory } from '../../../database/users';
@@ -31,6 +31,7 @@ type SaveProps = {
   setImageUrl: (value: string) => void;
   setShowInput: (value: boolean) => void;
   setIsLoading: (value: boolean) => void;
+  uploadImageOnly: boolean;
   imageUrl: string;
   idSelectedCategories: number[];
   userId: number;
@@ -38,11 +39,11 @@ type SaveProps = {
   description: string;
 };
 
-interface CategoriesOption {
-  readonly id: number;
-  readonly value: string;
-  readonly label: string;
-}
+type CategoriesOption = {
+  id: number;
+  value?: string; // Make the 'value' property optional
+  label: string;
+};
 
 interface RemoveParams {
   setUserContacts: (value: UserWithCategory[]) => void;
