@@ -3,17 +3,17 @@ import { selectedCategoriesId } from '../../app/profile/[userName]/idSelectedCat
 
 const selectedOption = [{ id: 1 }, { id: 2 }, { id: 3 }];
 
-test('maps selectedOption to idSelectedCategories', () => {
+test('maps selectedOption to selectedCategoriesId', () => {
   const result = selectedCategoriesId(selectedOption);
   expect(result).toEqual([1, 2, 3]);
 });
 
-test('idSelectedCategories is an array', () => {
+test('selectedCategoriesId is an array', () => {
   const result = Array.isArray(selectedCategoriesId(selectedOption));
   expect(result).toBe(true);
 });
 
-test('idSelectedCategories length matches selectedOption length', () => {
+test('selectedCategoriesId length matches selectedOption length', () => {
   const result = selectedCategoriesId(selectedOption).length;
   expect(result).toBe(selectedOption.length);
 });
