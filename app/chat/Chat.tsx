@@ -71,7 +71,7 @@ export default function Chat({
   userContacts,
   userData,
 }: Props) {
-  const [messagesEnd, setMessagesEnd] = useState();
+  const [messagesEnd, setMessagesEnd] = useState<HTMLDivElement | null>(null);
 
   const scrollToBottom = () => {
     messagesEnd?.scrollIntoView({ behavior: 'smooth' });
@@ -90,7 +90,9 @@ export default function Chat({
       <div
         style={{ float: 'left', clear: 'both' }}
         ref={(el) => {
-          setMessagesEnd(el);
+          if (el) {
+            setMessagesEnd(el);
+          }
         }}
       />
     </div>
