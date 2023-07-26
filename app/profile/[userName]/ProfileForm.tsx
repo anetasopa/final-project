@@ -163,10 +163,6 @@ export default function ProfileForm(props: Props) {
     }),
   );
 
-  // export const idSelectedCategories: number[] = selectedOption.map(
-  //   (selected) => selected.id
-  // );
-
   const idSelectedCategories = selectedCategoriesId(selectedOption);
 
   const [userCategories, setUserCategories] = useState(userCategoriesProps);
@@ -345,10 +341,6 @@ export default function ProfileForm(props: Props) {
           )}
         </form>
       </div>
-      {/* <Link className={styles.link} href="/list">
-        Go to list...
-      </Link> */}
-
       <h3 className={styles.contactList}>Your contact list</h3>
       <div className={styles.container}>
         <ul className={styles.responsiveTable}>
@@ -368,12 +360,6 @@ export default function ProfileForm(props: Props) {
             <div className={`${styles.col} ${styles.col5} ${styles.bold}`}>
               Interests
             </div>
-            {/* <div className={`${styles.col} ${styles.col5} ${styles.bold}`}>
-              Common interests
-            </div>
-            <div className={`${styles.col} ${styles.col5} ${styles.bold}`}>
-              Percentage
-            </div> */}
             <div className={`${styles.col} ${styles.col5} ${styles.bold}`}>
               Delete
             </div>
@@ -454,38 +440,6 @@ export default function ProfileForm(props: Props) {
                       )}
                     </div>
                   </div>
-                  {/* <div
-                    className={`${styles.col} ${styles.col5}`}
-                    data-label="Common interests"
-                  >
-                    <div className={styles.categoriesContainer}>
-                      {user.commonCategories &&
-                      user.commonCategories.length > 0 ? (
-                        user.commonCategories.map((category) => {
-                          return category ? <p>{category.name}</p> : null;
-                        })
-                      ) : (
-                        <p>-</p>
-                      )}
-                    </div>
-                  </div> */}
-                  {/* <div
-                    className={`${styles.col} ${styles.col5}`}
-                    data-label="Percentage"
-                  >
-                    <div className={styles.categoriesContainer}>
-                      {user.commonInterestsInPercentage ? (
-                        <p>
-                          {Math.floor(
-                            Math.round(user.commonInterestsInPercentage),
-                          )}{' '}
-                          %
-                        </p>
-                      ) : (
-                        <p>-</p>
-                      )}
-                    </div>
-                  </div> */}
                   <div
                     className={`${styles.col} ${styles.col2} ${styles.addContainer}`}
                     data-label="Delete"
@@ -509,8 +463,6 @@ export default function ProfileForm(props: Props) {
                         ) : (
                           <CiCircleRemove />
                         )}
-
-                        {/* <CiCircleRemove /> */}
                       </button>
                     </div>
                   </div>

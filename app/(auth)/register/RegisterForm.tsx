@@ -85,7 +85,6 @@ export default function RegisterForm() {
           </Link>
         </div>
       </div>
-
       <form
         className={styles.form}
         onSubmit={(event) => event.preventDefault()}
@@ -106,7 +105,6 @@ export default function RegisterForm() {
               .map((error) => (
                 <div key="errorMessage" className={styles.errorMessage}>
                   <p>{error.message}</p>
-                  {/* <FaExclamationCircle className={styles.icon} /> */}
                 </div>
               ))}
           </div>
@@ -130,7 +128,6 @@ export default function RegisterForm() {
                   className={styles.errorMessage}
                 >
                   <p>{error.message}</p>
-                  {/* <FaExclamationCircle className={styles.icon} /> */}
                 </div>
               ))}
           </div>
@@ -154,7 +151,6 @@ export default function RegisterForm() {
                   className={styles.errorMessage}
                 >
                   <p>{error.message}</p>
-                  {/* <FaExclamationCircle className={styles.icon} /> */}
                 </div>
               ))}
           </div>

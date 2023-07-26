@@ -63,7 +63,6 @@ export default function Message({
           await saveMessages();
         }}
       >
-        {/* Send */}
         <BsSend className={styles.sendIcon} />
       </button>
     </form>

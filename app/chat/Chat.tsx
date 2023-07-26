@@ -73,10 +73,6 @@ export default function Chat({
 }: Props) {
   const [messagesEnd, setMessagesEnd] = useState<HTMLDivElement | null>(null);
 
-  // const scrollToBottom = () => {
-  //   messagesEnd?.scrollIntoView({ behavior: 'smooth' });
-  // };
-
   const scrollToBottom = useCallback(() => {
     messagesEnd?.scrollIntoView({ behavior: 'smooth' });
   }, [messagesEnd]);

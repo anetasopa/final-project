@@ -55,13 +55,11 @@ export default function Nav({ user, singleUserData }: Props) {
         <button onClick={handleMenuToggle} className={styles.hamburgerIcon}>
           {!isOpen ? <RxHamburgerMenu /> : <CgClose />}
         </button>
-
         <div>
           <Link href="/" className={styles.logo}>
             ChatSync
           </Link>
         </div>
-
         {user ? (
           <>
             <Link

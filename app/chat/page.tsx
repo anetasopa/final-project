@@ -25,8 +25,6 @@ export default async function Chat() {
   const userContacts = await getUserContacts(userId);
   const userData = await getUsersById(userId);
 
-  // const singleUserData = getUsersById(userId);
-
   const firebaseConfig = {
     apiKey: process.env.FIREBASE_API_KEY,
     authDomain: process.env.FIREBASE_AUTH_DOMAIN,

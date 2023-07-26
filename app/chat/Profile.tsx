@@ -35,7 +35,6 @@ export default function Profile({
         )}
         <p className={styles.nickname}>{receiverNickname}</p>
       </div>
-
       <button className={styles.mobileButton} onClick={toggleMobileMenu}>
         {isMobileMenuOpen ? <p>Show List</p> : <p>Hide List</p>}
       </button>

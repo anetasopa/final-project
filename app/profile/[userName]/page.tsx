@@ -29,7 +29,6 @@ export default async function Profile() {
   const userId = user.id;
 
   const singleUserData = await getUsersById(userId);
-  // const userCategories = await getUserCategories(userId);
 
   if (!singleUserData) {
     notFound();
@@ -60,15 +59,15 @@ export default async function Profile() {
   const userContacts: UserWithCategory[] = await getUserContacts(userId);
   const categories: Category[] = await getCategories();
 
-  console.log(
-    util.inspect(
-      {
-        userContacts,
-      },
+  // console.log(
+  //   util.inspect(
+  //     {
+  //       userContacts,
+  //     },
 
-      { showHidden: false, depth: null, colors: true },
-    ),
-  );
+  //     { showHidden: false, depth: null, colors: true },
+  //   ),
+  // );
 
   return (
     <main className={styles.profileContainer}>

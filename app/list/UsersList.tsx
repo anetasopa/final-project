@@ -115,7 +115,6 @@ export default function UsersLis({ result }: Props) {
             </div>
           </li>
           {filteredResults.map((user) => {
-            console.log({ user1234567: user });
             return (
               <div key={`user-${user.user.id}`}>
                 <li className={styles.tableRow}>
@@ -183,7 +182,6 @@ export default function UsersLis({ result }: Props) {
                       )}
                     </div>
                   </div>
-
                   <div
                     className={`${styles.col} ${styles.col5}`}
                     data-label="Common interests"

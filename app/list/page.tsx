@@ -1,4 +1,3 @@
-import util from 'node:util';
 import { cookies } from 'next/headers';
 import { notFound } from 'next/navigation';
 import {
@@ -61,16 +60,16 @@ export default async function List() {
 
   const result = usersWithSimilarInterests({ users, myUser });
 
-  console.log(
-    util.inspect(
-      {
-        users,
-        result,
-      },
+  // console.log(
+  //   util.inspect(
+  //     {
+  //       users,
+  //       result,
+  //     },
 
-      { showHidden: false, depth: null, colors: true },
-    ),
-  );
+  //     { showHidden: false, depth: null, colors: true },
+  //   ),
+  // );
 
   return (
     <main className={styles.listContainer}>

@@ -6,8 +6,6 @@ import { UserEntity } from '../migrations/1686751602-createTableUsers';
 // import Footer from './components/Footer';
 import Nav from './components/Nav';
 
-// import styles from './page.module.scss';
-
 // const inter = Inter({ subsets: ['latin'] });
 
 // export const metadata = {
